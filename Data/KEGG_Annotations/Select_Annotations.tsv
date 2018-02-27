@@ -1,0 +1,457 @@
+Protein_Name	Bin_Name	KO_Annot_1	KO_Annot_2	KO_Annot_3	K_number	Kingdom	Class	Genus	GHOSTX_score	KEGG_GenesID
+bin_1_GOOLCNIJ_01258	bin_1	K00376			K00376	Bacteria	Gemmatimonadetes	Gemmatimonas	995.727	gau:GAU_1385
+bin_1_GOOLCNIJ_02951	bin_1	K08738			K08738	Bacteria	Gemmatimonadetes	Gemmatimonas	212.616	gph:GEMMAAP_02010
+bin_11_CKKMPDND_01078	bin_11	K00368			K00368	Bacteria	Actinobacteria	Nocardioides	180.644	nca:Noca_2101
+bin_12_FEDNEPMN_00020	bin_12	K00376			K00376	Bacteria	Bacteroidetes	Niabella	1112.83	nso:NIASO_09245
+bin_12_FEDNEPMN_02307	bin_12	K04561			K04561	Bacteria	Bacteroidetes	Solitalea	352.829	scn:Solca_0518
+bin_13_KJBFHAAK_01187	bin_13	K10944			K10944	Bacteria	Betaproteobacteria	Nitrosospira	535.798	nmu:Nmul_A2325
+bin_13_KJBFHAAK_01188	bin_13	K10945			K10945	Bacteria	Betaproteobacteria	Nitrosospira	699.123	nmu:Nmul_A2324
+bin_14_MOPLEMBB_00172	bin_14	K10946			K10946	Bacteria	Gammaproteobacteria - Others	Methylovulum	501.516	mpsy:CEK71_17430
+bin_14_MOPLEMBB_00173	bin_14	K10944			K10944	Bacteria	Gammaproteobacteria - Others	Methylovulum	497.664	mpsy:CEK71_17435
+bin_14_MOPLEMBB_00174	bin_14	K10945			K10945	Bacteria	Gammaproteobacteria - Others	Methylovulum	755.747	mpsy:CEK71_17440
+bin_14_MOPLEMBB_01817	bin_14	K04561			K04561	Bacteria	Gammaproteobacteria - Others	Methylomonas	868.611	mmt:Metme_2511
+bin_15_IOPBJFGJ_00435	bin_15	K02567			K02567	Bacteria	Betaproteobacteria	Sulfuritalea	1666.36	shd:SUTH_00372
+bin_15_IOPBJFGJ_00487	bin_15	K08738			K08738	Bacteria	Betaproteobacteria	Sulfuritalea	179.874	shd:SUTH_00441
+bin_15_IOPBJFGJ_00489	bin_15	K08738			K08738	Bacteria	Betaproteobacteria	Sulfuritalea	165.622	shd:SUTH_00449
+bin_15_IOPBJFGJ_01081	bin_15	K17226			K17226	Bacteria	Betaproteobacteria	Sulfuritalea	265.774	shd:SUTH_02726
+bin_15_IOPBJFGJ_01082	bin_15	K17227			K17227	Bacteria	Betaproteobacteria	Sulfuritalea	189.889	shd:SUTH_02727
+bin_15_IOPBJFGJ_01083	bin_15	K17222			K17222	Bacteria	Betaproteobacteria	Sulfuritalea	494.197	shd:SUTH_02728
+bin_15_IOPBJFGJ_01084	bin_15	K17223			K17223	Bacteria	Betaproteobacteria	Sulfuritalea	361.688	shd:SUTH_02729
+bin_15_IOPBJFGJ_01325	bin_15	K10535			K10535	Bacteria	Other	Candidatus Methylomirabilis	293.508	mox:DAMO_2473
+bin_15_IOPBJFGJ_02160	bin_15	K00376			K00376	Bacteria	Betaproteobacteria	Sulfuritalea	1433.7	shd:SUTH_02573
+bin_15_IOPBJFGJ_02684	bin_15	K08738			K08738	Bacteria	Betaproteobacteria	Sulfuritalea	186.422	shd:SUTH_00280
+bin_15_IOPBJFGJ_02840	bin_15	K11181			K11181	Bacteria	Betaproteobacteria	Sulfuritalea	684.871	shd:SUTH_01443
+bin_15_IOPBJFGJ_02903	bin_15	K00394			K00394	Bacteria	Betaproteobacteria	Sulfuritalea	380.948	shd:SUTH_02771
+bin_15_IOPBJFGJ_02980	bin_15	K17222			K17222	Bacteria	Betaproteobacteria	Sulfuritalea	436.032	shd:SUTH_02728
+bin_15_IOPBJFGJ_03167	bin_15	K08738			K08738	Bacteria	Betaproteobacteria	Sulfuritalea	153.295	shd:SUTH_00443
+bin_15_IOPBJFGJ_03218	bin_15	K08738			K08738	Bacteria	Betaproteobacteria	Sulfuritalea	157.532	shd:SUTH_00449
+bin_16_JHFBEDLJ_03184	bin_16	K04561			K04561	Bacteria	Bacteroidetes	Rufibacter	1046.96	ruf:TH63_11765
+bin_17_JDLOKFIE_03490	bin_17	K00368			K00368	Bacteria	Verrucomicrobia	Lacunisphaera	681.404	obg:Verru16b_00368
+bin_17_JDLOKFIE_05460	bin_17	K00368			K00368	Bacteria	Gammaproteobacteria - Others	Thioalkalivibrio	497.278	tkm:TK90_1652
+bin_19_GGINHOFJ_00120	bin_19	K10946			K10946	Bacteria	Betaproteobacteria	Nitrosospira	511.531	nmu:Nmul_A0798
+bin_19_GGINHOFJ_00717	bin_19	K10945			K10945	Bacteria	Betaproteobacteria	Nitrosospira	730.709	nmu:Nmul_A2764
+bin_19_GGINHOFJ_00718	bin_19	K10944			K10944	Bacteria	Betaproteobacteria	Nitrosospira	533.487	nmu:Nmul_A2325
+bin_19_GGINHOFJ_01187	bin_19	K00368			K00368	Bacteria	Gammaproteobacteria - Others	Oleispira	459.914	oai:OLEAN_C07560
+bin_2_KPOMJHBH_04212	bin_2	K03385			K03385	Bacteria	Chlorobi	Ignavibacterium	625.935	ial:IALB_0861
+bin_22_KPMMGFAF_00526	bin_22	K02567			K02567	Bacteria	Verrucomicrobia	Coraliomargarita	285.419	caa:Caka_0064
+bin_22_KPMMGFAF_04405	bin_22				K08738	Bacteria	Planctomycetes	Planctomyces	159.844	pls:VT03_17580
+bin_23_GKCJFILG_00379	bin_23				K00368	Bacteria	Gammaproteobacteria - Others	Psychrobacter	103.219	psyc:DABAL43B_1588
+bin_24_DANOOOII_00195	bin_24	K08738			K08738	Bacteria	Betaproteobacteria	Roseateles	127.487	rdp:RD2015_2959
+bin_24_DANOOOII_01832	bin_24	K17223			K17223	Bacteria	Betaproteobacteria	Pandoraea	252.292	ppk:U875_24485
+bin_24_DANOOOII_01833	bin_24	K17222			K17222	Bacteria	Betaproteobacteria	[Polyangium] brachysporum	360.533	pbh:AAW51_2270
+bin_24_DANOOOII_01834	bin_24	K17227			K17227	Bacteria	Betaproteobacteria	Limnohabitans	160.999	lim:L103DPR2_01200
+bin_24_DANOOOII_01835	bin_24	K17226			K17226	Bacteria	Betaproteobacteria	Betaproteobacteria bacterium UKL13-2	108.612	beb:AEM42_07755
+bin_25_DEMCJCJC_00808	bin_25	K03385			K03385	Bacteria	Deltaproteobacteria	Syntrophobacter	727.243	sfu:Sfum_2398
+bin_25_DEMCJCJC_00854	bin_25	K00394			K00394	Bacteria	Deltaproteobacteria	Desulfatibacillum	1174.46	dal:Dalk_1569
+bin_25_DEMCJCJC_01425	bin_25	K11181			K11181	Bacteria	Deltaproteobacteria	Desulfatibacillum	681.019	dal:Dalk_4300
+bin_25_DEMCJCJC_01426	bin_25	K11180			K11180	Bacteria	Deltaproteobacteria	Desulfococcus	752.281	dol:Dole_2669
+bin_25_DEMCJCJC_02485	bin_25	K00958			K00958	Bacteria	Deltaproteobacteria	Desulfatibacillum	697.582	dal:Dalk_1700
+bin_26_NKKGGPGH_01686	bin_26	K03385			K03385	Bacteria	Gammaproteobacteria - Enterobacteria	Escherichia	992.26	eco:b4070
+bin_26_NKKGGPGH_02182	bin_26	K02567			K02567	Bacteria	Gammaproteobacteria - Enterobacteria	Escherichia	1660.97	eco:b2206
+bin_27_COPLIDAH_00832	bin_27	K08738			K08738	Bacteria	Bacteroidetes	Flavobacterium	130.568	fjo:Fjoh_0958
+bin_27_COPLIDAH_00999	bin_27	K10535			K10535	Bacteria	Betaproteobacteria	Nitrosomonas	929.858	neu:NE2044
+bin_27_COPLIDAH_01652	bin_27	K00376			K00376	Bacteria	Bacteroidetes	Flavobacterium	1144.03	fjg:BB050_03580
+bin_27_COPLIDAH_02181	bin_27	K10946			K10946	Bacteria	Betaproteobacteria	Nitrosomonas	515.768	neu:NE0945
+bin_28_LJODPFPL_02663	bin_28	K04561			K04561	Bacteria	Spirochaetes	Leptospira	678.322	lbi:LEPBI_I2954
+bin_28_LJODPFPL_03040	bin_28	K00958			K00958	Bacteria	Planctomycetes	Thermogutta	437.573	ttf:THTE_0679
+bin_28_LJODPFPL_06779	bin_28	K00376			K00376	Bacteria	Alphaproteobacteria	Magnetospira	743.421	magq:MGMAQ_1222
+bin_29_FMBNMGCE_00076	bin_29	K00958			K00958	Bacteria	Cyanobacteria	Cyanobium	627.476	cgc:Cyagr_1883
+bin_3_NNNGIFOF_00006	bin_3	K04561			K04561	Bacteria	Bacteroidetes	Muricauda	1182.16	mrs:Murru_2903
+bin_3_NNNGIFOF_00555	bin_3	K00376			K00376	Bacteria	Bacteroidetes	Flavisolibacter	1087.4	fla:SY85_10520
+bin_3_NNNGIFOF_01111	bin_3	K08738			K08738	Bacteria	Bacteroidetes	Runella	440.654	rsi:Runsl_4304
+bin_3_NNNGIFOF_01505	bin_3	K04561			K04561	Bacteria	Bacteroidetes	Solitalea	283.108	scn:Solca_0518
+bin_3_NNNGIFOF_03207	bin_3				K08738	Bacteria	Bacteroidetes	Arenibacter	533.872	aalg:AREALGSMS7_01486
+bin_30_PBEBEICL_00194	bin_30	K08738			K08738	Bacteria	Betaproteobacteria	Sideroxydans	119.398	slt:Slit_2693
+bin_30_PBEBEICL_00621	bin_30	K11181			K11181	Bacteria	Betaproteobacteria	Sideroxydans	708.753	slt:Slit_1685
+bin_30_PBEBEICL_00622	bin_30	K11180			K11180	Bacteria	Betaproteobacteria	Sideroxydans	797.349	slt:Slit_1686
+bin_30_PBEBEICL_01392	bin_30	K17226			K17226	Bacteria	Betaproteobacteria	Dechloromonas	135.961	dar:Daro_3132
+bin_30_PBEBEICL_01393	bin_30	K17227			K17227	Bacteria	Alphaproteobacteria	Azospirillum	154.066	ati:AL072_28015
+bin_30_PBEBEICL_01394	bin_30	K17222			K17222	Bacteria	Betaproteobacteria	Betaproteobacteria bacterium GR16-43	310.457	beba:BWI17_16385
+bin_30_PBEBEICL_01395	bin_30	K17223			K17223	Bacteria	Betaproteobacteria	Comamonas	216.853	ctt:CtCNB1_2868
+bin_30_PBEBEICL_01759	bin_30	K00958			K00958	Bacteria	Betaproteobacteria	Sideroxydans	699.123	slt:Slit_1712
+bin_30_PBEBEICL_01818	bin_30	K00394			K00394	Bacteria	Betaproteobacteria	Sideroxydans	1036.56	slt:Slit_1715
+bin_31_GEBKPEPI_00943	bin_31	K00376			K00376	Bacteria	Bacteroidetes	Rhodothermus	855.514	rmr:Rmar_2012
+bin_33_KDPOFKGA_00036	bin_33	K08738			K08738	Bacteria	Betaproteobacteria	Vitreoscilla	125.561	vff:VITFI_CDS0600
+bin_34_LGAJHCHI_03234	bin_34	K02567			K02567	Bacteria	Deltaproteobacteria	Geobacter	276.174	glo:Glov_1056
+bin_35_INEJFIFD_01135	bin_35	K08738			K08738	Bacteria	Bacteroidetes	Flavisolibacter	127.487	fla:SY85_02890
+bin_36_JKNJNDAM_00443	bin_36	K02567			K02567	Bacteria	Gammaproteobacteria - Others	Thioalkalivibrio	1157.51	tni:TVNIR_1329
+bin_37_EGFMLAOP_00514	bin_37	K08738			K08738	Bacteria	Betaproteobacteria	Rhodoferax	140.969	rfr:Rfer_4085
+bin_37_EGFMLAOP_01009	bin_37	K17223			K17223	Bacteria	Betaproteobacteria	Vitreoscilla	281.182	vff:VITFI_CDS0980
+bin_37_EGFMLAOP_01010	bin_37	K17222			K17222	Bacteria	Betaproteobacteria	Vitreoscilla	410.609	vff:VITFI_CDS0981
+bin_37_EGFMLAOP_01011	bin_37	K17227			K17227	Bacteria	Betaproteobacteria	Leptothrix	176.407	lch:Lcho_3781
+bin_37_EGFMLAOP_01159	bin_37	K08738			K08738	Bacteria	Betaproteobacteria	Vitreoscilla	457.603	vff:VITFI_CDS0984
+bin_37_EGFMLAOP_01160	bin_37	K17226			K17226	Bacteria	Betaproteobacteria	Leptothrix	221.09	lch:Lcho_3782
+bin_37_EGFMLAOP_02697	bin_37	K08738			K08738	Bacteria	Betaproteobacteria	Mitsuaria	147.902	miu:ABE85_02675
+bin_37_EGFMLAOP_04004	bin_37	K08738			K08738	Bacteria	Gammaproteobacteria - Others	Halioglobus	113.235	hja:BST95_17900
+bin_39_MFBAGLJA_00727	bin_39	K04561			K04561	Bacteria	Bacteroidetes	Rufibacter	1118.99	ruf:TH63_11765
+bin_4_EJLBMEFP_00005	bin_4	K08738			K08738	Bacteria	Betaproteobacteria	Rhodoferax	150.599	rfr:Rfer_4085
+bin_4_EJLBMEFP_00437	bin_4	K08738			K08738	Bacteria	Betaproteobacteria	Paucibacter	117.087	pkt:AT984_08180
+bin_4_EJLBMEFP_01949	bin_4	K08738			K08738	Bacteria	Betaproteobacteria	Acidovorax	152.91	aav:Aave_1504
+bin_40_ICPDOFHM_00195	bin_40	K00376			K00376	Bacteria	Alphaproteobacteria	Magnetospirillum	1451.03	mag:amb3086
+bin_40_ICPDOFHM_00441	bin_40	K17227			K17227	Bacteria	Alphaproteobacteria	Magnetospirillum	177.563	mag:amb0855
+bin_40_ICPDOFHM_00442	bin_40	K17226			K17226	Bacteria	Alphaproteobacteria	Magnetospirillum	245.743	mag:amb0856
+bin_40_ICPDOFHM_00727	bin_40	K11181			K11181	Bacteria	Alphaproteobacteria	Magnetospirillum	715.301	mag:amb3368
+bin_40_ICPDOFHM_00728	bin_40	K11180			K11180	Bacteria	Alphaproteobacteria	Magnetospirillum	798.89	mag:amb3367
+bin_40_ICPDOFHM_00759	bin_40	K02567			K02567	Bacteria	Alphaproteobacteria	Magnetospirillum	1635.16	mag:amb2690
+bin_40_ICPDOFHM_01427	bin_40	K17226			K17226	Bacteria	Betaproteobacteria	Methyloversatilis	230.335	metr:BSY238_624
+bin_40_ICPDOFHM_01524	bin_40	K08738			K08738	Bacteria	Alphaproteobacteria	Rhodomicrobium	338.191	rva:Rvan_1826
+bin_41_MOGIHAPO_01333	bin_41				K04561	Bacteria	Gammaproteobacteria - Others	Methylomonas	102.449	mmt:Metme_2511
+bin_41_MOGIHAPO_01597	bin_41	K10946			K10946	Bacteria	Gammaproteobacteria - Others	Methylovulum	495.738	mpsy:CEK71_17430
+bin_42_HGLAFGDH_00318	bin_42	K08738			K08738	Bacteria	Bacteroidetes	Dyadobacter	405.986	dfe:Dfer_2188
+bin_42_HGLAFGDH_00505	bin_42	K08738			K08738	Bacteria	Bacteroidetes	Flammeovirgaceae bacterium 311	451.055	fbt:D770_11610
+bin_42_HGLAFGDH_01058	bin_42	K00368			K00368	Bacteria	Bacteroidetes	Rufibacter	124.405	ruf:TH63_11770
+bin_42_HGLAFGDH_01465	bin_42	K08738			K08738	Bacteria	Bacteroidetes	Dyadobacter	485.723	dfe:Dfer_2188
+bin_43_OKJIKHIN_00281	bin_43	K08738			K08738	Bacteria	Alphaproteobacteria	Candidatus Pelagibacter	178.718	pub:SAR11_0504
+bin_46_OMOCCEHF_00251	bin_46	K04561			K04561	Bacteria	Bacteroidetes	Solitalea	349.362	scn:Solca_0518
+bin_46_OMOCCEHF_01674	bin_46	K00376			K00376	Bacteria	Bacteroidetes	Niabella	1091.26	nso:NIASO_09245
+bin_47_GFBNLHJL_00404	bin_47	K00958			K00958	Bacteria	Chloroflexi	Chloroflexus	667.922	cau:Caur_2113
+bin_47_GFBNLHJL_00850	bin_47	K03385			K03385	Bacteria	Chloroflexi	Anaerolinea	507.679	atm:ANT_29060
+bin_47_GFBNLHJL_01950	bin_47	K00368			K00368	Bacteria	Betaproteobacteria	Polaromonas	421.779	pna:Pnap_1326
+bin_48_IGCKALLP_01606	bin_48	K00376			K00376	Bacteria	Bacteroidetes	Solitalea	999.579	scn:Solca_1787
+bin_48_IGCKALLP_01608	bin_48	K04561			K04561	Bacteria	Bacteroidetes	Rufibacter	1089.33	ruf:TH63_11765
+bin_49_APKKBAMP_00039	bin_49	K08738			K08738	Bacteria	Betaproteobacteria	Methylovorus	160.229	mei:Msip34_0374
+bin_52_PJGLABHM_03117	bin_52	K00958			K00958	Bacteria	Cyanobacteria	Microcystis	784.252	mar:MAE_17390
+bin_53_BJCANHEK_00264	bin_53	K08738			K08738	Bacteria	Betaproteobacteria	Methylotenera	148.288	mmb:Mmol_0398
+bin_55_JHAHOKBP_04041	bin_55	K00958			K00958	Bacteria	Planctomycetes	Planctomyces	683.33	pls:VT03_24410
+bin_58_KDKMPMAC_00060	bin_58	K04561			K04561	Bacteria	Gammaproteobacteria - Others	Methylomicrobium	906.36	mah:MEALZ_1161
+bin_58_KDKMPMAC_00064	bin_58	K00368			K00368	Bacteria	Firmicutes - Clostridia	Symbiobacterium	317.775	sth:STH741
+bin_58_KDKMPMAC_00275	bin_58	K10946			K10946	Bacteria	Gammaproteobacteria - Others	Methylococcus	265.774	mca:MCA0295
+bin_58_KDKMPMAC_00276	bin_58	K10945			K10945	Bacteria	Betaproteobacteria	Nitrosospira	305.064	nmu:Nmul_A2324
+bin_58_KDKMPMAC_00277	bin_58	K10944			K10944	Bacteria	Gammaproteobacteria - Others	Methylomicrobium	287.73	mah:MEALZ_0515
+bin_58_KDKMPMAC_01334	bin_58	K04561			K04561	Bacteria	Gammaproteobacteria - Others	Methylomicrobium	912.909	mah:MEALZ_1161
+bin_59_FMHNMKLJ_00106	bin_59	K00376			K00376	Bacteria	Epsilonproteobacteria	Sulfurospirillum	128.642	smul:SMUL_2124
+bin_59_FMHNMKLJ_00495	bin_59	K08738			K08738	Bacteria	Betaproteobacteria	Gallionella	142.895	gca:Galf_2084
+bin_59_FMHNMKLJ_01209	bin_59	K00394			K00394	Bacteria	Betaproteobacteria	Sideroxydans	1273.46	slt:Slit_1715
+bin_59_FMHNMKLJ_01212	bin_59	K00958			K00958	Bacteria	Betaproteobacteria	Sideroxydans	721.465	slt:Slit_1712
+bin_59_FMHNMKLJ_01228	bin_59	K11180			K11180	Bacteria	Betaproteobacteria	Sideroxydans	764.607	slt:Slit_1686
+bin_59_FMHNMKLJ_01229	bin_59	K11181			K11181	Bacteria	Betaproteobacteria	Sideroxydans	715.687	slt:Slit_1685
+bin_59_FMHNMKLJ_01416	bin_59	K08738			K08738	Bacteria	Betaproteobacteria	Sideroxydans	136.732	slt:Slit_2693
+bin_59_FMHNMKLJ_01417	bin_59	K08738			K08738	Bacteria	Betaproteobacteria	Pseudogulbenkiania	108.227	pse:NH8B_4001
+bin_59_FMHNMKLJ_02313	bin_59	K08738			K08738	Bacteria	Betaproteobacteria	Sideroxydans	127.872	slt:Slit_2693
+bin_60_JHGMDIMO_00851	bin_60				K04561	Bacteria	Bacteroidetes	Solitalea	250.751	scn:Solca_0518
+bin_60_JHGMDIMO_01584	bin_60	K00376			K00376	Bacteria	Bacteroidetes	Niabella	1102.04	nso:NIASO_09245
+bin_61_FACLCNAF_00962	bin_61	K00368			K00368	Bacteria	Actinobacteria	Micromonospora	330.102	mau:Micau_3956
+bin_62_MFPGMBLC_02556	bin_62	K17227			K17227	Bacteria	Gammaproteobacteria - Others	Methylomicrobium	107.071	mah:MEALZ_1319
+bin_62_MFPGMBLC_02557	bin_62	K17226			K17226	Bacteria	Gammaproteobacteria - Others	Methylomicrobium	125.176	mah:MEALZ_1320
+bin_63_DMELABGG_00132	bin_63	K00368			K00368	Bacteria	Gammaproteobacteria - Others	Candidatus Tenderia	436.417	tee:Tel_15465
+bin_63_DMELABGG_00971	bin_63	K00958			K00958	Bacteria	Kiritimatiellaeota	Kiritimatiella	640.188	vbl:L21SP4_02316
+bin_63_DMELABGG_02311	bin_63	K08738			K08738	Bacteria	Gammaproteobacteria - Others	Candidatus Tenderia	132.494	tee:Tel_14260
+bin_66_AAEFALFK_00192	bin_66	K08738			K08738	Bacteria	Betaproteobacteria	Mitsuaria	124.79	miu:ABE85_02675
+bin_66_AAEFALFK_01089	bin_66	K17223			K17223	Bacteria	Betaproteobacteria	Polynucleobacter	136.346	pnu:Pnuc_1157
+bin_66_AAEFALFK_01090	bin_66				K17227	Bacteria	Alphaproteobacteria	Bradyrhizobium	115.546	bja:bll2733
+bin_66_AAEFALFK_01091	bin_66	K17222			K17222	Bacteria	Alphaproteobacteria	Rhodoplanes	204.912	rhz:RHPLAN_09250
+bin_66_AAEFALFK_01454	bin_66	K08738			K08738	Bacteria	Betaproteobacteria	Herminiimonas	408.297	har:HEAR1189
+bin_66_AAEFALFK_01455	bin_66	K17226			K17226	Bacteria	Betaproteobacteria	Methyloversatilis	159.844	metr:BSY238_1522
+bin_66_AAEFALFK_01500	bin_66	K17223			K17223	Bacteria	Betaproteobacteria	Comamonas	259.996	ctt:CtCNB1_2868
+bin_66_AAEFALFK_01501	bin_66	K17222			K17222	Bacteria	Betaproteobacteria	Variovorax	261.151	vbo:CKY39_30925
+bin_67_LALHDEAP_01219	bin_67	K00376			K00376	Bacteria	Chlorobi	Melioribacter	948.347	mro:MROS_1104
+bin_67_LALHDEAP_01390	bin_67	K04561			K04561	Bacteria	Bacteroidetes	Rufibacter	1121.69	ruf:TH63_11765
+bin_67_LALHDEAP_01645	bin_67	K08738			K08738	Bacteria	Chlorobi	Ignavibacterium	269.626	ial:IALB_1399
+bin_67_LALHDEAP_01746	bin_67	K03385			K03385	Bacteria	Chlorobi	Ignavibacterium	700.664	ial:IALB_0861
+bin_68_KGAMMEIJ_00087	bin_68	K11180			K11180	Bacteria	Firmicutes - Clostridia	Carboxydothermus	554.673	chy:CHY_2410
+bin_68_KGAMMEIJ_00088	bin_68	K11181			K11181	Bacteria	Firmicutes - Clostridia	Carboxydothermus	531.946	chy:CHY_2409
+bin_69_GEHFKKKP_00715	bin_69	K08738			K08738	Bacteria	Betaproteobacteria	Polynucleobacter	495.738	pnu:Pnuc_0802
+bin_69_GEHFKKKP_00716	bin_69	K17226			K17226	Bacteria	Betaproteobacteria	Polynucleobacter	253.062	pnu:Pnuc_0803
+bin_69_GEHFKKKP_00717	bin_69	K17227			K17227	Bacteria	Betaproteobacteria	beta proteobacterium CB	186.037	bprc:D521_0982
+bin_69_GEHFKKKP_00718	bin_69	K17222			K17222	Bacteria	Betaproteobacteria	Polynucleobacter	449.899	pnu:Pnuc_0805
+bin_69_GEHFKKKP_00719	bin_69	K17223			K17223	Bacteria	Betaproteobacteria	Polynucleobacter	320.857	pnu:Pnuc_0806
+bin_69_GEHFKKKP_01630	bin_69	K08738			K08738	Bacteria	Betaproteobacteria	Methylibium	250.751	mpt:Mpe_A0912
+bin_70_KAFNHEPC_00474	bin_70	K17227			K17227	Bacteria	Betaproteobacteria	Betaproteobacteria bacterium GR16-43	105.145	beba:BWI17_10325
+bin_70_KAFNHEPC_00475	bin_70	K17226			K17226	Bacteria	Alphaproteobacteria	Filomicrobium	119.012	fil:BN1229_v1_0546
+bin_70_KAFNHEPC_00478	bin_70	K17222			K17222	Bacteria	Betaproteobacteria	Limnohabitans	312.768	lim:L103DPR2_01510
+bin_70_KAFNHEPC_00999	bin_70	K08738			K08738	Bacteria	Betaproteobacteria	Paucibacter	137.117	pkt:AT984_08180
+bin_70_KAFNHEPC_01819	bin_70	K08738			K08738	Bacteria	Betaproteobacteria	Vitreoscilla	127.872	vff:VITFI_CDS0600
+bin_70_KAFNHEPC_01822	bin_70	K08738			K08738	Bacteria	Betaproteobacteria	Limnohabitans	598.201	lim:L103DPR2_01202
+bin_70_KAFNHEPC_01823	bin_70	K17226			K17226	Bacteria	Betaproteobacteria	Limnohabitans	273.478	lim:L103DPR2_01201
+bin_72_GBFNFCJH_01849	bin_72	K00376			K00376	Bacteria	Bacteroidetes	Niastella	857.825	nko:Niako_5286
+bin_73_KCFDIMMH_00178	bin_73	K00376			K00376	Bacteria	Betaproteobacteria	Sulfuritalea	1528.46	shd:SUTH_02573
+bin_73_KCFDIMMH_00539	bin_73	K17226			K17226	Bacteria	Betaproteobacteria	Sulfuritalea	285.419	shd:SUTH_02726
+bin_73_KCFDIMMH_00540	bin_73	K17227			K17227	Bacteria	Betaproteobacteria	Sulfuritalea	190.66	shd:SUTH_02727
+bin_73_KCFDIMMH_00541	bin_73	K17222			K17222	Bacteria	Betaproteobacteria	Sulfuritalea	526.554	shd:SUTH_02728
+bin_73_KCFDIMMH_00542	bin_73	K17223			K17223	Bacteria	Betaproteobacteria	Sulfuritalea	402.905	shd:SUTH_02729
+bin_73_KCFDIMMH_01482	bin_73	K08738			K08738	Bacteria	Betaproteobacteria	Sulfuritalea	176.022	shd:SUTH_00280
+bin_73_KCFDIMMH_01985	bin_73	K17226			K17226	Bacteria	Betaproteobacteria	Methyloversatilis	289.656	metr:BSY238_624
+bin_73_KCFDIMMH_02104	bin_73	K11180			K11180	Bacteria	Betaproteobacteria	Sulfuritalea	880.937	shd:SUTH_01444
+bin_73_KCFDIMMH_02105	bin_73	K11181			K11181	Bacteria	Betaproteobacteria	Sulfuritalea	748.429	shd:SUTH_01443
+bin_73_KCFDIMMH_02565	bin_73	K00394			K00394	Bacteria	Betaproteobacteria	Sulfuritalea	468.774	shd:SUTH_02771
+bin_73_KCFDIMMH_02828	bin_73	K02567			K02567	Bacteria	Betaproteobacteria	Sulfuritalea	204.912	shd:SUTH_00372
+bin_73_KCFDIMMH_03348	bin_73	K08738			K08738	Bacteria	Betaproteobacteria	Alicycliphilus	119.398	adn:Alide_4610
+bin_74_FLOJHMEH_00031	bin_74	K00394			K00394	Bacteria	Deltaproteobacteria	Desulfomonile	1114.75	dti:Desti_1443
+bin_74_FLOJHMEH_01714	bin_74	K00958			K00958	Bacteria	Deltaproteobacteria	Syntrophobacter	622.083	sfu:Sfum_1046
+bin_74_FLOJHMEH_01978	bin_74	K04561			K04561	Bacteria	Deltaproteobacteria	Syntrophobacter	886.715	sfu:Sfum_2932
+bin_76_NHINCJFK_00324	bin_76	K04561			K04561	Bacteria	Betaproteobacteria	Rhodoferax	1260.74	rfr:Rfer_1886
+bin_76_NHINCJFK_01708	bin_76	K08738			K08738	Bacteria	Betaproteobacteria	Aquaspirillum	131.339	aql:BXU06_16635
+bin_76_NHINCJFK_02157	bin_76	K17222			K17222	Bacteria	Alphaproteobacteria	Rhodoplanes	148.288	rhz:RHPLAN_09250
+bin_76_NHINCJFK_02804	bin_76	K17223			K17223	Bacteria	Betaproteobacteria	Leptothrix	163.31	lch:Lcho_0066
+bin_76_NHINCJFK_02805	bin_76	K17226			K17226	Bacteria	Alphaproteobacteria	Pseudorhodoplanes	165.236	psin:CAK95_14985
+bin_76_NHINCJFK_02806	bin_76	K17227			K17227	Bacteria	Alphaproteobacteria	Chelatococcus	131.724	chel:AL346_19255
+bin_77_OMDGGNMK_00321	bin_77	K08738			K08738	Bacteria	Betaproteobacteria	Methylobacillus	129.028	mfa:Mfla_2196
+bin_77_OMDGGNMK_00747	bin_77	K00376			K00376	Bacteria	Betaproteobacteria	Rubrivivax	1078.54	rge:RGE_19210
+bin_77_OMDGGNMK_00834	bin_77	K17223			K17223	Bacteria	Alphaproteobacteria	Rhodoplanes	157.147	rhz:RHPLAN_09280
+bin_77_OMDGGNMK_00836	bin_77	K17227			K17227	Bacteria	Betaproteobacteria	Betaproteobacteria bacterium GR16-43	104.76	beba:BWI17_10325
+bin_77_OMDGGNMK_00837	bin_77	K17222			K17222	Bacteria	Alphaproteobacteria	Filomicrobium	271.166	fil:BN1229_v1_0548
+bin_77_OMDGGNMK_01655	bin_77	K17226			K17226	Bacteria	Betaproteobacteria	Thiobacillus	184.111	tbd:Tbd_0566
+bin_77_OMDGGNMK_01656	bin_77	K17227			K17227	Bacteria	Betaproteobacteria	Ralstonia	130.568	rso:RSc3258
+bin_77_OMDGGNMK_01657	bin_77	K17222			K17222	Bacteria	Gammaproteobacteria - Others	Thioalkalivibrio	257.299	tgr:Tgr7_0857
+bin_77_OMDGGNMK_01658	bin_77	K17223			K17223	Bacteria	Betaproteobacteria	Betaproteobacteria bacterium GR16-43	149.058	beba:BWI17_16380
+bin_78_HKPKJHMK_00727	bin_78	K10946			K10946	Bacteria	Gammaproteobacteria - Others	Methylovulum	494.582	mpsy:CEK71_17430
+bin_78_HKPKJHMK_00728	bin_78	K10944			K10944	Bacteria	Gammaproteobacteria - Others	Methylomicrobium	486.108	mah:MEALZ_0515
+bin_78_HKPKJHMK_00729	bin_78	K10945			K10945	Bacteria	Gammaproteobacteria - Others	Methylovulum	727.628	mpsy:CEK71_17440
+bin_78_HKPKJHMK_01411	bin_78	K04561			K04561	Bacteria	Gammaproteobacteria - Others	Methylomicrobium	910.598	mah:MEALZ_1161
+bin_78_HKPKJHMK_01956	bin_78	K00368			K00368	Bacteria	Chloroflexi	Chloroflexus	328.176	cau:Caur_1570
+bin_79_MBNJBCFC_00610	bin_79	K08738			K08738	Bacteria	Betaproteobacteria	Herminiimonas	280.796	har:HEAR1189
+bin_79_MBNJBCFC_00611	bin_79	K17226			K17226	Bacteria	Betaproteobacteria	Herminiimonas	118.242	har:HEAR1191
+bin_79_MBNJBCFC_00612	bin_79	K17227			K17227	Bacteria	Betaproteobacteria	Herminiimonas	103.219	har:HEAR1192
+bin_79_MBNJBCFC_01751	bin_79	K17223			K17223	Bacteria	Betaproteobacteria	Herminiimonas	251.906	har:HEAR1194
+bin_79_MBNJBCFC_01752	bin_79	K17222			K17222	Bacteria	Betaproteobacteria	Janthinobacterium	420.239	mms:mma_0451
+bin_79_MBNJBCFC_01753	bin_79	K17227			K17227	Bacteria	Betaproteobacteria	Janthinobacterium	156.377	mms:mma_0450
+bin_79_MBNJBCFC_01754	bin_79	K17226			K17226	Bacteria	Betaproteobacteria	Herminiimonas	194.512	har:HEAR1191
+bin_79_MBNJBCFC_01755	bin_79	K08738			K08738	Bacteria	Betaproteobacteria	Herminiimonas	451.44	har:HEAR1189
+bin_79_MBNJBCFC_02278	bin_79	K08738			K08738	Bacteria	Betaproteobacteria	[Polyangium] brachysporum	144.05	pbh:AAW51_1718
+bin_8_CAGJJKJH_00177	bin_8	K17223			K17223	Bacteria	Betaproteobacteria	Hydrogenophaga	287.73	hyr:BSY239_837
+bin_8_CAGJJKJH_00178	bin_8	K17222			K17222	Bacteria	Betaproteobacteria	Limnohabitans	439.113	lim:L103DPR2_01199
+bin_8_CAGJJKJH_00179	bin_8	K17227			K17227	Bacteria	Betaproteobacteria	Limnohabitans	182.185	lim:L103DPR2_01200
+bin_8_CAGJJKJH_00180	bin_8	K17226			K17226	Bacteria	Betaproteobacteria	Rhodoferax	219.55	rac:RA876_14690
+bin_8_CAGJJKJH_00181	bin_8	K08738			K08738	Bacteria	Betaproteobacteria	Limnohabitans	524.242	lim:L103DPR2_01202
+bin_80_JNHINHHK_02256	bin_80	K00368			K00368	Bacteria	Verrucomicrobia	Lacunisphaera	225.328	obg:Verru16b_00368
+bin_80_JNHINHHK_02322	bin_80	K08738			K08738	Bacteria	Betaproteobacteria	Verminephrobacter	124.79	vei:Veis_1601
+bin_81_ONHIDHNN_01928	bin_81	K00376			K00376	Bacteria	Bacteroidetes	Solitalea	532.332	scn:Solca_1787
+bin_83_LPPJPNOD_00207	bin_83	K08738			K08738	Bacteria	Betaproteobacteria	Delftia	112.079	dac:Daci_2749
+bin_83_LPPJPNOD_00947	bin_83	K17222			K17222	Bacteria	Betaproteobacteria	beta proteobacterium CB	286.189	bprc:D521_0678
+bin_83_LPPJPNOD_00948	bin_83	K17227			K17227	Bacteria	Betaproteobacteria	beta proteobacterium CB	122.094	bprc:D521_0677
+bin_83_LPPJPNOD_00950	bin_83	K17223			K17223	Bacteria	Betaproteobacteria	beta proteobacterium CB	161.384	bprc:D521_0675
+bin_83_LPPJPNOD_01633	bin_83	K08738			K08738	Bacteria	Betaproteobacteria	Janthinobacterium	199.134	mms:mma_0447
+bin_83_LPPJPNOD_01634	bin_83	K17226			K17226	Bacteria	Betaproteobacteria	Dechloromonas	184.111	dar:Daro_3132
+bin_83_LPPJPNOD_01635	bin_83	K17227			K17227	Bacteria	Betaproteobacteria	Comamonas	168.703	ctt:CtCNB1_2870
+bin_83_LPPJPNOD_01636	bin_83	K17222			K17222	Bacteria	Betaproteobacteria	Rhodoferax	328.561	rac:RA876_14680
+bin_83_LPPJPNOD_01637	bin_83	K17223			K17223	Bacteria	Betaproteobacteria	Hydrogenophaga	278.87	hyr:BSY239_837
+bin_83_LPPJPNOD_01772	bin_83	K17227			K17227	Bacteria	Betaproteobacteria	Limnohabitans	197.978	lim:L103DPR2_01200
+bin_85_KFMCADBG_00462	bin_85	K08738			K08738	Bacteria	Alphaproteobacteria	Bradyrhizobium	220.705	bja:bll6120
+bin_85_KFMCADBG_01656	bin_85	K17223			K17223	Bacteria	Alphaproteobacteria	Pseudorhodoplanes	159.844	psin:CAK95_14990
+bin_85_KFMCADBG_01657	bin_85	K17226			K17226	Bacteria	Alphaproteobacteria	Rhodoplanes	140.198	rhz:RHPLAN_09270
+bin_85_KFMCADBG_01658	bin_85	K17227			K17227	Bacteria	Alphaproteobacteria	Rhodoplanes	141.739	rhz:RHPLAN_09260
+bin_85_KFMCADBG_02434	bin_85	K17227			K17227	Bacteria	Betaproteobacteria	Pandoraea	155.992	ppk:U875_24475
+bin_85_KFMCADBG_02435	bin_85	K17226			K17226	Bacteria	Betaproteobacteria	Dechloromonas	187.578	dar:Daro_3132
+bin_85_KFMCADBG_02436	bin_85	K08738			K08738	Bacteria	Betaproteobacteria	Herminiimonas	404.06	har:HEAR1189
+bin_85_KFMCADBG_03824	bin_85	K17222			K17222	Bacteria	Alphaproteobacteria	Rhodoplanes	157.532	rhz:RHPLAN_09250
+bin_85_KFMCADBG_03887	bin_85	K17222			K17222	Bacteria	Betaproteobacteria	Betaproteobacteria bacterium UKL13-2	255.373	beb:AEM42_07770
+bin_86_JIFAIENN_01112	bin_86	K08738			K08738	Bacteria	Bacteroidetes	Niabella	104.375	nso:NIASO_05585
+unbinned_IJDLJFPM_07303	unbinned	K08738			K08738	Bacteria	Betaproteobacteria	Limnohabitans	617.846	lim:L103DPR2_01202
+unbinned_IJDLJFPM_07304	unbinned	K17226			K17226	Bacteria	Betaproteobacteria	Limnohabitans	268.47	lim:L103DPR2_01201
+unbinned_IJDLJFPM_07305	unbinned	K17227			K17227	Bacteria	Betaproteobacteria	Limnohabitans	205.682	lim:L103DPR2_01200
+unbinned_IJDLJFPM_07306	unbinned	K17222			K17222	Bacteria	Betaproteobacteria	Limnohabitans	508.449	lim:L103DPR2_01199
+unbinned_IJDLJFPM_07307	unbinned	K17223			K17223	Bacteria	Betaproteobacteria	Limnohabitans	351.288	lim:L103DPR2_01198
+unbinned_IJDLJFPM_10844	unbinned	K17227			K17227	Bacteria	Betaproteobacteria	beta proteobacterium CB	182.956	bprc:D521_0982
+unbinned_IJDLJFPM_10845	unbinned	K17222			K17222	Bacteria	Betaproteobacteria	beta proteobacterium CB	390.193	bprc:D521_0981
+unbinned_IJDLJFPM_16442	unbinned	K00376			K00376	Bacteria	Deltaproteobacteria	Anaeromyxobacter	234.572	ade:Adeh_2402
+unbinned_IJDLJFPM_19071	unbinned	K17226			K17226	Bacteria	Alphaproteobacteria	Devosia	112.079	deq:XM25_01330
+unbinned_IJDLJFPM_19072	unbinned	K17227			K17227	Bacteria	Betaproteobacteria	Betaproteobacteria bacterium GR16-43	112.849	beba:BWI17_10325
+unbinned_IJDLJFPM_19655	unbinned	K17223			K17223	Bacteria	Betaproteobacteria	Limnohabitans	326.635	lim:L103DPR2_01198
+unbinned_IJDLJFPM_19656	unbinned	K17222			K17222	Bacteria	Betaproteobacteria	Limnohabitans	348.206	lim:L103DPR2_01199
+unbinned_IJDLJFPM_26237	unbinned	K00376			K00376	Bacteria	Betaproteobacteria	Thauera	363.614	tmz:Tmz1t_0664
+unbinned_IJDLJFPM_30341	unbinned	K17227			K17227	Bacteria	Betaproteobacteria	beta proteobacterium CB	181.03	bprc:D521_0982
+unbinned_IJDLJFPM_30342	unbinned	K17226			K17226	Bacteria	Betaproteobacteria	Polynucleobacter	261.536	pnu:Pnuc_0803
+unbinned_IJDLJFPM_32603	unbinned	K08738			K08738	Bacteria	Betaproteobacteria	Rugosibacter	134.806	rbu:PG1C_13310
+unbinned_IJDLJFPM_43617	unbinned	K08738			K08738	Bacteria	Betaproteobacteria	Betaproteobacteria bacterium GR16-43	100.138	beba:BWI17_04205
+unbinned_IJDLJFPM_46429	unbinned	K00376			K00376	Bacteria	Bacteroidetes	Niastella	587.03	nko:Niako_5286
+unbinned_IJDLJFPM_46975	unbinned	K08738			K08738	Bacteria	Bacteroidetes	Emticicia	401.364	eol:Emtol_2216
+unbinned_IJDLJFPM_47386	unbinned	K00958			K00958	Bacteria	Kiritimatiellaeota	Kiritimatiella	654.825	vbl:L21SP4_02316
+unbinned_IJDLJFPM_51665	unbinned	K08738			K08738	Bacteria	Gammaproteobacteria - Others	Sulfuricaulis	103.605	slim:SCL_2740
+unbinned_IJDLJFPM_51808	unbinned	K08738			K08738	Bacteria	Betaproteobacteria	beta proteobacterium CB	169.088	bprc:D521_0033
+unbinned_IJDLJFPM_55064	unbinned	K11180			K11180	Bacteria	Betaproteobacteria	Sulfuritalea	588.956	shd:SUTH_01444
+unbinned_IJDLJFPM_60682	unbinned				K08738	Bacteria	Bacteroidetes	Spirosoma	634.409	sli:Slin_4030
+unbinned_IJDLJFPM_61662	unbinned	K00394			K00394	Bacteria	Betaproteobacteria	Sideroxydans	1008.05	slt:Slit_1715
+unbinned_IJDLJFPM_61830	unbinned	K17222			K17222	Bacteria	Betaproteobacteria	beta proteobacterium CB	301.982	bprc:D521_0678
+unbinned_IJDLJFPM_61831	unbinned	K17227			K17227	Bacteria	Betaproteobacteria	Polynucleobacter	135.191	pnu:Pnuc_1155
+unbinned_IJDLJFPM_61832	unbinned	K17226			K17226	Bacteria	Betaproteobacteria	beta proteobacterium CB	177.563	bprc:D521_0676
+unbinned_IJDLJFPM_61833	unbinned	K17223			K17223	Bacteria	Betaproteobacteria	Polynucleobacter	164.466	pnu:Pnuc_1157
+unbinned_IJDLJFPM_64047	unbinned	K17226			K17226	Bacteria	Betaproteobacteria	Methylibium	269.626	mpt:Mpe_A2085
+unbinned_IJDLJFPM_66384	unbinned	K00376			K00376	Bacteria	Bacteroidetes	Dyadobacter	753.051	dfe:Dfer_0693
+unbinned_IJDLJFPM_69558	unbinned	K17226			K17226	Bacteria	Betaproteobacteria	Sulfuritalea	149.058	shd:SUTH_03440
+unbinned_IJDLJFPM_69559	unbinned	K17227			K17227	Bacteria	Betaproteobacteria	Sulfuritalea	207.994	shd:SUTH_03441
+unbinned_IJDLJFPM_71165	unbinned	K08738			K08738	Bacteria	Bacteroidetes	Runella	766.918	rsi:Runsl_2443
+unbinned_IJDLJFPM_72918	unbinned	K08738			K08738	Bacteria	Alphaproteobacteria	Magnetospirillum	155.221	mag:amb1259
+unbinned_IJDLJFPM_80658	unbinned	K00958			K00958	Bacteria	Betaproteobacteria	Sideroxydans	717.227	slt:Slit_1712
+unbinned_IJDLJFPM_81544	unbinned	K02567			K02567	Bacteria	Betaproteobacteria	Sulfuritalea	204.912	shd:SUTH_00372
+unbinned_IJDLJFPM_82094	unbinned	K17227			K17227	Bacteria	Alphaproteobacteria	Azospirillum	170.244	ati:AL072_28015
+unbinned_IJDLJFPM_82095	unbinned	K17222			K17222	Bacteria	Alphaproteobacteria	Azospirillum	378.637	ati:AL072_28020
+unbinned_IJDLJFPM_82541	unbinned	K08738			K08738	Bacteria	Betaproteobacteria	Vitreoscilla	129.413	vff:VITFI_CDS0902
+unbinned_IJDLJFPM_91105	unbinned	K17226			K17226	Bacteria	Betaproteobacteria	Limnohabitans	239.58	lim:L103DPR2_01201
+unbinned_IJDLJFPM_91106	unbinned	K17227			K17227	Bacteria	Betaproteobacteria	Limnohabitans	118.627	lim:L103DPR2_01200
+unbinned_IJDLJFPM_92037	unbinned	K08738			K08738	Bacteria	Bacteroidetes	Runella	469.929	rsi:Runsl_2443
+unbinned_IJDLJFPM_92807	unbinned	K08738			K08738	Bacteria	Betaproteobacteria	Nitrosospira	132.109	nmu:Nmul_A0344
+unbinned_IJDLJFPM_93044	unbinned	K00368			K00368	Bacteria	Betaproteobacteria	Betaproteobacteria bacterium GR16-43	674.085	beba:BWI17_21665
+unbinned_IJDLJFPM_94925	unbinned	K17223			K17223	Bacteria	Betaproteobacteria	Limnohabitans	123.635	lim:L103DPR2_01513
+unbinned_IJDLJFPM_97124	unbinned	K17222			K17222	Bacteria	Betaproteobacteria	beta proteobacterium CB	380.948	bprc:D521_0981
+unbinned_IJDLJFPM_97211	unbinned	K08738			K08738	Bacteria	Chlorobi	Melioribacter	129.798	mro:MROS_0033
+unbinned_IJDLJFPM_98825	unbinned	K17227			K17227	Bacteria	Betaproteobacteria	Limnohabitans	198.364	lim:L103DPR2_01200
+unbinned_IJDLJFPM_98826	unbinned	K17222			K17222	Bacteria	Betaproteobacteria	Limnohabitans	494.967	lim:L103DPR2_01199
+unbinned_IJDLJFPM_98827	unbinned	K17223			K17223	Bacteria	Betaproteobacteria	Limnohabitans	359.762	lim:L103DPR2_01198
+unbinned_IJDLJFPM_99184	unbinned	K10944			K10944	Bacteria	Gammaproteobacteria - Others	Methylococcus	254.603	mca:MCA2854
+unbinned_IJDLJFPM_101837	unbinned	K04561			K04561	Bacteria	Calditrichaeota	Caldithrix	1142.1	caby:Cabys_1327
+unbinned_IJDLJFPM_106973	unbinned	K08738			K08738	Bacteria	Betaproteobacteria	Sideroxydans	115.931	slt:Slit_2693
+unbinned_IJDLJFPM_107807	unbinned	K08738			K08738	Bacteria	Bacteroidetes	Niabella	136.346	nso:NIASO_05585
+unbinned_IJDLJFPM_110705	unbinned	K08738			K08738	Bacteria	Bacteroidetes	Runella	362.844	rsi:Runsl_0295
+unbinned_IJDLJFPM_114684	unbinned	K00368			K00368	Bacteria	Gammaproteobacteria - Others	Candidatus Tenderia	425.246	tee:Tel_15465
+unbinned_IJDLJFPM_118428	unbinned	K02567			K02567	Bacteria	Betaproteobacteria	Sulfuritalea	793.882	shd:SUTH_00372
+unbinned_IJDLJFPM_119716	unbinned	K00368			K00368	Bacteria	Actinobacteria	Actinoplanes	310.457	ams:AMIS_63230
+unbinned_IJDLJFPM_120808	unbinned	K00376			K00376	Bacteria	Bacteroidetes	Niabella	334.724	nso:NIASO_09245
+unbinned_IJDLJFPM_122417	unbinned	K08738			K08738	Bacteria	Betaproteobacteria	Nitrosospira	153.68	nmu:Nmul_A0344
+unbinned_IJDLJFPM_129565	unbinned	K00376			K00376	Bacteria	Bacteroidetes	Runella	586.26	rsi:Runsl_0111
+unbinned_IJDLJFPM_131535	unbinned	K08738			K08738	Bacteria	Betaproteobacteria	Laribacter	101.293	lhk:LHK_00036
+unbinned_IJDLJFPM_133447	unbinned	K17227			K17227	Bacteria	Betaproteobacteria	Limnohabitans	176.022	lim:L103DPR2_01200
+unbinned_IJDLJFPM_133448	unbinned	K17222			K17222	Bacteria	Betaproteobacteria	Limnohabitans	253.832	lim:L103DPR2_01199
+unbinned_IJDLJFPM_136831	unbinned	K00368			K00368	Bacteria	Chloroflexi	Sphaerobacter	148.673	sti:Sthe_0153
+unbinned_IJDLJFPM_137426	unbinned	K08738			K08738	Bacteria	Betaproteobacteria	Mitsuaria	104.76	miu:ABE85_02675
+unbinned_IJDLJFPM_142012	unbinned	K17226			K17226	Bacteria	Betaproteobacteria	Rhodoferax	239.965	rac:RA876_14690
+unbinned_IJDLJFPM_142013	unbinned	K17227			K17227	Bacteria	Betaproteobacteria	Limnohabitans	186.808	lim:L103DPR2_01200
+unbinned_IJDLJFPM_142014	unbinned	K17222			K17222	Bacteria	Betaproteobacteria	Limnohabitans	457.988	lim:L103DPR2_01199
+unbinned_IJDLJFPM_142015	unbinned	K17223			K17223	Bacteria	Betaproteobacteria	Limnohabitans	320.857	lim:L103DPR2_01198
+unbinned_IJDLJFPM_145004	unbinned	K08738			K08738	Bacteria	Gammaproteobacteria - Others	Candidatus Tenderia	131.339	tee:Tel_14260
+unbinned_IJDLJFPM_148016	unbinned	K08738			K08738	Bacteria	Alphaproteobacteria	Bradyrhizobium	155.221	bja:blr1423
+unbinned_IJDLJFPM_151467	unbinned	K08738			K08738	Bacteria	Betaproteobacteria	Gallionella	133.265	gca:Galf_2084
+unbinned_IJDLJFPM_153846	unbinned	K08738			K08738	Bacteria	Betaproteobacteria	Thauera	110.538	tmz:Tmz1t_3728
+unbinned_IJDLJFPM_153887	unbinned	K17223			K17223	Bacteria	Betaproteobacteria	Polynucleobacter	196.052	pnu:Pnuc_1157
+unbinned_IJDLJFPM_153889	unbinned	K17227			K17227	Bacteria	Betaproteobacteria	Polynucleobacter	189.504	pnu:Pnuc_1155
+unbinned_IJDLJFPM_153890	unbinned	K17222			K17222	Bacteria	Betaproteobacteria	Polynucleobacter	390.963	pnu:Pnuc_1154
+unbinned_IJDLJFPM_167004	unbinned	K17226			K17226	Bacteria	Betaproteobacteria	Betaproteobacteria bacterium GR16-43	108.612	beba:BWI17_10320
+unbinned_IJDLJFPM_169464	unbinned	K08738			K08738	Bacteria	Alphaproteobacteria	Hirschia	115.161	hba:Hbal_2122
+unbinned_IJDLJFPM_170532	unbinned	K00368			K00368	Bacteria	Chloroflexi	Herpetosiphon	559.681	hau:Haur_1295
+unbinned_IJDLJFPM_176408	unbinned	K00958			K00958	Bacteria	Cyanobacteria	Cyanobium	406.371	cgc:Cyagr_1883
+unbinned_IJDLJFPM_176785	unbinned	K08738			K08738	Bacteria	Betaproteobacteria	beta proteobacterium CB	323.168	bprc:D521_0984
+unbinned_IJDLJFPM_176786	unbinned	K17226			K17226	Bacteria	Betaproteobacteria	Polynucleobacter	273.092	pnu:Pnuc_0803
+unbinned_IJDLJFPM_179453	unbinned	K04561			K04561	Bacteria	Alphaproteobacteria	Magnetospirillum	582.793	mag:amb2944
+unbinned_IJDLJFPM_186636	unbinned	K00368			K00368	Bacteria	Betaproteobacteria	Betaproteobacteria bacterium GR16-43	723.776	beba:BWI17_21665
+unbinned_IJDLJFPM_187667	unbinned	K00958			K00958	Bacteria	Planctomycetes	Planctomyces	488.804	pls:VT03_24410
+unbinned_IJDLJFPM_190692	unbinned	K04561			K04561	Bacteria	Bacteroidetes	Rufibacter	1107.05	ruf:TH63_11765
+unbinned_IJDLJFPM_192289	unbinned	K08738			K08738	Bacteria	Planctomycetes	Planctomyces	228.794	pls:VT03_17580
+unbinned_IJDLJFPM_196776	unbinned	K17223			K17223	Bacteria	Betaproteobacteria	Sulfuritalea	246.514	shd:SUTH_02729
+unbinned_IJDLJFPM_196862	unbinned	K11181			K11181	Bacteria	Deltaproteobacteria	Desulfatibacillum	573.548	dal:Dalk_4300
+unbinned_IJDLJFPM_200104	unbinned	K08738			K08738	Bacteria	Betaproteobacteria	Advenella	175.252	aka:TKWG_00580
+unbinned_IJDLJFPM_200428	unbinned	K17223			K17223	Bacteria	Betaproteobacteria	Limnohabitans	305.834	lim:L103DPR2_01198
+unbinned_IJDLJFPM_201860	unbinned	K10945			K10945	Bacteria	Gammaproteobacteria - Others	Methylovulum	598.971	mpsy:CEK71_17440
+unbinned_IJDLJFPM_203104	unbinned	K17222			K17222	Bacteria	Betaproteobacteria	Limnohabitans	433.721	lim:L103DPR2_01510
+unbinned_IJDLJFPM_208449	unbinned	K10944			K10944	Bacteria	Betaproteobacteria	Nitrosospira	537.339	nmu:Nmul_A2325
+unbinned_IJDLJFPM_210392	unbinned	K08738			K08738	Bacteria	Betaproteobacteria	Rhodoferax	107.842	rfr:Rfer_2468
+unbinned_IJDLJFPM_212255	unbinned	K04561			K04561	Bacteria	Gammaproteobacteria - Others	Methylomicrobium	166.392	mah:MEALZ_1161
+unbinned_IJDLJFPM_212707	unbinned	K08738			K08738	Bacteria	Alphaproteobacteria	Rhizobiales bacterium NRL2	133.65	rbm:TEF_18445
+unbinned_IJDLJFPM_215663	unbinned	K08738			K08738	Bacteria	Betaproteobacteria	Limnohabitans	378.637	lim:L103DPR2_01202
+unbinned_IJDLJFPM_222883	unbinned	K17223			K17223	Bacteria	Betaproteobacteria	Limnohabitans	259.225	lim:L103DPR2_01198
+unbinned_IJDLJFPM_224744	unbinned	K00376			K00376	Bacteria	Bacteroidetes	Dyadobacter	1063.91	dfe:Dfer_0693
+unbinned_IJDLJFPM_225244	unbinned	K17226			K17226	Bacteria	Betaproteobacteria	Limnohabitans	245.743	lim:L103DPR2_01201
+unbinned_IJDLJFPM_225245	unbinned	K17227			K17227	Bacteria	Betaproteobacteria	Limnohabitans	197.978	lim:L103DPR2_01200
+unbinned_IJDLJFPM_225558	unbinned	K04561			K04561	Bacteria	Bacteroidetes	Solitalea	345.51	scn:Solca_0518
+unbinned_IJDLJFPM_230933	unbinned	K00958			K00958	Bacteria	Cyanobacteria	Cyanobium	327.02	cgc:Cyagr_1883
+unbinned_IJDLJFPM_231672	unbinned	K17226			K17226	Bacteria	Betaproteobacteria	Methylotenera	197.208	mmb:Mmol_2230
+unbinned_IJDLJFPM_234931	unbinned	K08738			K08738	Bacteria	Betaproteobacteria	Herminiimonas	183.726	har:HEAR1189
+unbinned_IJDLJFPM_234943	unbinned	K08738			K08738	Bacteria	Betaproteobacteria	Paucibacter	123.635	pkt:AT984_08180
+unbinned_IJDLJFPM_235076	unbinned	K17222			K17222	Bacteria	Betaproteobacteria	Sulfuritalea	495.352	shd:SUTH_03439
+unbinned_IJDLJFPM_235216	unbinned	K17227			K17227	Bacteria	Betaproteobacteria	Polynucleobacter	191.045	pnu:Pnuc_1155
+unbinned_IJDLJFPM_237592	unbinned	K04561			K04561	Bacteria	Betaproteobacteria	Leptothrix	105.916	lch:Lcho_1468
+unbinned_IJDLJFPM_241345	unbinned				K08738	Bacteria	Bacteroidetes	Emticicia	240.736	eol:Emtol_2216
+unbinned_IJDLJFPM_243477	unbinned	K08738			K08738	Bacteria	Betaproteobacteria	Rugosibacter	154.451	rbu:PG1C_13310
+unbinned_IJDLJFPM_250084	unbinned	K08738			K08738	Bacteria	Betaproteobacteria	Leptothrix	459.914	lch:Lcho_3783
+unbinned_IJDLJFPM_250085	unbinned	K17226			K17226	Bacteria	Betaproteobacteria	Leptothrix	223.787	lch:Lcho_3782
+unbinned_IJDLJFPM_250086	unbinned	K17227			K17227	Bacteria	Betaproteobacteria	Leptothrix	181.415	lch:Lcho_3781
+unbinned_IJDLJFPM_250087	unbinned	K17222			K17222	Bacteria	Betaproteobacteria	Methylibium	430.254	mpt:Mpe_A2434
+unbinned_IJDLJFPM_252160	unbinned	K08738			K08738	Bacteria	Betaproteobacteria	Methyloversatilis	342.428	metr:BSY238_1521
+unbinned_IJDLJFPM_254394	unbinned	K08738			K08738	Bacteria	Betaproteobacteria	Acidovorax	140.584	aav:Aave_1504
+unbinned_IJDLJFPM_259468	unbinned	K17227			K17227	Bacteria	Betaproteobacteria	Polynucleobacter	129.413	pnu:Pnuc_1155
+unbinned_IJDLJFPM_259469	unbinned	K17226			K17226	Bacteria	Betaproteobacteria	beta proteobacterium CB	120.938	bprc:D521_0676
+unbinned_IJDLJFPM_259952	unbinned	K17223			K17223	Bacteria	Betaproteobacteria	beta proteobacterium CB	276.174	bprc:D521_0980
+unbinned_IJDLJFPM_262960	unbinned	K08738			K08738	Bacteria	Betaproteobacteria	Rhodoferax	107.457	rfr:Rfer_2468
+unbinned_IJDLJFPM_263105	unbinned	K10946			K10946	Bacteria	Gammaproteobacteria - Others	Methylococcus	466.463	mca:MCA0295
+unbinned_IJDLJFPM_268639	unbinned	K17223			K17223	Bacteria	Betaproteobacteria	beta proteobacterium CB	278.485	bprc:D521_0980
+unbinned_IJDLJFPM_268640	unbinned	K17222			K17222	Bacteria	Betaproteobacteria	beta proteobacterium CB	392.889	bprc:D521_0981
+unbinned_IJDLJFPM_270665	unbinned	K08738			K08738	Bacteria	Betaproteobacteria	Paucibacter	139.813	pkt:AT984_08180
+unbinned_IJDLJFPM_271151	unbinned	K02567			K02567	Bacteria	Gammaproteobacteria - Others	Thioalkalivibrio	1321.99	tni:TVNIR_1329
+unbinned_IJDLJFPM_276020	unbinned	K08738			K08738	Bacteria	Betaproteobacteria	Sulfuritalea	150.214	shd:SUTH_00441
+unbinned_IJDLJFPM_280951	unbinned	K08738			K08738	Bacteria	Gammaproteobacteria - Others	Oceanicoccus	110.923	osg:BST96_04410
+unbinned_IJDLJFPM_281099	unbinned	K08738			K08738	Bacteria	Betaproteobacteria	Paucibacter	139.428	pkt:AT984_08180
+unbinned_IJDLJFPM_282496	unbinned	K04561			K04561	Bacteria	Betaproteobacteria	Methylotenera	818.15	mmb:Mmol_1051
+unbinned_IJDLJFPM_283336	unbinned	K17223			K17223	Bacteria	Betaproteobacteria	Polynucleobacter	154.836	pnu:Pnuc_0806
+unbinned_IJDLJFPM_286356	unbinned	K10535			K10535	Bacteria	Betaproteobacteria	Nitrosospira	979.163	nmu:Nmul_A0805
+unbinned_IJDLJFPM_287946	unbinned	K00376			K00376	Bacteria	Bacteroidetes	Dyadobacter	989.564	dfe:Dfer_0693
+unbinned_IJDLJFPM_290384	unbinned	K00368			K00368	Bacteria	Betaproteobacteria	Polaromonas	320.472	pna:Pnap_1326
+unbinned_IJDLJFPM_290857	unbinned	K17226			K17226	Bacteria	Betaproteobacteria	beta proteobacterium CB	273.092	bprc:D521_0983
+unbinned_IJDLJFPM_290858	unbinned	K08738			K08738	Bacteria	Betaproteobacteria	beta proteobacterium CB	502.671	bprc:D521_0984
+unbinned_IJDLJFPM_293062	unbinned				K17227	Bacteria	Alphaproteobacteria	Pseudorhodoplanes	114.775	psin:CAK95_14980
+unbinned_IJDLJFPM_293064	unbinned	K17223			K17223	Bacteria	Betaproteobacteria	Polynucleobacter	144.821	pnu:Pnuc_1157
+unbinned_IJDLJFPM_300837	unbinned	K08738			K08738	Bacteria	Betaproteobacteria	Rhodoferax	150.214	rfr:Rfer_4085
+unbinned_IJDLJFPM_303871	unbinned	K17222			K17222	Bacteria	Betaproteobacteria	beta proteobacterium CB	439.499	bprc:D521_0678
+unbinned_IJDLJFPM_303872	unbinned				K17227	Bacteria	Betaproteobacteria	beta proteobacterium CB	185.652	bprc:D521_0677
+unbinned_IJDLJFPM_303873	unbinned	K17226			K17226	Bacteria	Betaproteobacteria	beta proteobacterium CB	229.18	bprc:D521_0676
+unbinned_IJDLJFPM_303874	unbinned	K17223			K17223	Bacteria	Betaproteobacteria	beta proteobacterium CB	202.216	bprc:D521_0675
+unbinned_IJDLJFPM_305518	unbinned	K00368			K00368	Bacteria	Gammaproteobacteria - Others	Zobellella	681.019	zdf:AN401_05960
+unbinned_IJDLJFPM_310142	unbinned	K08738			K08738	Bacteria	Betaproteobacteria	Methylotenera	128.257	mmb:Mmol_0398
+unbinned_IJDLJFPM_316566	unbinned	K17226			K17226	Bacteria	Betaproteobacteria	Polynucleobacter	285.804	pnu:Pnuc_0803
+unbinned_IJDLJFPM_316567	unbinned	K17227			K17227	Bacteria	Betaproteobacteria	beta proteobacterium CB	197.593	bprc:D521_0982
+unbinned_IJDLJFPM_316568	unbinned	K17222			K17222	Bacteria	Betaproteobacteria	beta proteobacterium CB	503.827	bprc:D521_0981
+unbinned_IJDLJFPM_316569	unbinned	K17223			K17223	Bacteria	Betaproteobacteria	beta proteobacterium CB	374.4	bprc:D521_0980
+unbinned_IJDLJFPM_319501	unbinned	K11181			K11181	Bacteria	Betaproteobacteria	Burkholderiales bacterium GJ-E10	649.432	bbag:E1O_03060
+unbinned_IJDLJFPM_319502	unbinned	K11180			K11180	Bacteria	Betaproteobacteria	Sulfuricella	672.544	sdr:SCD_n02074
+unbinned_IJDLJFPM_320491	unbinned				K08738	Bacteria	Betaproteobacteria	Sulfuritalea	171.4	shd:SUTH_00441
+unbinned_IJDLJFPM_320736	unbinned	K17222			K17222	Bacteria	Betaproteobacteria	Limnohabitans	341.273	lim:L103DPR2_01510
+unbinned_IJDLJFPM_326239	unbinned	K04561			K04561	Bacteria	Betaproteobacteria	Gallionella	972.23	gca:Galf_2472
+unbinned_IJDLJFPM_326855	unbinned	K17222			K17222	Bacteria	Betaproteobacteria	Limnohabitans	335.88	lim:L103DPR2_01510
+unbinned_IJDLJFPM_326856	unbinned				K17227	Bacteria	Betaproteobacteria	Limnohabitans	175.252	lim:L103DPR2_01511
+unbinned_IJDLJFPM_326857	unbinned				K17226	Bacteria	Betaproteobacteria	Limnohabitans	175.637	lim:L103DPR2_01512
+unbinned_IJDLJFPM_326858	unbinned	K17223			K17223	Bacteria	Betaproteobacteria	Limnohabitans	137.502	lim:L103DPR2_01513
+unbinned_IJDLJFPM_327843	unbinned	K10946			K10946	Bacteria	Gammaproteobacteria - Others	Methylovulum	494.967	mpsy:CEK71_17430
+unbinned_IJDLJFPM_333398	unbinned	K00958			K00958	Bacteria	Deltaproteobacteria	Desulfatibacillum	727.243	dal:Dalk_2445
+unbinned_IJDLJFPM_338882	unbinned	K17226			K17226	Bacteria	Betaproteobacteria	Sulfuritalea	263.462	shd:SUTH_02726
+unbinned_IJDLJFPM_338883	unbinned	K17227			K17227	Bacteria	Betaproteobacteria	Sulfuritalea	185.267	shd:SUTH_02727
+unbinned_IJDLJFPM_338884	unbinned	K17222			K17222	Bacteria	Betaproteobacteria	Sulfuritalea	493.426	shd:SUTH_02728
+unbinned_IJDLJFPM_339057	unbinned	K17227			K17227	Bacteria	Betaproteobacteria	Methylotenera	175.252	mmb:Mmol_2229
+unbinned_IJDLJFPM_339058	unbinned	K17226			K17226	Bacteria	Betaproteobacteria	Methylotenera	192.586	mmb:Mmol_2230
+unbinned_IJDLJFPM_340033	unbinned	K02567			K02567	Bacteria	Betaproteobacteria	Sulfuritalea	1059.67	shd:SUTH_00372
+unbinned_IJDLJFPM_342500	unbinned	K08738			K08738	Bacteria	Planctomycetes	Planctomyces	733.406	pls:VT03_17580
+unbinned_IJDLJFPM_347083	unbinned	K17226			K17226	Bacteria	Betaproteobacteria	Limnohabitans	190.66	lim:L103DPR2_01201
+unbinned_IJDLJFPM_347084	unbinned	K17227			K17227	Bacteria	Betaproteobacteria	Ramlibacter	172.555	rta:Rta_13810
+unbinned_IJDLJFPM_347295	unbinned	K08738			K08738	Bacteria	Betaproteobacteria	Pseudogulbenkiania	112.079	pse:NH8B_4001
+unbinned_IJDLJFPM_347296	unbinned	K08738			K08738	Bacteria	Betaproteobacteria	Sideroxydans	147.902	slt:Slit_2693
+unbinned_IJDLJFPM_348422	unbinned	K08738			K08738	Bacteria	Bacteroidetes	Niabella	137.117	nso:NIASO_05585
+unbinned_IJDLJFPM_350440	unbinned	K10945			K10945	Bacteria	Gammaproteobacteria - Others	Methylovulum	753.821	mpsy:CEK71_17440
+unbinned_IJDLJFPM_355143	unbinned	K03385			K03385	Bacteria	Deinococcus-Thermus	Meiothermus	427.943	msv:Mesil_1980
+unbinned_IJDLJFPM_356123	unbinned	K04561			K04561	Bacteria	Cyanobacteria	Geitlerinema	742.651	gei:GEI7407_0530
+unbinned_IJDLJFPM_356685	unbinned	K00958			K00958	Bacteria	Cyanobacteria	Geitlerinema	688.723	gei:GEI7407_1258
+unbinned_IJDLJFPM_359048	unbinned	K00958			K00958	Bacteria	Cyanobacteria	Cyanobium	654.055	cgc:Cyagr_1883
+unbinned_IJDLJFPM_361306	unbinned				K10535	Bacteria	Betaproteobacteria	Nitrosomonas	151.754	neu:NE2044
+unbinned_IJDLJFPM_367489	unbinned	K08738			K08738	Bacteria	Planctomycetes	Planctomyces	564.688	pls:VT03_17580
+unbinned_IJDLJFPM_373612	unbinned	K00958			K00958	Bacteria	Actinobacteria	Isoptericola	233.802	iva:Isova_2381
+unbinned_IJDLJFPM_374859	unbinned	K08738			K08738	Bacteria	Betaproteobacteria	Sulfuritalea	184.111	shd:SUTH_00280
+unbinned_IJDLJFPM_376749	unbinned	K17222			K17222	Bacteria	Betaproteobacteria	beta proteobacterium CB	308.531	bprc:D521_0678
+unbinned_IJDLJFPM_376750	unbinned	K17227			K17227	Bacteria	Betaproteobacteria	beta proteobacterium CB	125.946	bprc:D521_0677
+unbinned_IJDLJFPM_386460	unbinned	K00376			K00376	Bacteria	Chlorobi	Melioribacter	949.118	mro:MROS_1104
+unbinned_IJDLJFPM_388282	unbinned	K17222			K17222	Bacteria	Betaproteobacteria	Betaproteobacteria bacterium GR16-43	144.05	beba:BWI17_10330
+unbinned_IJDLJFPM_389535	unbinned	K08738			K08738	Bacteria	Betaproteobacteria	Vitreoscilla	134.42	vff:VITFI_CDS0600
+unbinned_IJDLJFPM_393761	unbinned	K04561			K04561	Bacteria	Bacteroidetes	Rufibacter	999.964	ruf:TH63_11765
+unbinned_IJDLJFPM_395928	unbinned	K08738			K08738	Bacteria	Betaproteobacteria	Polynucleobacter	348.977	pnu:Pnuc_0802
+unbinned_IJDLJFPM_395929	unbinned	K17226			K17226	Bacteria	Betaproteobacteria	Polynucleobacter	254.603	pnu:Pnuc_0803
+unbinned_IJDLJFPM_395930	unbinned	K17227			K17227	Bacteria	Betaproteobacteria	beta proteobacterium CB	186.422	bprc:D521_0982
+unbinned_IJDLJFPM_396968	unbinned	K08738			K08738	Bacteria	Bacteroidetes	Filimonas	109.383	fln:FLA_5957
+unbinned_IJDLJFPM_397475	unbinned	K00958			K00958	Bacteria	Gammaproteobacteria - Others	Thiodictyon	641.728	tsy:THSYN_16390
+unbinned_IJDLJFPM_402569	unbinned	K03385			K03385	Bacteria	Chlorobi	Ignavibacterium	702.59	ial:IALB_0861
+unbinned_IJDLJFPM_403155	unbinned	K17223			K17223	Bacteria	Betaproteobacteria	Sulfuritalea	336.65	shd:SUTH_02729
+unbinned_IJDLJFPM_403156	unbinned	K17222			K17222	Bacteria	Betaproteobacteria	Sulfuritalea	436.032	shd:SUTH_02728
+unbinned_IJDLJFPM_403157	unbinned	K17227			K17227	Bacteria	Betaproteobacteria	Sulfuritalea	187.963	shd:SUTH_02727
+unbinned_IJDLJFPM_403158	unbinned	K17226			K17226	Bacteria	Betaproteobacteria	Sulfuritalea	243.432	shd:SUTH_02726
+unbinned_IJDLJFPM_403251	unbinned	K00958			K00958	Bacteria	Bacteroidetes	Rhodothermus	545.814	rmr:Rmar_1856
+unbinned_IJDLJFPM_406412	unbinned	K17227			K17227	Bacteria	Betaproteobacteria	Betaproteobacteria bacterium GR16-43	176.022	beba:BWI17_16395
+unbinned_IJDLJFPM_406413	unbinned	K17226			K17226	Bacteria	Betaproteobacteria	Betaproteobacteria bacterium GR16-43	203.371	beba:BWI17_16400
+unbinned_IJDLJFPM_406414	unbinned	K08738			K08738	Bacteria	Betaproteobacteria	Herminiimonas	325.094	har:HEAR1189
+unbinned_IJDLJFPM_407551	unbinned	K08738			K08738	Bacteria	Betaproteobacteria	Pseudogulbenkiania	112.079	pse:NH8B_4001
+unbinned_IJDLJFPM_408624	unbinned	K00368			K00368	Bacteria	Actinobacteria	Actinoplanes	334.339	ams:AMIS_63230
+unbinned_IJDLJFPM_410087	unbinned	K00368			K00368	Bacteria	Alphaproteobacteria	Rhodopseudomonas	268.47	rpa:RPA3306
+unbinned_IJDLJFPM_414602	unbinned	K04561			K04561	Bacteria	Chlamydiae	Parachlamydia	883.634	puv:PUV_24980
+unbinned_IJDLJFPM_417165	unbinned	K08738			K08738	Bacteria	Betaproteobacteria	Limnohabitans	462.225	lim:L103DPR2_01202
+unbinned_IJDLJFPM_418043	unbinned	K17226			K17226	Bacteria	Betaproteobacteria	Methyloversatilis	291.582	metr:BSY238_624
+unbinned_IJDLJFPM_418087	unbinned				K08738	Bacteria	Gammaproteobacteria - Others	Granulosicoccus	121.709	gai:IMCC3135_15390
+unbinned_IJDLJFPM_421482	unbinned	K08738			K08738	Bacteria	Betaproteobacteria	Gallionella	140.198	gca:Galf_2084
+unbinned_IJDLJFPM_424668	unbinned	K00376			K00376	Bacteria	Bacteroidetes	Niastella	294.664	nko:Niako_5286
+unbinned_IJDLJFPM_428838	unbinned	K17223			K17223	Bacteria	Betaproteobacteria	beta proteobacterium CB	153.68	bprc:D521_0675
+unbinned_IJDLJFPM_437709	unbinned	K00368			K00368	Bacteria	Verrucomicrobia	Lacunisphaera	757.288	obg:Verru16b_00368
+unbinned_IJDLJFPM_445181	unbinned	K08738			K08738	Bacteria	Betaproteobacteria	beta proteobacterium CB	486.493	bprc:D521_0984
+unbinned_IJDLJFPM_449115	unbinned	K11181			K11181	Bacteria	Betaproteobacteria	Sideroxydans	720.694	slt:Slit_1685
+unbinned_IJDLJFPM_449117	unbinned	K11180			K11180	Bacteria	Betaproteobacteria	Sideroxydans	806.979	slt:Slit_1686
+unbinned_IJDLJFPM_449897	unbinned	K04561			K04561	Bacteria	Gammaproteobacteria - Others	Methylomicrobium	906.36	mah:MEALZ_1161
