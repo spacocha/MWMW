@@ -1,0 +1,50 @@
+/scratch/users/karoraw1@jhu.edu/miniconda2/envs/metawrap-env/opt/quast-4.1/quast.py -t 24 -o /home-3/karoraw1@jhu.edu/scratch/metaWRAP_Out/mystic_n_posctrl_assem/QUAST_out -m 500 /home-3/karoraw1@jhu.edu/scratch/metaWRAP_Out/mystic_n_posctrl_assem/final_assembly.fasta
+
+Version: 4.1, build 26.05.2016 14:25
+
+System information:
+  OS: Linux-2.6.32-573.22.1.el6.x86_64-x86_64-with-centos-6.7-Final (linux_64)
+  Python version: 2.7.14
+  CPUs number: 48
+
+Started: 2018-02-04 07:20:33
+
+Logging to /home-3/karoraw1@jhu.edu/scratch/metaWRAP_Out/mystic_n_posctrl_assem/QUAST_out/quast.log
+
+Main parameters: 
+  Threads: 24, minimum contig length: 500, ambiguity: one, threshold for extensive misassembly size: 1000
+
+WARNING: Can't draw plots: please install python-matplotlib.
+
+Contigs:
+  /home-3/karoraw1@jhu.edu/scratch/metaWRAP_Out/mystic_n_posctrl_assem/final_assembly.fasta ==> final_assembly
+
+2018-02-04 07:21:19
+Running Basic statistics processor...
+  Contig files: 
+    final_assembly
+  Calculating N50 and L50...
+    final_assembly, N50 = 3183, L50 = 43069, Total length = 674983205, GC % = 50.82, # N's per 100 kbp =  64.72
+Done.
+
+NOTICE: Genes are not predicted by default. Use --gene-finding option to enable it.
+
+2018-02-04 07:21:58
+Creating large visual summaries...
+This may take a while: press Ctrl-C to skip this step..
+  1 of 1: Creating Icarus viewers...
+Done
+
+2018-02-04 07:22:09
+RESULTS:
+  Text versions of total report are saved to /home-3/karoraw1@jhu.edu/scratch/metaWRAP_Out/mystic_n_posctrl_assem/QUAST_out/report.txt, report.tsv, and report.tex
+  Text versions of transposed total report are saved to /home-3/karoraw1@jhu.edu/scratch/metaWRAP_Out/mystic_n_posctrl_assem/QUAST_out/transposed_report.txt, transposed_report.tsv, and transposed_report.tex
+  HTML version (interactive tables and plots) saved to /home-3/karoraw1@jhu.edu/scratch/metaWRAP_Out/mystic_n_posctrl_assem/QUAST_out/report.html
+  Icarus (contig browser) is saved to /home-3/karoraw1@jhu.edu/scratch/metaWRAP_Out/mystic_n_posctrl_assem/QUAST_out/icarus.html
+  Log saved to /home-3/karoraw1@jhu.edu/scratch/metaWRAP_Out/mystic_n_posctrl_assem/QUAST_out/quast.log
+
+Finished: 2018-02-04 07:22:09
+Elapsed time: 0:01:36.083008
+NOTICEs: 1; WARNINGs: 1; non-fatal ERRORs: 0
+
+Thank you for using QUAST!
