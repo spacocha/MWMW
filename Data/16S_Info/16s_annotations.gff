@@ -1,0 +1,44 @@
+bin_18.gff:NODE_19140_length_5424_cov_9.215496	barrnap:0.8	rRNA	1	1485	0	-	.	ID=CCFMLJIA_03240;locus_tag=CCFMLJIA_03240;product=16S ribosomal RNA
+bin_19.gff:NODE_90_length_4850_cov_9.441232	barrnap:0.8	rRNA	1	807	3.8e-197	-	.	ID=GGINHOFJ_01299;locus_tag=GGINHOFJ_01299;note=aligned only 50 percent of the 16S ribosomal RNA;product=16S ribosomal RNA (partial)
+bin_31.gff:NODE_8208_length_9220_cov_20.365303	barrnap:0.8	rRNA	1	885	5.5e-194	-	.	ID=GEBKPEPI_03035;locus_tag=GEBKPEPI_03035;note=aligned only 55 percent of the 16S ribosomal RNA;product=16S ribosomal RNA (partial)
+bin_32.gff:NODE_836_length_33619_cov_12.844208	barrnap:0.8	rRNA	1	812	2.1e-188	-	.	ID=HMLACPEJ_00762;locus_tag=HMLACPEJ_00762;note=aligned only 51 percent of the 16S ribosomal RNA;product=16S ribosomal RNA (partial)
+bin_55.gff:NODE_40_length_18801_cov_4.406323	barrnap:0.8	rRNA	5021	6555	0	+	.	ID=JHAHOKBP_00807;locus_tag=JHAHOKBP_00807;product=16S ribosomal RNA
+bin_64.gff:NODE_18_length_43123_cov_13.649297	barrnap:0.8	rRNA	41737	43054	0	-	.	ID=DBGALNLC_00932;locus_tag=DBGALNLC_00932;product=16S ribosomal RNA
+bin_64.gff:NODE_448_length_1441_cov_8.331378	barrnap:0.8	rRNA	280	1441	0	-	.	ID=DBGALNLC_03864;locus_tag=DBGALNLC_03864;note=aligned only 73 percent of the 16S ribosomal RNA;product=16S ribosomal RNA (partial)
+bin_64.gff:NODE_485_length_1140_cov_14.422389	barrnap:0.8	rRNA	142	1139	6.1e-272	-	.	ID=DBGALNLC_03905;locus_tag=DBGALNLC_03905;note=aligned only 62 percent of the 16S ribosomal RNA;product=16S ribosomal RNA (partial)
+bin_64.gff:NODE_502_length_966_cov_8.951631	barrnap:0.8	rRNA	75	966	9.7e-250	-	.	ID=DBGALNLC_03916;locus_tag=DBGALNLC_03916;note=aligned only 56 percent of the 16S ribosomal RNA;product=16S ribosomal RNA (partial)
+bin_9.gff:NODE_27006_length_4351_cov_16.126862	barrnap:0.8	rRNA	1	924	7.6e-225	-	.	ID=MCICBKJM_02750;locus_tag=MCICBKJM_02750;note=aligned only 58 percent of the 16S ribosomal RNA;product=16S ribosomal RNA (partial)
+unbinned.gff:NODE_107697_length_1732_cov_5697.795468	barrnap:0.8	rRNA	46	1583	0	-	.	ID=IJDLJFPM_15704;locus_tag=IJDLJFPM_15704;product=16S ribosomal RNA
+unbinned.gff:NODE_121873_length_1599_cov_4.559585	barrnap:0.8	rRNA	415	1584	7.2e-234	-	.	ID=IJDLJFPM_43257;locus_tag=IJDLJFPM_43257;note=aligned only 73 percent of the 16S ribosomal RNA;product=16S ribosomal RNA (partial)
+unbinned.gff:NODE_121937_length_1598_cov_57.421257	barrnap:0.8	rRNA	487	1598	1.7e-258	+	.	ID=IJDLJFPM_43386;locus_tag=IJDLJFPM_43386;note=aligned only 70 percent of the 16S ribosomal RNA;product=16S ribosomal RNA (partial)
+unbinned.gff:NODE_140113_length_1461_cov_3.608108	barrnap:0.8	rRNA	202	1302	5.4e-95	-	.	ID=IJDLJFPM_78170;locus_tag=IJDLJFPM_78170;note=aligned only 69 percent of the 16S ribosomal RNA;product=16S ribosomal RNA (partial)
+unbinned.gff:NODE_140642_length_1457_cov_6.892297	barrnap:0.8	rRNA	1	1457	7.8e-295	+	.	ID=IJDLJFPM_79210;locus_tag=IJDLJFPM_79210;product=16S ribosomal RNA
+unbinned.gff:NODE_141995_length_1448_cov_9.493898	barrnap:0.8	rRNA	366	1448	1.3e-244	+	.	ID=IJDLJFPM_81837;locus_tag=IJDLJFPM_81837;note=aligned only 68 percent of the 16S ribosomal RNA;product=16S ribosomal RNA (partial)
+unbinned.gff:NODE_148729_length_1405_cov_16.174815	barrnap:0.8	rRNA	2	1404	0	-	.	ID=IJDLJFPM_94027;locus_tag=IJDLJFPM_94027;product=16S ribosomal RNA
+unbinned.gff:NODE_155043_length_1368_cov_10.895659	barrnap:0.8	rRNA	1	1059	6.8e-271	-	.	ID=IJDLJFPM_105509;locus_tag=IJDLJFPM_105509;note=aligned only 66 percent of the 16S ribosomal RNA;product=16S ribosomal RNA (partial)
+unbinned.gff:NODE_160715_length_1337_cov_8.323713	barrnap:0.8	rRNA	1	1071	7.2e-238	-	.	ID=IJDLJFPM_115542;locus_tag=IJDLJFPM_115542;note=aligned only 67 percent of the 16S ribosomal RNA;product=16S ribosomal RNA (partial)
+unbinned.gff:NODE_173983_length_1272_cov_6.466721	barrnap:0.8	rRNA	1	1028	1.9e-238	+	.	ID=IJDLJFPM_138681;locus_tag=IJDLJFPM_138681;note=aligned only 64 percent of the 16S ribosomal RNA;product=16S ribosomal RNA (partial)
+unbinned.gff:NODE_174554_length_1270_cov_2.355556	barrnap:0.8	rRNA	4	1113	2e-188	-	.	ID=IJDLJFPM_139687;locus_tag=IJDLJFPM_139687;note=aligned only 70 percent of the 16S ribosomal RNA;product=16S ribosomal RNA (partial)
+unbinned.gff:NODE_184427_length_1226_cov_169.217763	barrnap:0.8	rRNA	1	931	3.1e-220	-	.	ID=IJDLJFPM_156152;locus_tag=IJDLJFPM_156152;note=aligned only 58 percent of the 16S ribosomal RNA;product=16S ribosomal RNA (partial)
+unbinned.gff:NODE_192167_length_1195_cov_852.033333	barrnap:0.8	rRNA	1	1046	1.7e-298	+	.	ID=IJDLJFPM_168783;locus_tag=IJDLJFPM_168783;note=aligned only 65 percent of the 16S ribosomal RNA;product=16S ribosomal RNA (partial)
+unbinned.gff:NODE_196002_length_1181_cov_3.202487	barrnap:0.8	rRNA	202	1130	5.5e-124	+	.	ID=IJDLJFPM_174824;locus_tag=IJDLJFPM_174824;note=aligned only 58 percent of the 16S ribosomal RNA;product=16S ribosomal RNA (partial)
+unbinned.gff:NODE_2029_length_20882_cov_9.430547	barrnap:0.8	rRNA	15730	17220	0	-	.	ID=IJDLJFPM_186013;locus_tag=IJDLJFPM_186013;product=16S ribosomal RNA
+unbinned.gff:NODE_206089_length_1144_cov_54.880624	barrnap:0.8	rRNA	1	877	1.7e-218	-	.	ID=IJDLJFPM_190919;locus_tag=IJDLJFPM_190919;note=aligned only 55 percent of the 16S ribosomal RNA;product=16S ribosomal RNA (partial)
+unbinned.gff:NODE_219459_length_1100_cov_15.005742	barrnap:0.8	rRNA	4	1099	3.2e-250	+	.	ID=IJDLJFPM_211806;locus_tag=IJDLJFPM_211806;note=aligned only 69 percent of the 16S ribosomal RNA;product=16S ribosomal RNA (partial)
+unbinned.gff:NODE_221999_length_1092_cov_8.029894	barrnap:0.8	rRNA	1	910	1.6e-219	-	.	ID=IJDLJFPM_215643;locus_tag=IJDLJFPM_215643;note=aligned only 57 percent of the 16S ribosomal RNA;product=16S ribosomal RNA (partial)
+unbinned.gff:NODE_230590_length_1067_cov_3.386364	barrnap:0.8	rRNA	31	1066	2.5e-186	-	.	ID=IJDLJFPM_228718;locus_tag=IJDLJFPM_228718;note=aligned only 65 percent of the 16S ribosomal RNA;product=16S ribosomal RNA (partial)
+unbinned.gff:NODE_231628_length_1064_cov_3.338949	barrnap:0.8	rRNA	7	1027	5.6e-74	-	.	ID=IJDLJFPM_230202;locus_tag=IJDLJFPM_230202;note=aligned only 64 percent of the 16S ribosomal RNA;product=16S ribosomal RNA (partial)
+unbinned.gff:NODE_251502_length_1012_cov_34.120167	barrnap:0.8	rRNA	109	1012	6.5e-224	+	.	ID=IJDLJFPM_259515;locus_tag=IJDLJFPM_259515;note=aligned only 57 percent of the 16S ribosomal RNA;product=16S ribosomal RNA (partial)
+unbinned.gff:NODE_254438_length_1005_cov_8.877895	barrnap:0.8	rRNA	1	1005	4.5e-250	+	.	ID=IJDLJFPM_263606;locus_tag=IJDLJFPM_263606;note=aligned only 63 percent of the 16S ribosomal RNA;product=16S ribosomal RNA (partial)
+unbinned.gff:NODE_27610_length_4290_cov_44.804959	barrnap:0.8	rRNA	2891	4289	0	+	.	ID=IJDLJFPM_272659;locus_tag=IJDLJFPM_272659;product=16S ribosomal RNA
+unbinned.gff:NODE_30639_length_4003_cov_18.748734	barrnap:0.8	rRNA	3172	4000	4.7e-71	-	.	ID=IJDLJFPM_282066;locus_tag=IJDLJFPM_282066;note=aligned only 52 percent of the 16S ribosomal RNA;product=16S ribosomal RNA (partial)
+unbinned.gff:NODE_3146_length_16262_cov_59.272845	barrnap:0.8	rRNA	8328	9682	5.6e-282	+	.	ID=IJDLJFPM_284344;locus_tag=IJDLJFPM_284344;product=16S ribosomal RNA
+unbinned.gff:NODE_39667_length_3368_cov_23.239360	barrnap:0.8	rRNA	2353	3368	1.3e-268	-	.	ID=IJDLJFPM_307197;locus_tag=IJDLJFPM_307197;note=aligned only 64 percent of the 16S ribosomal RNA;product=16S ribosomal RNA (partial)
+unbinned.gff:NODE_55601_length_2686_cov_8.271760	barrnap:0.8	rRNA	255	1756	0	+	.	ID=IJDLJFPM_349216;locus_tag=IJDLJFPM_349216;product=16S ribosomal RNA
+unbinned.gff:NODE_7_length_230422_cov_20.803279	barrnap:0.8	rRNA	99251	100645	4.7e-183	+	.	ID=IJDLJFPM_406981;locus_tag=IJDLJFPM_406981;product=16S ribosomal RNA
+unbinned.gff:NODE_82782_length_2059_cov_14.479541	barrnap:0.8	rRNA	363	1815	0	+	.	ID=IJDLJFPM_413274;locus_tag=IJDLJFPM_413274;product=16S ribosomal RNA
+unbinned.gff:NODE_84789_length_2028_cov_3.705525	barrnap:0.8	rRNA	2	1423	1.6e-277	+	.	ID=IJDLJFPM_417624;locus_tag=IJDLJFPM_417624;product=16S ribosomal RNA
+unbinned.gff:NODE_85005_length_2024_cov_6.058405	barrnap:0.8	rRNA	265	1669	4.3e-179	+	.	ID=IJDLJFPM_418040;locus_tag=IJDLJFPM_418040;product=16S ribosomal RNA
+unbinned.gff:NODE_93589_length_1899_cov_7.909978	barrnap:0.8	rRNA	189	1275	4.4e-102	+	.	ID=IJDLJFPM_436731;locus_tag=IJDLJFPM_436731;note=aligned only 68 percent of the 16S ribosomal RNA;product=16S ribosomal RNA (partial)
+unbinned.gff:NODE_93932_length_1895_cov_3.625000	barrnap:0.8	rRNA	1	1550	1.6e-214	-	.	ID=IJDLJFPM_437447;locus_tag=IJDLJFPM_437447;product=16S ribosomal RNA
+unbinned.gff:NODE_95268_length_1877_cov_17.071350	barrnap:0.8	rRNA	402	1877	0	+	.	ID=IJDLJFPM_440265;locus_tag=IJDLJFPM_440265;product=16S ribosomal RNA

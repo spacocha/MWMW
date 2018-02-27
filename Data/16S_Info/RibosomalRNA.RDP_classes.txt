@@ -1,0 +1,45 @@
+bin_18_CCFMLJIA_03240;+;Bacteria;100%;"Planctomycetes";44%;Phycisphaerae;44%;Tepidisphaerales;44%;Tepidisphaeraceae;44%;Tepidisphaera;44%
+bin_19_GGINHOFJ_01299;+;Bacteria;100%;"Proteobacteria";100%;Betaproteobacteria;100%;Nitrosomonadales;100%;Nitrosomonadaceae;100%;Nitrosospira;100%
+bin_31_GEBKPEPI_03035;+;Bacteria;100%;"Planctomycetes";99%;Phycisphaerae;99%;Phycisphaerales;81%;Phycisphaeraceae;81%;Phycisphaera;81%
+bin_32_HMLACPEJ_00762;+;Bacteria;100%;"Bacteroidetes";100%;Flavobacteriia;100%;"Flavobacteriales";100%;Cryomorphaceae;100%;Fluviicola;99%
+bin_55_JHAHOKBP_00807;+;Bacteria;100%;"Planctomycetes";100%;Planctomycetia;100%;Planctomycetales;100%;Planctomycetaceae;100%;Schlesneria;100%
+bin_59_FMHNMKLJ_02508;+;Bacteria;100%;"Bacteroidetes";100%;"Bacteroidia";72%;"Bacteroidales";72%;Prolixibacteraceae;52%;Mariniphaga;11%
+bin_64_DBGALNLC_00932;+;Bacteria;100%;"Lentisphaerae";100%;"Lentisphaeria";87%;Victivallales;87%;"Victivallaceae";87%;Victivallis;87%
+bin_64_DBGALNLC_03864;+;Bacteria;100%;"Actinobacteria";100%;Actinobacteria;100%;Acidimicrobiales;100%;Acidimicrobiaceae;92%;Ilumatobacter;91%
+bin_64_DBGALNLC_03905;+;Bacteria;100%;"Actinobacteria";100%;Actinobacteria;100%;Actinomycetales;100%;Ruaniaceae;32%;Haloactinobacterium;32%
+bin_64_DBGALNLC_03916;+;Bacteria;100%;"Acidobacteria";100%;Holophagae;100%;Holophagales;100%;Holophagaceae;100%;Geothrix;100%
+bin_9_MCICBKJM_02750;+;Bacteria;100%;"Proteobacteria";100%;Gammaproteobacteria;99%;Xanthomonadales;93%;Sinobacteraceae;93%;Povalibacter;81%
+unbinned_IJDLJFPM_15704;+;Bacteria;100%;"Proteobacteria";100%;Gammaproteobacteria;100%;"Enterobacteriales";100%;Enterobacteriaceae;100%;Escherichia/Shigella;100%
+unbinned_IJDLJFPM_43257;+;Bacteria;98%;"Proteobacteria";74%;Alphaproteobacteria;48%;Rhodospirillales;21%;Rhodospirillaceae;21%;Lacibacterium;11%
+unbinned_IJDLJFPM_43386;+;Bacteria;100%;"Verrucomicrobia";100%;Subdivision3;100%;Subdivision3_genera_incertae_sedis;100%;Subdivision3_genera_incertae_sedis;100%;Subdivision3_genera_incertae_sedis;100%
+unbinned_IJDLJFPM_78170;+;Bacteria;82%;"Proteobacteria";28%;Gammaproteobacteria;19%;Gammaproteobacteria_incertae_sedis;19%;Candidatus Carsonella;19%;Candidatus Carsonella;19%
+unbinned_IJDLJFPM_79210;+;Bacteria;98%;Microgenomates;81%;Microgenomates_genera_incertae_sedis;81%;Microgenomates_genera_incertae_sedis;81%;Microgenomates_genera_incertae_sedis;81%;Microgenomates_genera_incertae_sedis;81%
+unbinned_IJDLJFPM_81837;+;Bacteria;100%;"Planctomycetes";100%;Planctomycetia;100%;Planctomycetales;100%;Planctomycetaceae;100%;Gemmata;76%
+unbinned_IJDLJFPM_94027;+;Bacteria;100%;"Verrucomicrobia";100%;Subdivision5;100%;Subdivision5_genera_incertae_sedis;100%;Subdivision5_genera_incertae_sedis;100%;Subdivision5_genera_incertae_sedis;100%
+unbinned_IJDLJFPM_105509;+;Bacteria;100%;"Armatimonadetes";100%;Armatimonadia;100%;Armatimonadales;100%;Armatimonadaceae;100%;Armatimonas/Armatimonadetes_gp1;100%
+unbinned_IJDLJFPM_115542;+;Bacteria;100%;"Planctomycetes";100%;Planctomycetia;100%;Planctomycetales;100%;Planctomycetaceae;100%;Pirellula;92%
+unbinned_IJDLJFPM_138681;+;Bacteria;100%;"Chloroflexi";7%;Dehalococcoidia;6%;Dehalococcoidales;6%;Dehalococcoidaceae;6%;Dehalococcoides;6%
+unbinned_IJDLJFPM_139687;+;Bacteria;100%;"Proteobacteria";79%;Gammaproteobacteria;60%;Gammaproteobacteria_incertae_sedis;56%;Candidatus Carsonella;56%;Candidatus Carsonella;56%
+unbinned_IJDLJFPM_156152;+;Bacteria;100%;"Verrucomicrobia";100%;Opitutae;99%;Opitutales;70%;Opitutaceae;70%;Opitutus;65%
+unbinned_IJDLJFPM_168783;+;Bacteria;100%;"Proteobacteria";100%;Gammaproteobacteria;100%;Methylococcales;100%;Methylococcaceae;100%;Methylobacter;100%
+unbinned_IJDLJFPM_174824;+;Archaea;100%;"Euryarchaeota";100%;"Methanomicrobia";100%;Methanosarcinales;100%;Methanotrichaceae;100%;Methanothrix;100%
+unbinned_IJDLJFPM_186013;+;Bacteria;100%;Parcubacteria;89%;Parcubacteria_genera_incertae_sedis;89%;Parcubacteria_genera_incertae_sedis;89%;Parcubacteria_genera_incertae_sedis;89%;Parcubacteria_genera_incertae_sedis;89%
+unbinned_IJDLJFPM_190919;+;Bacteria;100%;Cyanobacteria/Chloroplast;100%;Cyanobacteria;100%;Family XI;100%;Family XI;100%;GpXI;100%
+unbinned_IJDLJFPM_211806;+;Bacteria;100%;Parcubacteria;80%;Parcubacteria_genera_incertae_sedis;80%;Parcubacteria_genera_incertae_sedis;80%;Parcubacteria_genera_incertae_sedis;80%;Parcubacteria_genera_incertae_sedis;80%
+unbinned_IJDLJFPM_215643;+;Bacteria;100%;"Lentisphaerae";99%;Oligosphaeria;98%;Oligosphaerales;98%;Oligosphaeraceae;98%;Oligosphaera;98%
+unbinned_IJDLJFPM_228718;+;Bacteria;97%;"Proteobacteria";58%;Gammaproteobacteria;52%;Gammaproteobacteria_incertae_sedis;49%;Candidatus Carsonella;49%;Candidatus Carsonella;49%
+unbinned_IJDLJFPM_230202;+;Bacteria;87%;"Proteobacteria";24%;Gammaproteobacteria;17%;Gammaproteobacteria_incertae_sedis;11%;Candidatus Carsonella;11%;Candidatus Carsonella;11%
+unbinned_IJDLJFPM_259515;+;Bacteria;100%;Cyanobacteria/Chloroplast;100%;Chloroplast;99%;Chloroplast;99%;Chloroplast;99%;Bacillariophyta;67%
+unbinned_IJDLJFPM_263606;+;Bacteria;100%;"Planctomycetes";100%;Planctomycetia;100%;Planctomycetales;100%;Planctomycetaceae;100%;Gimesia;51%
+unbinned_IJDLJFPM_272659;+;Bacteria;100%;"Bacteroidetes";100%;Cytophagia;38%;Cytophagales;38%;Cyclobacteriaceae;25%;Nitritalea;24%
+unbinned_IJDLJFPM_282066;+;Archaea;38%;"Crenarchaeota";20%;Thermoprotei;20%;Thermoproteales;14%;Thermoproteaceae;13%;Thermoproteus;5%
+unbinned_IJDLJFPM_284344;+;Bacteria;99%;Parcubacteria;85%;Parcubacteria_genera_incertae_sedis;85%;Parcubacteria_genera_incertae_sedis;85%;Parcubacteria_genera_incertae_sedis;85%;Parcubacteria_genera_incertae_sedis;85%
+unbinned_IJDLJFPM_307197;+;Bacteria;100%;"Bacteroidetes";100%;"Bacteroidia";24%;"Bacteroidales";24%;"Rikenellaceae";23%;Mucinivorans;23%
+unbinned_IJDLJFPM_349216;+;Bacteria;100%;"Chloroflexi";100%;Anaerolineae;100%;Anaerolineales;100%;Anaerolineaceae;100%;Longilinea;30%
+unbinned_IJDLJFPM_406981;+;Archaea;100%;Pacearchaeota;99%;Pacearchaeota Incertae Sedis AR13;99%;Pacearchaeota Incertae Sedis AR13;99%;Pacearchaeota Incertae Sedis AR13;99%;Pacearchaeota Incertae Sedis AR13;99%
+unbinned_IJDLJFPM_413274;+;Bacteria;100%;"Verrucomicrobia";26%;Opitutae;24%;Puniceicoccales;24%;Puniceicoccaceae;24%;Puniceicoccus;24%
+unbinned_IJDLJFPM_417624;+;Bacteria;94%;"Chloroflexi";23%;Anaerolineae;17%;Anaerolineales;17%;Anaerolineaceae;17%;Pelolinea;11%
+unbinned_IJDLJFPM_418040;+;Archaea;100%;Pacearchaeota;100%;Pacearchaeota Incertae Sedis AR13;100%;Pacearchaeota Incertae Sedis AR13;100%;Pacearchaeota Incertae Sedis AR13;100%;Pacearchaeota Incertae Sedis AR13;100%
+unbinned_IJDLJFPM_436731;+;Bacteria;95%;"Proteobacteria";84%;Gammaproteobacteria;81%;Gammaproteobacteria_incertae_sedis;81%;Candidatus Carsonella;81%;Candidatus Carsonella;81%
+unbinned_IJDLJFPM_437447;+;Archaea;100%;Woesearchaeota;43%;Woesearchaeota Incertae Sedis AR20;31%;Woesearchaeota Incertae Sedis AR20;31%;Woesearchaeota Incertae Sedis AR20;31%;Woesearchaeota Incertae Sedis AR20;31%
+unbinned_IJDLJFPM_440265;+;Bacteria;100%;Parcubacteria;64%;Parcubacteria_genera_incertae_sedis;64%;Parcubacteria_genera_incertae_sedis;64%;Parcubacteria_genera_incertae_sedis;64%;Parcubacteria_genera_incertae_sedis;64%
