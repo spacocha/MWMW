@@ -1,6 +1,12 @@
 # MWMW
 metagenomic binning, quantification, and analysis with metawrap
 
+TODO:
+ - Pull reads that map to 16S gene from libraries, classify, and assign to bins 
+   based on combined objective of taxanomic class & abundance vector matches
+ - Coverage of individual gene copies within group of K number & HMM annotations
+ - Add Shell scripts from MARCC to scripts
+
 Contents of `Data/` include:
   - `Bin_Taxonomy.xlsx`: Consensus bin taxonomy & scores 
   - `BinningMethodsText.docx`: Description of methods required by GSC 
