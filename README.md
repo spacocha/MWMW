@@ -4,7 +4,6 @@ metagenomic binning, quantification, and analysis with metawrap
 TODO:
  - Pull reads that map to 16S gene from libraries, classify, and assign to bins 
    based on combined objective of taxanomic class & abundance vector matches
- - Coverage of individual gene copies within group of K number & HMM annotations
  - Add Shell scripts from MARCC to scripts
 
 Contents of `Data/` include:
@@ -24,6 +23,8 @@ Contents of `Data/` include:
     - `Select_Ks_By_Bin.tsv`: a matrix of select KO hit counts by bin
     - `All_HMM_Hits_raw.tsv`: a matrix of db-CAN & metabolic-hmm annotations with gene id & bin info
     - `HMM_counts_by_bin.tsv`: a matrix of hmm hit counts by bin
+    - `gene_abundances_raw.tsv`: a matrix of select annotation coverages by sample (needs per sample normalization)
+    - `duplicate_clusters.tsv`: output by Salmon as duplicate sequences while calculating coverage (*by_bin.tsv files need correction)
   - `Krona_Plots/`:
     - `mysticLibs_kronagram.html`: assumed taxanomic abundances using QC'd reads as input
     - `final_assembly_kronagram.html`: assumed taxanomic abundances using assembled contigs as input
