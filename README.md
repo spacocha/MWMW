@@ -4,7 +4,15 @@ metagenomic binning, quantification, and analysis with metawrap
 TODO:
  - Pull reads that map to 16S gene from libraries, classify, and assign to bins 
    based on combined objective of taxanomic class & abundance vector matches
+ - Make master script to string together accesory shell scripts from marcc
  - Add Shell scripts from MARCC to scripts
+ - use phylosift to add taxonomy to poorly classified bins
+ - check degree of homology between & within bins
+	 - determine the degree of e. coli sequence dispersion
+ - compare environmental gene abundances within each bin to overall bin abundance
+ - make map of gene:process and plot process by sample in violins
+ - determine which CAZy genes are responsive to DOM & check their internal consistency
+
 
 Contents of `Data/` include:
   - `Bin_Taxonomy.xlsx`: Consensus bin taxonomy & scores 
