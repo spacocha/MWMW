@@ -13,6 +13,7 @@ Contents of `Data/` include:
   - `Mystic_MAG_Quality_Stats.xlsx`: Individual MAG stats incl. # unique tRNAs	# rRNA seqs, completeness, contamination, GC,  # contigs/genes/scaffolds, Coding density, GC pct, GC std, Genome size, contig/scaffold length, N50, and more
   - `Bin_Abundances/`
     - `bin_abundance.tab`: matrix of average bin coverage per sample
+    - `bin_counts_normed.tsv`: unit normalized within sample & then normalized by library size 
     - `genome_abundance_heatmap.png`: clustered heatmap of `bin_abundance.tab` with assoc. dendograms
     - `sample_read_count.tab`: vector of read counts per sample for normalizing `bin_abundance.tab`
   - `Blob_Plots/`: deeply unhelpful plots of GC% v. coverage of contigs colored in various ways
@@ -23,7 +24,7 @@ Contents of `Data/` include:
     - `Select_Ks_By_Bin.tsv`: a matrix of select KO hit counts by bin
     - `All_HMM_Hits_raw.tsv`: a matrix of db-CAN & metabolic-hmm annotations with gene id & bin info
     - `HMM_counts_by_bin.tsv`: a matrix of hmm hit counts by bin
-    - `gene_abundances_raw.tsv`: a matrix of select annotation coverages by sample (needs per sample normalization)
+    - `gene_abundances_raw.tsv`: a matrix of select annotation coverages by sample (sample normalized)
     - `duplicate_clusters.tsv`: output by Salmon as duplicate sequences while calculating coverage (*by_bin.tsv files need correction)
   - `Krona_Plots/`:
     - `mysticLibs_kronagram.html`: assumed taxanomic abundances using QC'd reads as input
