@@ -1,6 +1,9 @@
 # MWMW
 metagenomic binning, quantification, and analysis with metawrap
 
+Notes:
+ - Bin 26 is E. Coli, Bin 52 is M. aeruginosa, Bin 18 should be Runella slithyformis
+
 TODO:
  - Pull reads that map to 16S gene from libraries, classify, and assign to bins 
    based on combined objective of taxanomic class & abundance vector matches
