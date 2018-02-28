@@ -5,5 +5,5 @@ df2 = pd.read_csv("../Data/Bin_Abundances/bin_abundance.tab", sep="\t", index_co
 row_normed = df2.div(df2.sum())
 norm_values = s_counts/s_counts.min()
 sample_normed = row_normed.rmul(norm_values.ix[:, 'reads'], axis=1)
-sample_normed.to_csv("../Data/Bin_Abundances/bin_counts_normed.tsv", sep="\t", index_label="Genomic bins")
+row_normed.to_csv("../Data/Bin_Abundances/bin_counts_normed.tsv", sep="\t", index_label="Genomic bins")
 
