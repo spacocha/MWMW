@@ -3,6 +3,8 @@ metagenomic binning, quantification, and analysis with metawrap
 
 Notes:
  - Bin 26 is E. Coli, Bin 52 is M. aeruginosa, Bin 18 should be Runella slithyformis
+ - https://github.com/LANL-Bioinformatics/MeGAMerge 
+ - 
 
 TODO:
  - Pull reads that map to 16S gene from libraries, classify, and assign to bins 
