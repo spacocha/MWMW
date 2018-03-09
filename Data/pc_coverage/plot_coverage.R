@@ -1,0 +1,5 @@
+pos <- read.table("r_slithy.cov.bed", header=FALSE, colClasses=c(rep('NULL',6),"numeric") )
+cov_ = as.vector(pos[,1])
+png("r_slithy_coverage.png", 490, 350)
+barplot(cov_, col='darkgreen')
+dev.off()
