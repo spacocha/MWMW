@@ -1,15 +1,13 @@
-
-
 import os, sys
 import pandas as pd
 import numpy as np
 
 target_dir = sys.argv[-1]
-sam_fs = [os.path.join(target_dir, i) os.listdir(target_dir)]
+sam_fs = [os.path.join(target_dir, i) for i in os.listdir(target_dir) if i.endswith(".sam")]
 # sam_fs = sorted(os.listdir(os.getcwd()))
 def parse_sams(a_sam_f):
     print os.path.basename(a_sam_f)
-    known_bollocks = set(["seq50099", 'seq178877', 'seq86424'])
+    known_bollocks = set(["seq50099", 'seq178877', 'seq86424', "seq1097", "seq421", "seq120556"])
     column_names = ["Query", "Flag", "Reference", "Position_on_Ref", "MAPQ",
                     "CIGAR", "RNEXT", "PNEXT", "TLEN", "Seq", "Qual", "Alignment_Score",
                     "score_of_alt_align", "ambig_bases", "mismatches", "gap_opens", 
@@ -74,4 +72,4 @@ final_df = pd.DataFrame(parsed_sams)
 final_df = final_df.fillna(0)
 sorted_cols = sorted(list(final_df.columns))
 final_df.columns = sorted_cols
-final_df.to_csv("dbOTUbySample.tsv", sep="\t", index=False)
+final_df.to_csv(sys.argv[-2], sep="\t", index=False)

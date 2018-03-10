@@ -1,0 +1,348 @@
+parameters <- list(#
+	S = 25 , # psu#
+	t = 15 , # degrees C#
+	k = 0.4 , # 1/d proportionality factor for air-water exchange#
+	rOx = 0.0000003 , # mol-N/(kg*d) maximal rate of oxic mineralisation#
+	rNitri = 0.0000002 , # mol-N/(kg*d) maximal rate of nitrification#
+	rPP = 0.0000006 , # mol-N/(kg*d) maximal rate of primary production#
+	ksSumNH4 = 0.000001 , # mol-N/kg#
+	D = 0.1 , # 1/d (dispersive) transport coefficient#
+	SumNH4_io = 0.000008 , # mol/kg-soln#
+	SumCO2_io = 0.002320 , # mol/kg-soln#
+	TA_io = 0.002435 , # mol/kg-soln#
+	C_Nratio = 8 , # mol C/mol N C:N ratio of organic matter#
+	a = 5 , # time from which PriPro begins#
+	b = 20 , # time where PriPro shuts off again#
+	modeltime = 30 # duration of the model#
+)
+boxmodel <- function(timestep, currentstate, parameters)#
+{#
+	with (#
+		as.list(c(currentstate,parameters)),#
+		{#
+			# the "classical" implicit pH calculation method is applied in aquaenv#
+			ae <- aquaenv(S=S, t=t, SumCO2=sumCO2,#
+			              SumNH4=sumNH4, TA=alkalinity, dsa=TRUE)#
+#
+			ECO2 <- k * (ae$CO2_sat - ae$CO2)#
+#
+			RNit <- rNitri#
+			ROx <- rOx#
+#
+			if ((timestep > a) && (timestep < b))#
+				RPP <- rPP * (sumNH4/(ksSumNH4 + sumNH4))#
+			else#
+				RPP <- 0#
+#
+			dsumCO2 <- ECO2 + C_Nratio*ROx - C_Nratio*RPP#
+			dsumNH4 <- ROx - RNit - RPP#
+			dalkalinity <- ROx - 2*RNit - RPP#
+#
+			# The DSA pH#
+			dH <- (dalkalinity - (dsumCO2*ae$dTAdSumCO2 + dsumNH4*ae$dTAdSumNH4))/ae$dTAdH#
+			DSApH <- -log10(H)#
+#
+			# The DSA pH using pH dependent fractional stoichiometry (= using partitioning coefficients)#
+			rhoHECO2 <- ae$c2 + 2*ae$c3#
+			rhoHRNit <- 1 + ae$n1#
+			rhoHROx <- C_Nratio * (ae$c2 + 2*ae$c3) - ae$n1#
+			rhoHRPP <- -(C_Nratio * (ae$c2 + 2*ae$c3)) + ae$n1#
+#
+			dH_ECO2 <- rhoHECO2*ECO2/(-ae$dTAdH)#
+			dH_RNit <- rhoHRNit*RNit/(-ae$dTAdH)#
+			dH_ROx <- rhoHROx*ROx /(-ae$dTAdH)#
+			dH_RPP <- rhoHRPP*RPP /(-ae$dTAdH)#
+#
+			dH_stoich <- dH_ECO2 + dH_RNit + dH_ROx + dH_RPP#
+			DSAstoichpH <- -log10(H_stoich)#
+#
+			ratesofchanges <- c(dsumNH4, dsumCO2, dalkalinity, dH, dH_stoich)#
+			processrates <- c(ECO2=ECO2, RNit=RNit, ROx=ROx, RPP=RPP)#
+			DSA <- c(DSApH=DSApH, rhoHECO2=rhoHECO2, rhoHRNit=rhoHRNit, rhoHROx=rhoHROx,#
+			         rhoHRPP=rhoHRPP, dH_ECO2=dH_ECO2, dH_RNit=dH_RNit, dH_ROx=dH_ROx,#
+			         dH_RPP=dH_RPP, DSAstoichpH=DSAstoichpH)#
+#
+			return(list(ratesofchanges, processrates, DSA, ae))#
+		})
+}
+with (as.list(parameters),#
+	{#
+	H_init <<- 10^(-(aquaenv(S=S, t=t, SumCO2=SumCO2_io, SumNH4=SumNH4_io, TA=TA_io,#
+	                         speciation=FALSE)$pH))#
+	initialstate <<- c(sumNH4=SumNH4_io, sumCO2=SumCO2_io, alkalinity =TA_io, H=H_init,#
+	                   H_stoich=H_init)#
+	times <<- c(0:modeltime)#
+	})
+H_init
+output <- vode(initialstate, times, boxmodel, parameters, hmax=1)
+typeof(times)
+times
+names(output)
+typeof(output)
+length(output)
+shape(output)
+dim(output)
+dim(initialstate)
+length(initialstate)
+initialstate
+fix(output)
+library("boot")    #
+a <- c(2500, 3500)#
+A2 <- matrix(c(50, 150, 500, 250), ncol=2, nrow=2, byrow=TRUE)#
+b2 <- c(900, 2500)#
+simplex(a, A2 = A2, b2 = b2, maxi=FALSE)
+a
+A2
+b
+b2
+a
+a2
+A2
+fat <- c(800, 6000, 1000, 400)
+init = <-c(2, 2, 3, 0.5)
+init = c(2, 2, 3, 0.5)
+init*fat
+sum(init*fat)
+A2_ <- rbind(c(2, 1), c(1, 1), c(0, 1), c(1, 0))
+A2_
+cbind(10, 6)
+rm(list=ls())
+library(boot)
+a_ <- c(3, 2)
+A1_ <- c(-3, 2)
+b1_ <- 6
+A2_ <- rbind(c(2, 1), c(1, 1))
+b2_ <- rbind(10, 6)
+simplex(a = a_, A1 = A1_, b1 = b1_, A2 = A2_, b2 = b2_, maxi = FALSE)
+a_ <- c(3, 2, 4)#
+A2_ <- c(3, 3, 5)#
+b2_ <- 120#
+A3_ <- c(2, 1, 3)#
+b3_ <- 60#
+#
+simplex(a = a_, A2 = A2_, b2 = b2_, A3 = A3_, b3 = b3_, maxi = FALSE)
+a_
+A2_
+b2_
+rm(list = ls())
+a_ <- c(3, 2, 4)
+A2_ <- c(3, 3, 5)
+b2_ = 120
+A3_ = c(2, 1, 3)
+b3_ = 60
+simplex(a_, A1= NULL, b1=NULL, A2=A2_, b2=b2_, A3=A3_, b3=b3_, maxi=FALSE)
+a_ <- c(3, 2, 4, 5)#
+A2_ <- c(3, 3, 5, 1)#
+b2_ <- 120#
+A3_ <- c(2, 1, 3, 1)#
+b3_ <- 60#
+#
+simplex(a = a_, A2 = A2_, b2 = b2_, A3 = A3_, b3 = b3_, maxi = FALSE)
+a = c(1, 2, 3, 4)
+b = c(2, 2, 2, 2)
+a - (0.5*b)
+1/4/3
+1/12
+ls()
+typeof(fnFs)
+length(fnFs)
+fnFs
+hat = 'hat'
+ls()
+save(file=/Users/login/cowdata.RData)
+quit()
+ls()
+hat = "hat"
+ls()
+save("/Users/login/hat.RData")
+save(file="/Users/login/hat.RData")
+save(hat, file="/Users/login/hat.RData")
+rm(list=ls())
+ls()
+load("/Users/login/hat.RData")
+ls()
+hat
+ls()
+install.packages("tscount",dependencies=T)
+library("tsglm")
+install.packages("tsglm")
+library("tscount").
+library("tscount")
+ls
+ls9)
+ls()
+campy
+interv_covariate()?
+?interv_covariate()
+interventions <- interv_covariate(n = length(campy), tau = c(84, 100),delta = c(1, 0))
+interventions
+dim(interventions)
+dim(campy)
+campy
+length(campy)
+plot(campy)
+options(repos = c(CRAN = "http://cran.rstudio.com"))
+if (!require(remotes)) { install.packages("remotes") }
+library(remotes)
+remotes::install_github("fbreitwieser/pavian")
+pavian::runApp(port=5000)
+q
+quit()
+setwd("~")
+rmd_file = "Example.Rmd"
+render(rmd_file, "pdf_document")
+library(rmarkdown)
+render(rmd_file, "pdf_document")
+quit()
+setwd("~")
+library(rmarkdown)
+render("Example.Rmd", "pdf_document")
+library(rmarkdown)
+setwd("~")
+render("Example.Rmd", "pdf_document")
+render?
+?render
+render("Example.Rmd", "pdf_document", run_pandoc=F)
+render("Example.Rmd", "pdf_document", run_pandoc=F, intermediates_dir="~")
+render("Example.Rmd", "pdf_document", run_pandoc=F, clean=False)
+render("Example.Rmd", "pdf_document", run_pandoc=F, clean=F)
+render("Example.Rmd", "pdf_document", clean=F)
+render("Example.Rmd", "html_document", clean=F)
+render("Example.Rmd", "html_document")
+render("Example.Rmd", "pdf_document")
+render("Example.Rmd", "word_document")
+quit()
+setwd("/Users/login/Documents/MysticLakeBins/MWMW/Data")
+otu_df = read.table("dbOTUbySample.tsv", header=True)
+otu_df = read.table("dbOTUbySample.tsv", header=T)
+fix(otu_df)
+otu_df = read.table("dbOTUbySample.tsv", header=T, nrows=5)
+dim(otu_df)
+classes <- sapply(otu_df, class)
+classes[1:4]
+?read.table()
+classes[2:3]
+classes[2:3] = c(NULL, NULL)
+classes[2] = NULL
+length(classes)
+new_classes = c(NULL, NULL, classes[4:715])
+r5_otu_df = read.table("dbOTUbySample.tsv", row.names=1 header=T, nrows=5)
+r5_otu_df = read.table("dbOTUbySample.tsv", row.names=1, header=T, nrows=5)
+classes <- sapply(r5_otu_df, class)
+classes[1:4]
+classes[3:4]
+new_classes = c(NULL, NULL, classes[3:715])
+otu_df = read.table("dbOTUbySample.tsv", row.names=1, header=T, colClasses=new_classes)
+length(classes)
+new_classes = c(NULL, NULL, classes[3:714])
+otu_df = read.table("dbOTUbySample.tsv", row.names=1, header=T, colClasses=new_classes)
+colNames(otu_df)[1:3]
+colnames(otu_df)[1:3]
+r5_otu_df = read.table("dbOTUbySample.tsv", row.names=1, header=T, nrows=5)
+classes <- sapply(r5_otu_df, class)
+length(classes)
+classes[1:5]
+new_classes = c(NULL, NULL, classes[3:714])
+classes['bSample']
+classes['bSample'] = NULL
+new_classes[1:5]
+714-2
+new_classes = c(NULL, NULL, rep("numeric", 712))
+new_classes[1:5]
+otu_df = read.table("dbOTUbySample.tsv", row.names=1, header=T, colClasses=c(NULL, NULL, rep("numeric", 712)))
+otu_df = read.table("dbOTUbySample.tsv", row.names=1, header=T, colClasses=c("factor", NULL, NULL, rep("numeric", 712)))
+otu_df = read.table("dbOTUbySample.tsv", row.names=1, header=T, colClasses=c("factor", NULL, NULL, rep("numeric", 712)))
+otu_df = read.table("dbOTUbySample.tsv", row.names=1, header=T)
+col.names(otu_df)[1:10]
+colnames(otu_df)[1:10]
+colnames(otu_df)[714]
+colnames(otu_df)[2]
+colnames(otu_df)[3]
+colnames(otu_df)[3:5]
+just_data = otu_df[colnames(otu_df)[3:714]]
+dim(just_data)
+colnames(just_data)[1]
+rownames(just_data)[1]
+library(corrplot)
+corrplot(cor(just_data), method="circle")
+?cor()
+corrplot(cor(t(just_data)), method="circle")
+?corrplot()
+corrplot(cor(t(just_data)), method="circle", tl.cex=0.5)
+corrplot(cor(t(just_data)), method="circle", tl.cex=0.4, type="upper", order="hclust")
+corrplot(cor(t(just_data)), method="circle", tl.cex=0.4, type="upper", order="hclust")
+rowSums(just_data)
+H2_Pos_1 = just_data["H2_PosControlEBAlly_1.sam", which(just_data!=0)]
+H2_Pos_1 = just_data["H2_PosControlEBAlly_1.sam",  col(just_data)[which(just_data!=0)]]
+length(H2_Pos_1)
+H2_Pos_1 = just_data["H2_PosControlEBAlly_1.sam",]
+H2_Pos_1_nz = H2_Pos_1[which(H2_Pos_1!=0)]
+length(H2_Pos_1_nz)
+H2_Pos_1_nz
+ctrls = c("B9_PosControlEColiMystic_1.sam", "B9_PosControlEColiMystic_2.sam", "H2_PosControlEBAlly_1.sam", "H2_PosControlEBAlly_2.sam")
+ctrls = c("B9_PosControlEColiMystic_1.sam", "B9_PosControlEColiMystic_2.sam", "H2_PosControlEBAlly_1.sam", "H2_PosControlEBAlly_2.sam")H2_1_nz = just_data["H2_PosControlEBAlly_1.sam",which(just_data$H2_PosControlEBAlly_1.sam!=0)]
+H2_1_nz = just_data["H2_PosControlEBAlly_1.sam",which(just_data$H2_PosControlEBAlly_1.sam!=0)]
+H2_1_nz
+H2_1 = just_data["H2_PosControlEBAlly_1.sam",]
+H2_1_nz = H2_1[H2_1!=0)]
+H2_1_nz = H2_1[which(H2_1!=0)]
+H2_1_nz
+H2_2 = just_data["H2_PosControlEBAlly_2.sam",]
+H2_2_nz = H2_1[which(H2_2!=0)]
+H2_2_nz
+B9_1 = just_data["B9_PosControlEColiMystic_1.sam",]
+B9_1_nz = B9_1[which(B9_1!=0)]
+B9_1_nz
+B9_2 = just_data["B9_PosControlEColiMystic_2.sam",]#
+B9_2_nz = B9_2[which(B9_2!=0)]
+B9_2_nz
+rownames(just_data)
+H3_2 = just_data["H3_PosControlEMAlly_2.sam",]
+H3_1 = just_data["H3_PosControlEMAlly_1.sam",]
+H3_1_nz = H3_1[which(H3_1!=0)]
+H3_2_nz = H3_2[which(H3_2!=0)]
+H3_1_nz
+H3_2_nz
+H2_1_nz = H2_1[which(H2_1!=0)]#
+H2_2_nz = H2_1[which(H2_2!=0)]#
+B9_1_nz = B9_1[which(B9_1!=0)]#
+B9_2_nz = B9_2[which(B9_2!=0)]#
+H3_1_nz = H3_1[which(H3_1!=0)]#
+H3_2_nz = H3_2[which(H3_2!=0)]
+H2_1_nz#
+H2_2_nz#
+B9_1_nz#
+B9_2_nz#
+H3_1_nz#
+H3_2_nz
+library(dplyr)
+combine(H2_1_nz, H2_2_nz)
+bind_cols(H2_1_nz, H2_2_nz)
+bind_rows(H2_1_nz, H2_2_nz)
+bind_rows(H2_1_nz, H2_2_nz, B9_1_nz, B9_2_nz, H3_1_nz, H3_2_nz)
+H2_1_nz
+psctrl_df = bind_rows(H2_1_nz, H2_2_nz, B9_1_nz, B9_2_nz, H3_1_nz, H3_2_nz)
+rownames(psctrl_df)
+psctrl_samples = c("H2_PosControlEBAlly_1.sam", "H2_PosControlEBAlly_2.sam", "B9_PosControlEColiMystic_1.sam", "B9_PosControlEColiMystic_2.sam", "H3_PosControlEMAlly_1.sam", "H3_PosControlEMAlly_2.sam")
+rownames(psctrl_df) = psctrl_samples
+psctrl_df
+psctrl_df[is.na(psctrl_df)] = 0
+psctrl_df
+t(psctrl_df)
+library(gridExtra)
+pdf("PositiveControl16SAlignments.pdf", height=11, width=8.5)
+grid.table(psctrl_df)
+dev.off()
+knitr::kable(x, digits = 2, caption = "A table produced by printr.")
+x = matrix(rnorm(40), 5)
+dimnames(x) = list(NULL, head(LETTERS, ncol(x)))
+x
+library(knitr)
+knitr::kable(psctrl_df, digits = 2)
+library(rmarkdown)
+render("PositiveControl16SAlignments.Rmd", 'pdf_document', clean=F)
+knitr::kable(t(psctrl_df), digits = 2)
+render("PositiveControl16SAlignments.Rmd", 'pdf_document', clean=F)
+render("PositiveControl16SAlignments.Rmd", 'pdf_document', clean=F)
+render("PositiveControl16SAlignments.Rmd", 'pdf_document', clean=F)
+render("PositiveControl16SAlignments.Rmd", 'pdf_document', clean=F)
