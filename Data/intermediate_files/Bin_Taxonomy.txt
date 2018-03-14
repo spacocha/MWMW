@@ -1,0 +1,88 @@
+Bin Name	Kingdom	% contigs annotated	Phylum	% contigs annotated	Class	% contigs annotated	Order	% contigs annotated	Family	% contigs annotated	Genus	% contigs annotated	Species	% contigs annotated
+Bin 1	Bacteria	100												
+Bin 2	Bacteria	99												
+Bin 3	Bacteria	97	Bacteroidetes	53										
+Bin 4	Bacteria	100	Proteobacteria	89	Betaproteobacteria	88	Burkholderiales	84	Comamonadaceae	75				
+Bin 5	Bacteria	94												
+Bin 6	Bacteria	100	Actinobacteria	100										
+Bin 7	Bacteria	100	Actinobacteria	92										
+Bin 8	Bacteria	100	Proteobacteria	94	Betaproteobacteria	93	Burkholderiales	89	Comamonadaceae	80				
+Bin 9	Bacteria	99	Proteobacteria	88										
+Bin 10	Bacteria	98	Proteobacteria	70	Deltaproteobacteria	58	Desulfuromonadales	94	Geobacteraceae	79				
+Bin 11	Bacteria	97												
+Bin 12	Bacteria	96	Bacteroidetes	76										
+Bin 13	Bacteria	99	Proteobacteria	97	Betaproteobacteria	78	Nitrosomonadales	81	Nitrosomonadaceae	98				
+Bin 14	Bacteria	98	Proteobacteria	85	Gammaproteobacteria	78								
+Bin 15	Bacteria	99	Proteobacteria	74	Betaproteobacteria	66								
+Bin 16	Bacteria	97												
+Bin 17	Bacteria	99	Verrucomicrobia	55										
+Bin 18	Bacteria	97												
+Bin 19	Bacteria	100	Proteobacteria	95	Betaproteobacteria	72								
+Bin 20	Bacteria	98												
+Bin 21	Bacteria	100	Actinobacteria	97										
+Bin 22	Bacteria	98												
+Bin 23	Bacteria	99												
+Bin 24	Bacteria	96	Proteobacteria	86	Betaproteobacteria	58	Burkholderiales	73						
+Bin 25	Bacteria	99	Proteobacteria	59										
+Bin 26	Bacteria	100	Proteobacteria	99	Gammaproteobacteria	100	Enterobacterales	100	Enterobacteriaceae	99				
+Bin 27	Bacteria	99	Bacteroidetes	94	Flavobacteriia	96	Flavobacteriales	100	Flavobacteriaceae	99				
+Bin 28	Bacteria	96												
+Bin 29	Bacteria	99	Cyanobacteria	84	Synechococcales	100	Synechococcaceae	100						
+Bin 30	Bacteria	100	Proteobacteria	76										
+Bin 31	Bacteria	99												
+Bin 32	Bacteria	99	Bacteroidetes	74	Flavobacteriia	57	Flavobacteriales	100						
+Bin 33	Bacteria	99	Proteobacteria	94	Betaproteobacteria	88	Burkholderiales	95	Comamonadaceae	88				
+Bin 34	Bacteria	98	Proteobacteria	73										
+Bin 35	Bacteria	95	Bacteroidetes	78										
+Bin 36	Bacteria	100												
+Bin 37	Bacteria	99	Proteobacteria	91	Betaproteobacteria	81	Burkholderiales	85						
+Bin 38	Bacteria	91												
+Bin 39	Bacteria	99												
+Bin 40	Bacteria	100	Proteobacteria	98	Alphaproteobacteria	97	Rhodospirillales	97	Rhodospirillaceae	100	Magnetospirillum	92		
+Bin 41	Bacteria	99	Proteobacteria	84	Gammaproteobacteria	88								
+Bin 42	Bacteria	97												
+Bin 43	Bacteria	99	Proteobacteria	99	Alphaproteobacteria	99	Pelagibacterales	99	Candidatus Fonsibacter	98	Candidatus Fonsibacter ubiquis	100		
+Bin 44	Bacteria	95												
+Bin 45	Bacteria	100	Actinobacteria	98	Actinobacteria	95	Candidatus Nanopelagicales	100	Candidatus Nanopelagicus	58				
+Bin 46	Bacteria	95	Bacteroidetes	68										
+Bin 47	Bacteria	91												
+Bin 48	Bacteria	98	Bacteroidetes	61										
+Bin 49	Bacteria	100	Proteobacteria	99	Betaproteobacteria	98	Nitrosomonadales	100	Methylophilaceae	100	Candidatus Methylopumilus	93	Candidatus Methylopumilus planktonicus	100
+Bin 50	Bacteria	96	Bacteroidetes	83										
+Bin 51	Bacteria	100	Actinobacteria	99										
+Bin 52	Bacteria	99	Cyanobacteria	88										
+Bin 53	Bacteria	100	Proteobacteria	99	Betaproteobacteria	99	Nitrosomonadales	100	Methylophilaceae	100	Candidatus Methylopumilus	97	Candidatus Methylopumilus planktonicus	99
+Bin 54	Bacteria	100												
+Bin 55	Bacteria	99												
+Bin 56	Bacteria	97	Bacteroidetes	59										
+Bin 57	Bacteria	98												
+Bin 58	Bacteria	97	Proteobacteria	88	Gammaproteobacteria	79								
+Bin 59	Bacteria	99												
+Bin 60	Bacteria	100	Bacteroidetes	72										
+Bin 61	Bacteria	97												
+Bin 62	Bacteria	100	Proteobacteria	94	Gammaproteobacteria	96	Methylococcales	54	Methylococcaceae	100				
+Bin 63	Bacteria	100	Proteobacteria	80										
+Bin 64	Bacteria	96												
+Bin 65	Bacteria	100	Actinobacteria	99										
+Bin 66	Bacteria	100	Proteobacteria	90	Betaproteobacteria	78								
+Bin 67	Bacteria	90												
+Bin 68	Bacteria	94												
+Bin 69	Bacteria	100	Proteobacteria	97	Betaproteobacteria	92	Burkholderiales	67	Burkholderiaceae	97				
+Bin 70	Bacteria	100	Proteobacteria	97	Betaproteobacteria	99	Burkholderiales	99	Comamonadaceae	97				
+Bin 71	Bacteria	99	Proteobacteria	88	Betaproteobacteria	61								
+Bin 72	Bacteria	95	Bacteroidetes	87										
+Bin 73	Bacteria	100	Proteobacteria	76	Betaproteobacteria	76								
+Bin 74	Bacteria	92												
+Bin 75	Bacteria	93												
+Bin 76	Bacteria	100	Proteobacteria	82										
+Bin 77	Bacteria	100	Proteobacteria	84	Betaproteobacteria	57								
+Bin 78	Bacteria	99	Proteobacteria	86	Gammaproteobacteria	81	Methylococcales	66	Methylococcaceae	100				
+Bin 79	Bacteria	98	Proteobacteria	95	Betaproteobacteria	82	Burkholderiales	88						
+Bin 80	Bacteria	100	Verrucomicrobia	84	Opitutae	80	Opitutales	100	Opitutaceae	100				
+Bin 81	Bacteria	98	Bacteroidetes	67										
+Bin 82	Bacteria	100	Actinobacteria	99	Actinobacteria	97	Candidatus Nanopelagicales	100	Candidatus Planktophila	91	Candidatus Planktophila limnetica	98		
+Bin 83	Bacteria	99	Proteobacteria	95	Betaproteobacteria	61	Burkholderiales	62						
+Bin 84	Bacteria	93												
+Bin 85	Bacteria	99	Proteobacteria	78	Betaproteobacteria	56								
+Bin 86	Bacteria	98	Bacteroidetes	82										
+Bin 87	Bacteria	96	Actinobacteria	61	Actinobacteria	74	Candidatus Nanopelagicales	91						

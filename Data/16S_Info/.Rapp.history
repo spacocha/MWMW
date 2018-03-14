@@ -1,0 +1,425 @@
+dim(lung$counts)
+lungdf = as.data.frame(lung$counts)
+dim(lungdf)
+taxa = read.delim(file.path(dataDirectory,"CHK_otus.taxonomy.csv"),stringsAsFactors=FALSE)
+dim(taxa)
+head(taxa)
+clin = loadPhenoData(file.path(dataDirectory,"CHK_clinical.csv"),tran=TRUE)
+ord = match(colnames(lung$counts),rownames(clin))
+typeof(ord)
+ord
+match?
+d
+?match
+dim(clin)
+dim(lungdf)
+length(ord)
+clin = clin[ord,]
+dim(clin)
+head(clin[1:2,])
+fix(clin)
+phenotypeData = AnnotatedDataFrame(clin)
+phenotypeData
+OTUdata = AnnotatedDataFrame(taxa)
+obj = newMRexperiment(lung$counts,phenoData=phenotypeData,featureData=OTUdata)
+dim(phenotypeData)
+dim(OTUdata)
+colnames(OTUData)
+colnames(OTUdata)
+head(normFactors(obj))
+normFactors(obj) <- rnorm(ncol(obj))
+head(normFactors(obj))
+?rnorm()
+data(lungData)
+typeof(lungData)
+dim(lungData)
+p=cumNormStatFast(lungData)
+typeof(p)
+p
+lungData = cumNorm(lungData,p=p)
+data(lungData)#
+controls = grep("Extraction.Control",pData(lungData)$SampleType)#
+lungTrim = lungData[,-controls]#
+rareFeatures = which(rowSums(MRcounts(lungTrim)>0)<10)#
+lungTrim = lungTrim[-rareFeatures,]
+lungp = cumNormStat(lungTrim,pFlag=TRUE,main="Trimmed lung data")
+lungp
+dim(lungTrim)
+lungTrim = cumNorm(lungTrim,p=lungp)
+dim(lungTrim)
+lungTrim[:5, :5]
+lungTrim[1:5, 1:5]
+names(lungTrim)
+lungTrim$counts[1:5, 1:5]
+lungTrim$counts
+lungTrim$assayData
+df = as.data.frame(lungTrim)
+normFactor = normFactors(lungTrim)
+normFactor
+normFactor = log2(normFactor/median(normFactor) + 1)
+normFactor
+normFactors(lungData)
+cumNormMat(lungData)
+dim(cumNormMat(lungData))
+normData = as.data.frame(cumNormMat(lungData))
+dim(normData)
+library(metagenomeSeq)#
+dataDirectory <- system.file("extdata", package="metagenomeSeq")#
+lung = loadMeta(file.path(dataDirectory,"CHK_NAME.otus.count.csv"))#
+taxa = read.delim(file.path(dataDirectory,"CHK_otus.taxonomy.csv"),stringsAsFactors=FALSE)#
+clin = loadPhenoData(file.path(dataDirectory,"CHK_clinical.csv"),tran=TRUE)#
+ord = match(colnames(lung$counts),rownames(clin)) #
+clin = clin[ord,]#
+phenotypeData = AnnotatedDataFrame(clin)#
+OTUdata = AnnotatedDataFrame(taxa)#
+lungData = newMRexperiment(lung$counts,phenoData=phenotypeData,featureData=OTUdata)#
+p=cumNormStatFast(lungData)#
+lungData = cumNorm(lungData,p=p)#
+normData = as.data.frame(cumNormMat(lungData))
+lung$counts
+type(lungData)
+typeof(lungData)
+install.packages("CHNOSZ")
+library(CHNOSZ)
+rxn1 <- subcrt(c("formaldehyde","HCN","H2O","glycolic acid","NH3"),#
+c(-1,-1,-2,1,1),P=300)
+data(thermo)
+rxn1 <- subcrt(c("formaldehyde","HCN","H2O","glycolic acid","NH3"),#
+c(-1,-1,-2,1,1),P=300)
+rxn1
+quit()
+install.packages("marelac", dependencies=T)
+library(marelac)
+gas_satconc(S = 35, t = 25, P = 1.013253)
+gas_satconc(S = 35, t = 25, P = 1.013253)("N2")
+gas_satconc(S = 35, t = 25, P = 1.013253)["N2"]
+gravity(39.285420)
+install.packages("AquaEnv", dependencies=T)
+rm(list=ls())
+library(AquaEnv)#
+library(marelac)#
+library(deSolve)
+parameters <- list(#
+	S = 25 , # psu#
+	t = 15 , # degrees C#
+	k = 0.4 , # 1/d proportionality factor for air-water exchange#
+	rOx = 0.0000003 , # mol-N/(kg*d) maximal rate of oxic mineralisation#
+	rNitri = 0.0000002 , # mol-N/(kg*d) maximal rate of nitrification#
+	rPP = 0.0000006 , # mol-N/(kg*d) maximal rate of primary production#
+	ksSumNH4 = 0.000001 , # mol-N/kg#
+	D = 0.1 , # 1/d (dispersive) transport coefficient#
+	SumNH4_io = 0.000008 , # mol/kg-soln#
+	SumCO2_io = 0.002320 , # mol/kg-soln#
+	TA_io = 0.002435 , # mol/kg-soln#
+	C_Nratio = 8 , # mol C/mol N C:N ratio of organic matter#
+	a = 5 , # time from which PriPro begins#
+	b = 20 , # time where PriPro shuts off again#
+	modeltime = 30 # duration of the model#
+)
+boxmodel <- function(timestep, currentstate, parameters)#
+{#
+	with (#
+		as.list(c(currentstate,parameters)),#
+		{#
+			# the "classical" implicit pH calculation method is applied in aquaenv#
+			ae <- aquaenv(S=S, t=t, SumCO2=sumCO2,#
+			              SumNH4=sumNH4, TA=alkalinity, dsa=TRUE)#
+#
+			ECO2 <- k * (ae$CO2_sat - ae$CO2)#
+#
+			RNit <- rNitri#
+			ROx <- rOx#
+#
+			if ((timestep > a) && (timestep < b))#
+				RPP <- rPP * (sumNH4/(ksSumNH4 + sumNH4))#
+			else#
+				RPP <- 0#
+#
+			dsumCO2 <- ECO2 + C_Nratio*ROx - C_Nratio*RPP#
+			Andreas F. Hofmann, Karline Soetaert and Mathilde Hagens 29#
+			dsumNH4 <- ROx - RNit - RPP#
+			dalkalinity <- ROx - 2*RNit - RPP#
+#
+			# The DSA pH#
+			dH <- (dalkalinity - (dsumCO2*ae$dTAdSumCO2 + dsumNH4*ae$dTAdSumNH4))/ae$dTAdH#
+			DSApH <- -log10(H)#
+#
+			# The DSA pH using pH dependent fractional stoichiometry (= using partitioning coefficients)#
+			rhoHECO2 <- ae$c2 + 2*ae$c3#
+			rhoHRNit <- 1 + ae$n1#
+			rhoHROx <- C_Nratio * (ae$c2 + 2*ae$c3) - ae$n1#
+			rhoHRPP <- -(C_Nratio * (ae$c2 + 2*ae$c3)) + ae$n1#
+#
+			dH_ECO2 <- rhoHECO2*ECO2/(-ae$dTAdH)#
+			dH_RNit <- rhoHRNit*RNit/(-ae$dTAdH)#
+			dH_ROx <- rhoHROx*ROx /(-ae$dTAdH)#
+			dH_RPP <- rhoHRPP*RPP /(-ae$dTAdH)#
+#
+			dH_stoich <- dH_ECO2 + dH_RNit + dH_ROx + dH_RPP#
+			DSAstoichpH <- -log10(H_stoich)#
+#
+			ratesofchanges <- c(dsumNH4, dsumCO2, dalkalinity, dH, dH_stoich)#
+			processrates <- c(ECO2=ECO2, RNit=RNit, ROx=ROx, RPP=RPP)#
+			DSA <- c(DSApH=DSApH, rhoHECO2=rhoHECO2, rhoHRNit=rhoHRNit, rhoHROx=rhoHROx,#
+			         rhoHRPP=rhoHRPP, dH_ECO2=dH_ECO2, dH_RNit=dH_RNit, dH_ROx=dH_ROx,#
+			         dH_RPP=dH_RPP, DSAstoichpH=DSAstoichpH)#
+#
+			return(list(ratesofchanges, processrates, DSA, ae))#
+		})#
+}
+rm(list=ls())
+library(AquaEnv)#
+library(marelac)#
+library(deSolve)
+parameters <- list(#
+	S = 25 , # psu#
+	t = 15 , # degrees C#
+	k = 0.4 , # 1/d proportionality factor for air-water exchange#
+	rOx = 0.0000003 , # mol-N/(kg*d) maximal rate of oxic mineralisation#
+	rNitri = 0.0000002 , # mol-N/(kg*d) maximal rate of nitrification#
+	rPP = 0.0000006 , # mol-N/(kg*d) maximal rate of primary production#
+	ksSumNH4 = 0.000001 , # mol-N/kg#
+	D = 0.1 , # 1/d (dispersive) transport coefficient#
+	SumNH4_io = 0.000008 , # mol/kg-soln#
+	SumCO2_io = 0.002320 , # mol/kg-soln#
+	TA_io = 0.002435 , # mol/kg-soln#
+	C_Nratio = 8 , # mol C/mol N C:N ratio of organic matter#
+	a = 5 , # time from which PriPro begins#
+	b = 20 , # time where PriPro shuts off again#
+	modeltime = 30 # duration of the model#
+)
+boxmodel <- function(timestep, currentstate, parameters)#
+{#
+	with (#
+		as.list(c(currentstate,parameters)),#
+		{#
+			# the "classical" implicit pH calculation method is applied in aquaenv#
+			ae <- aquaenv(S=S, t=t, SumCO2=sumCO2,#
+			              SumNH4=sumNH4, TA=alkalinity, dsa=TRUE)#
+#
+			ECO2 <- k * (ae$CO2_sat - ae$CO2)#
+#
+			RNit <- rNitri#
+			ROx <- rOx#
+#
+			if ((timestep > a) && (timestep < b))#
+				RPP <- rPP * (sumNH4/(ksSumNH4 + sumNH4))#
+			else#
+				RPP <- 0#
+#
+			dsumCO2 <- ECO2 + C_Nratio*ROx - C_Nratio*RPP#
+			dsumNH4 <- ROx - RNit - RPP#
+			dalkalinity <- ROx - 2*RNit - RPP#
+#
+			# The DSA pH#
+			dH <- (dalkalinity - (dsumCO2*ae$dTAdSumCO2 + dsumNH4*ae$dTAdSumNH4))/ae$dTAdH#
+			DSApH <- -log10(H)#
+#
+			# The DSA pH using pH dependent fractional stoichiometry (= using partitioning coefficients)#
+			rhoHECO2 <- ae$c2 + 2*ae$c3#
+			rhoHRNit <- 1 + ae$n1#
+			rhoHROx <- C_Nratio * (ae$c2 + 2*ae$c3) - ae$n1#
+			rhoHRPP <- -(C_Nratio * (ae$c2 + 2*ae$c3)) + ae$n1#
+#
+			dH_ECO2 <- rhoHECO2*ECO2/(-ae$dTAdH)#
+			dH_RNit <- rhoHRNit*RNit/(-ae$dTAdH)#
+			dH_ROx <- rhoHROx*ROx /(-ae$dTAdH)#
+			dH_RPP <- rhoHRPP*RPP /(-ae$dTAdH)#
+#
+			dH_stoich <- dH_ECO2 + dH_RNit + dH_ROx + dH_RPP#
+			DSAstoichpH <- -log10(H_stoich)#
+#
+			ratesofchanges <- c(dsumNH4, dsumCO2, dalkalinity, dH, dH_stoich)#
+			processrates <- c(ECO2=ECO2, RNit=RNit, ROx=ROx, RPP=RPP)#
+			DSA <- c(DSApH=DSApH, rhoHECO2=rhoHECO2, rhoHRNit=rhoHRNit, rhoHROx=rhoHROx,#
+			         rhoHRPP=rhoHRPP, dH_ECO2=dH_ECO2, dH_RNit=dH_RNit, dH_ROx=dH_ROx,#
+			         dH_RPP=dH_RPP, DSAstoichpH=DSAstoichpH)#
+#
+			return(list(ratesofchanges, processrates, DSA, ae))#
+		})
+}
+with (as.list(parameters),#
+	{#
+	H_init <<- 10^(-(aquaenv(S=S, t=t, SumCO2=SumCO2_io, SumNH4=SumNH4_io, TA=TA_io,#
+	                         speciation=FALSE)$pH))#
+	initialstate <<- c(sumNH4=SumNH4_io, sumCO2=SumCO2_io, alkalinity =TA_io, H=H_init,#
+	                   H_stoich=H_init)#
+	times <<- c(0:modeltime)#
+	})
+H_init
+output <- vode(initialstate, times, boxmodel, parameters, hmax=1)
+typeof(times)
+times
+names(output)
+typeof(output)
+length(output)
+shape(output)
+dim(output)
+dim(initialstate)
+length(initialstate)
+initialstate
+fix(output)
+library("boot")    #
+a <- c(2500, 3500)#
+A2 <- matrix(c(50, 150, 500, 250), ncol=2, nrow=2, byrow=TRUE)#
+b2 <- c(900, 2500)#
+simplex(a, A2 = A2, b2 = b2, maxi=FALSE)
+a
+A2
+b
+b2
+a
+a2
+A2
+fat <- c(800, 6000, 1000, 400)
+init = <-c(2, 2, 3, 0.5)
+init = c(2, 2, 3, 0.5)
+init*fat
+sum(init*fat)
+A2_ <- rbind(c(2, 1), c(1, 1), c(0, 1), c(1, 0))
+A2_
+cbind(10, 6)
+rm(list=ls())
+library(boot)
+a_ <- c(3, 2)
+A1_ <- c(-3, 2)
+b1_ <- 6
+A2_ <- rbind(c(2, 1), c(1, 1))
+b2_ <- rbind(10, 6)
+simplex(a = a_, A1 = A1_, b1 = b1_, A2 = A2_, b2 = b2_, maxi = FALSE)
+a_ <- c(3, 2, 4)#
+A2_ <- c(3, 3, 5)#
+b2_ <- 120#
+A3_ <- c(2, 1, 3)#
+b3_ <- 60#
+#
+simplex(a = a_, A2 = A2_, b2 = b2_, A3 = A3_, b3 = b3_, maxi = FALSE)
+a_
+A2_
+b2_
+rm(list = ls())
+a_ <- c(3, 2, 4)
+A2_ <- c(3, 3, 5)
+b2_ = 120
+A3_ = c(2, 1, 3)
+b3_ = 60
+simplex(a_, A1= NULL, b1=NULL, A2=A2_, b2=b2_, A3=A3_, b3=b3_, maxi=FALSE)
+a_ <- c(3, 2, 4, 5)#
+A2_ <- c(3, 3, 5, 1)#
+b2_ <- 120#
+A3_ <- c(2, 1, 3, 1)#
+b3_ <- 60#
+#
+simplex(a = a_, A2 = A2_, b2 = b2_, A3 = A3_, b3 = b3_, maxi = FALSE)
+a = c(1, 2, 3, 4)
+b = c(2, 2, 2, 2)
+a - (0.5*b)
+1/4/3
+1/12
+ls()
+typeof(fnFs)
+length(fnFs)
+fnFs
+hat = 'hat'
+ls()
+save(file=/Users/login/cowdata.RData)
+quit()
+ls()
+hat = "hat"
+ls()
+save("/Users/login/hat.RData")
+save(file="/Users/login/hat.RData")
+save(hat, file="/Users/login/hat.RData")
+rm(list=ls())
+ls()
+load("/Users/login/hat.RData")
+ls()
+hat
+ls()
+install.packages("tscount",dependencies=T)
+library("tsglm")
+install.packages("tsglm")
+library("tscount").
+library("tscount")
+ls
+ls9)
+ls()
+campy
+interv_covariate()?
+?interv_covariate()
+interventions <- interv_covariate(n = length(campy), tau = c(84, 100),delta = c(1, 0))
+interventions
+dim(interventions)
+dim(campy)
+campy
+length(campy)
+plot(campy)
+options(repos = c(CRAN = "http://cran.rstudio.com"))
+if (!require(remotes)) { install.packages("remotes") }
+library(remotes)
+remotes::install_github("fbreitwieser/pavian")
+pavian::runApp(port=5000)
+q
+quit()
+setwd("~")
+rmd_file = "Example.Rmd"
+render(rmd_file, "pdf_document")
+library(rmarkdown)
+render(rmd_file, "pdf_document")
+quit()
+setwd("~")
+library(rmarkdown)
+render("Example.Rmd", "pdf_document")
+library(rmarkdown)
+setwd("~")
+render("Example.Rmd", "pdf_document")
+render?
+?render
+render("Example.Rmd", "pdf_document", run_pandoc=F)
+render("Example.Rmd", "pdf_document", run_pandoc=F, intermediates_dir="~")
+render("Example.Rmd", "pdf_document", run_pandoc=F, clean=False)
+render("Example.Rmd", "pdf_document", run_pandoc=F, clean=F)
+render("Example.Rmd", "pdf_document", clean=F)
+render("Example.Rmd", "html_document", clean=F)
+render("Example.Rmd", "html_document")
+render("Example.Rmd", "pdf_document")
+render("Example.Rmd", "word_document")
+quit()
+setwd("/Users/login/Documents/MysticLakeBins/MWMW/Data/16S_Info")
+cwd
+cwd()
+getcwd()
+getwd()
+ls(getwd())
+f = "dbOTUbySample.tsv"
+t = read.table(f, sep="\t", header=True)
+t = read.table(f, sep="\t", header=T)
+fix(t)
+freqs = apply(t, 2, function(i) i/sum(i))
+t_d = t[,2:length(colnames(t))]
+colnames(t_d)
+length(colnames(t))
+t_d = t[,colnames(t)[2:715]]
+t_d[1:2, 1:2]
+t[1:2,colnames(t)[2:4]
+]
+t_d = t[,colnames(t)[4:715]]
+t_d[1:2, 1:2]
+freqs = apply(t_d, 2, function(i) i/sum(i))
+freqs[1:2, 1:2]
+freqs[,'seq86424']
+t = read.table(f, sep="\t", header=True, row.names=1)
+t = read.table(f, sep="\t", header=T, row.names=1)
+t_d = t[,colnames(t)[3:715]]
+t_d = t[,colnames(t)[3:714]]
+t_d[1:2, 1:2]
+freqs = apply(t_d, 2, function(i) i/sum(i))
+freqs[,'seq86424']
+(0.26666667+0.22222222)/2
+(0.22222222+0.17777778)/2
+dim(t_d)
+rm(list=ls())
+library(caret)
+library(caret)
+install.packages("caret", dependencies=T)
+R.home(component = "home")

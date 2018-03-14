@@ -3,8 +3,8 @@ metagenomic binning, quantification, and analysis with metawrap
 
 Notes:
  - Bin 26 is E. Coli, Bin 52 is M. aeruginosa, Bin 18 should be Runella slithyformis
- - https://github.com/LANL-Bioinformatics/MeGAMerge 
- - 
+ - Bin 43 is a new thing: https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?mode=Info&id=1925548&lvl=3&lin=f&keep=1&srchmode=1&unlock
+ - Bin 43 contigs are 100% classified as Fonsibacter
 
 TODO:
  - Pull reads that map to 16S gene from libraries, classify, and assign to bins 

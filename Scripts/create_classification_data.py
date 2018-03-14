@@ -78,7 +78,8 @@ def append_indv_col_taxa_to_df(taxa_srs, fulldf):
     """
     assert list(taxa_srs.index) == list(fulldf.index)
     taxa_list = list(taxa_srs.values)
-    taxa_splits = [i.split(";") for i in taxa_list]
+    taxa_splits = [[j.split("__")[-1] for j in i.split(";")] for i in taxa_list]
+    edited_splits = []
     tax_arr = np.array(taxa_splits)
     taxa_df = pd.DataFrame(index=taxa_srs.index, columns = ["Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species"], data=tax_arr)
     fullerdf = pd.concat([fulldf.copy(), taxa_df], axis=1, verify_integrity=True)
@@ -136,7 +137,12 @@ time_one = time_k(time_start, "Loaded packages")
 if len(sys.argv) < 3:
     shotgun_abunds = "../Data/16S_Info/dbOTUbySample.tsv"
     otu_matrix_file = "../Data/16S_Info/unique.dbOTU.nonchimera.mat.rdp.local.tsv"
+    bin_abund_file = "../Data/Bin_Abundances/bin_counts_normed.tsv"
+    bin_taxa_file = "../Data/intermediate_files/bin_taxonomy_edit.tsv"
+    # need to add new taxonomy
+    # need to edit it to remove propogated classifications 
 else:
+    bin_abunds = sys.argv[-3]
     shotgun_abunds = sys.argv[-2]
     otu_matrix_file = sys.argv[-1]
 
@@ -152,6 +158,15 @@ col_corresp = {"A4_3mMystic": "SB081213TAWMD03VV4TM",
                "B5_20mMystic": "SB081213TAWMD20VV4TM",
                "B6_21mMystic": "SB081213TAWMD21VV4TM",
                "B7_22mMystic": "SB081213TAWMD22VV4TM"}
+
+bin_table = pd.read_csv(bin_abund_file, sep="\t", index_col=0)
+col_sel_bins = bin_table.ix[:, sorted(col_corresp.keys())]
+new_b_cols = [col_corresp[i] for i in col_sel_bins.columns]
+col_sel_bins.columns = new_b_cols
+bin_taxa_raw = pd.read_csv(bin_taxa_file, sep="\t", index_col=0)
+good_cols = [i for i in bin_taxa_raw.columns if "%" not in i]
+good_cols.remove('Species')
+bin_taxa_lr = bin_taxa_raw.ix[:, good_cols].fillna("")
 
 # reads in SMG data
 smg_table = pd.read_csv(shotgun_abunds, sep="\t", index_col=0)
@@ -175,12 +190,24 @@ sample_select_t = sample_select.T
 clr_tags = clr(sample_select_t, 0.001)
 time_three = time_k(time_two_half, "Performed CLR on test size {}".format(clr_tags.shape))
 
-# load in new data
+# load in test data
 otu_table = pd.read_csv(otu_matrix_file, sep="\t", index_col=0)
 time_four = time_k(time_three, "Read in train (OTU) data")
 
-# split off taxa series 
+# split off taxa series and parse it into a dataframe
 taxa_series = otu_table.ix[:, -1]
+taxa_list = list(taxa_series.values)
+taxa_splits = [[j.split("__")[-1] for j in i.split(";")] for i in taxa_list]
+tax_arr = np.array(taxa_splits)
+taxa_df = pd.DataFrame(index=taxa_series.index, 
+                       columns = ["Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species"], 
+                       data=tax_arr)
+# drop blank species column
+taxa_df.drop(['Species'], axis=1, inplace=True)
+# make sets of both classifications at each hierarchy
+bin_taxa_sets = [set(bin_taxa_lr.ix[:, i].tolist()) for i in bin_taxa_lr.columns]
+otu_taxa_sets = [set(taxa_df.ix[:, i].tolist()) for i in taxa_df.columns]
+taxa_is_subset = [(s.issubset(t)) for s, t in zip(bin_taxa_sets, otu_taxa_sets)]
 
 # drop taxa series and bad columns first
 otu_time_table = otu_table.drop([otu_table.columns[-1]], axis=1)
@@ -231,5 +258,9 @@ taxa_series_test = taxa_series[list(clr_tags.T.index)]
 test_df = append_indv_col_taxa_to_df(taxa_series_test, clr_tags.T)
 test_df.to_csv("../Data/16S_Info/"+test_data_fname, sep="\t", header=True, index=True)
 _ = time_k(time_eleven, "Wrote out test data ({})".format(test_df.shape))
+
+
+
+
 
 sys.exit("Done. Exiting")
