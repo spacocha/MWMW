@@ -139,8 +139,12 @@ if len(sys.argv) < 3:
     otu_matrix_file = "../Data/16S_Info/unique.dbOTU.nonchimera.mat.rdp.local.tsv"
     bin_abund_file = "../Data/Bin_Abundances/bin_counts_normed.tsv"
     bin_taxa_file = "../Data/intermediate_files/bin_taxonomy_edit.tsv"
+    otu_taxa_file = "../Data/16S_Info/unique.dbOTU.nonchimera.ns.fasta.rdp2.txt"
     # need to add new taxonomy
     # need to edit it to remove propogated classifications 
+    # need to remove gaps in classifications 
+    
+
 else:
     bin_abunds = sys.argv[-3]
     shotgun_abunds = sys.argv[-2]
@@ -192,22 +196,48 @@ time_three = time_k(time_two_half, "Performed CLR on test size {}".format(clr_ta
 
 # load in test data
 otu_table = pd.read_csv(otu_matrix_file, sep="\t", index_col=0)
+# sort index here
 time_four = time_k(time_three, "Read in train (OTU) data")
 
 # split off taxa series and parse it into a dataframe
-taxa_series = otu_table.ix[:, -1]
-taxa_list = list(taxa_series.values)
-taxa_splits = [[j.split("__")[-1] for j in i.split(";")] for i in taxa_list]
+with open(otu_taxa_file, "r") as fh:
+    raw_taxa_otu = [ i for i in fh.read().replace("%",".").replace('"', "").split("\n") if i !=""][6:]
+taxa_cols = raw_taxa_otu[0].split(";")
+raw_taxa_otu.remove(raw_taxa_otu[0])
+taxa_splits = [i.split(";") for i in raw_taxa_otu]
 tax_arr = np.array(taxa_splits)
-taxa_df = pd.DataFrame(index=taxa_series.index, 
-                       columns = ["Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species"], 
-                       data=tax_arr)
+taxa_df_raw = pd.DataFrame(index=tax_arr[:,0], columns = taxa_cols[2:], data=tax_arr[:, 2:])
+# sort index here
+taxa_df_dt = taxa_df_raw.apply(pd.to_numeric, errors='ignore')
+
+def drop_low_conf_and_IS(label, confi_label, cutoff, df):
+    df_copy = df.copy()
+    df_bool = df.ix[:,confi_label] < float(cutoff)
+    print df_bool.sum(), "{}'s will be erased for low cutoff".format(label)
+    df_copy.ix[df_bool, label] = ""
+    df_bool2 = df_copy.ix[:, label].str.contains("Incertae")
+    print df_bool2.sum(), "{}'s will be erased for Incertae Sedis".format(label)
+    df_copy.ix[df_bool2, label] = ""
+    return df_copy
+
+taxa_df_gd = drop_low_conf_and_IS('Genus', 'G_con', 50., taxa_df_dt)
+taxa_df_fd = drop_low_conf_and_IS("Family",  "F_con", 50., taxa_df_gd)
+taxa_df_od = drop_low_conf_and_IS("Order",  "O_con", 50., taxa_df_fd)
+taxa_df_cd = drop_low_conf_and_IS("Class",  "C_con", 50., taxa_df_od)
+taxa_df_pd = drop_low_conf_and_IS("Phylum",  "P_con", 50., taxa_df_cd)
+taxa_df_kd = drop_low_conf_and_IS("Kingdom",  "K_con", 50., taxa_df_pd)
+
 # drop blank species column
-taxa_df.drop(['Species'], axis=1, inplace=True)
+taxa_df = taxa_df_kd.drop([i for i in taxa_df_kd.columns if "_con" in i ], axis=1)
 # make sets of both classifications at each hierarchy
 bin_taxa_sets = [set(bin_taxa_lr.ix[:, i].tolist()) for i in bin_taxa_lr.columns]
 otu_taxa_sets = [set(taxa_df.ix[:, i].tolist()) for i in taxa_df.columns]
 taxa_is_subset = [(s.issubset(t)) for s, t in zip(bin_taxa_sets, otu_taxa_sets)]
+if sum(taxa_is_subset) == len(taxa_is_subset):
+    print "All bin taxa levels are in otu taxa hierarchy!"
+else:
+    taxa_diff = {n:(s - t) for n, s, t in zip(bin_taxa_lr.columns, bin_taxa_sets, otu_taxa_sets)}
+    print taxa_diff
 
 # drop taxa series and bad columns first
 otu_time_table = otu_table.drop([otu_table.columns[-1]], axis=1)

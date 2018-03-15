@@ -25,12 +25,12 @@ Bin 23	Bacteria	99
 Bin 24	Bacteria	96	Proteobacteria	86	Betaproteobacteria	58	Burkholderiales	73						
 Bin 25	Bacteria	99	Proteobacteria	59										
 Bin 26	Bacteria	100	Proteobacteria	99	Gammaproteobacteria	100	Enterobacteriales	100	Enterobacteriaceae	99				
-Bin 27	Bacteria	99	Bacteroidetes	94	Flavobacteria	96	Flavobacteriales	100	Flavobacteriaceae	99				
+Bin 27	Bacteria	99	Bacteroidetes	94	Flavobacteriia	96	Flavobacteriales	100	Flavobacteriaceae	99				
 Bin 28	Bacteria	96												
-Bin 29	Bacteria	99	Cyanobacteria/Chloroplast	84	Cyanobacteria	100	Synechococcaceae	100						
+Bin 29	Bacteria	99	Cyanobacteria/Chloroplast	84	Cyanobacteria	100		100						
 Bin 30	Bacteria	100	Proteobacteria	76										
 Bin 31	Bacteria	99												
-Bin 32	Bacteria	99	Bacteroidetes	74	Flavobacteria	57	Flavobacteriales	100						
+Bin 32	Bacteria	99	Bacteroidetes	74	Flavobacteriia	57	Flavobacteriales	100						
 Bin 33	Bacteria	99	Proteobacteria	94	Betaproteobacteria	88	Burkholderiales	95	Comamonadaceae	88				
 Bin 34	Bacteria	98	Proteobacteria	73										
 Bin 35	Bacteria	95	Bacteroidetes	78										
@@ -43,15 +43,15 @@ Bin 41	Bacteria	99	Proteobacteria	84	Gammaproteobacteria	88
 Bin 42	Bacteria	97												
 Bin 43	Bacteria	99	Proteobacteria	99	Alphaproteobacteria	99	SAR11	99	SAR11	98	Candidatus Pelagibacter	100		
 Bin 44	Bacteria	95												
-Bin 45	Bacteria	100	Actinobacteria	98	Actinobacteria	95	Candidatus Nanopelagicales	100	Candidatus Nanopelagicus	58				
+Bin 45	Bacteria	100	Actinobacteria	98	Actinobacteria	95	Actinomycetales	100		58				
 Bin 46	Bacteria	95	Bacteroidetes	68										
 Bin 47	Bacteria	91												
 Bin 48	Bacteria	98	Bacteroidetes	61										
-Bin 49	Bacteria	100	Proteobacteria	99	Betaproteobacteria	98	Nitrosomonadales	100	Methylophilaceae	100	Candidatus Methylopumilus	93	Candidatus Methylopumilus planktonicus	100
+Bin 49	Bacteria	100	Proteobacteria	99	Betaproteobacteria	98	Methylophilales	100	Methylophilaceae	100	Methylotenera	93	Candidatus Methylopumilus planktonicus	100
 Bin 50	Bacteria	96	Bacteroidetes	83										
 Bin 51	Bacteria	100	Actinobacteria	99										
-Bin 52	Bacteria	99	Cyanobacteria	88										
-Bin 53	Bacteria	100	Proteobacteria	99	Betaproteobacteria	99	Nitrosomonadales	100	Methylophilaceae	100	Candidatus Methylopumilus	97	Candidatus Methylopumilus planktonicus	99
+Bin 52	Bacteria	99	Cyanobacteria/Chloroplast	88										
+Bin 53	Bacteria	100	Proteobacteria	99	Betaproteobacteria	99	Methylophilales	100	Methylophilaceae	100	Methylotenera	97	Candidatus Methylopumilus planktonicus	99
 Bin 54	Bacteria	100												
 Bin 55	Bacteria	99												
 Bin 56	Bacteria	97	Bacteroidetes	59										
@@ -85,4 +85,4 @@ Bin 83	Bacteria	99	Proteobacteria	95	Betaproteobacteria	61	Burkholderiales	62
 Bin 84	Bacteria	93												
 Bin 85	Bacteria	99	Proteobacteria	78	Betaproteobacteria	56								
 Bin 86	Bacteria	98	Bacteroidetes	82										
-Bin 87	Bacteria	96	Actinobacteria	61	Actinobacteria	74	Candidatus Nanopelagicales	91						
+Bin 87	Bacteria	96	Actinobacteria	61	Actinobacteria	74	Actinomycetales	91						
