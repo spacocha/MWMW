@@ -19,28 +19,53 @@ full_dist =  squareform(pdist(super_mat, metric='cosine'))
 bin_to_tags = full_dist[:bin_abunds.shape[0], bin_abunds.shape[0]:]
 dist_df = pd.DataFrame(index=bin_abunds.index, columns=test_abunds.index, data=bin_to_tags)
 
-label_list = ['Bin 26', 'Bin 18', "Bin 52"]
+label_list = bin_df.index.tolist()
 
-def taxa_stepper(bin_label, dist_df, bin_taxa):
-    this_bin_matches = dist_df.ix[bin_label, :].copy().round(12)
+def taxa_stepper(bin_label, distdf, bin_taxa, testtaxa, sigfigs):
+    this_bin_matches = distdf.ix[bin_label, :].copy().round(sigfigs)
     this_bin_taxa = bin_taxa.ix[bin_label, :].copy()
+    tt_cp = testtaxa.copy()
     for t_label, t_name in zip(this_bin_taxa.index, this_bin_taxa.values):
         if t_name != "":
-            step_1_t = test_taxa[test_taxa.ix[:, t_label] == t_name].index
-            this_bin_matches[step_1_t]-=1
+            step_1_t = tt_cp[tt_cp.ix[:, t_label] == t_name].index
+            this_bin_matches[step_1_t]-=(1./6.)
         else:
             break
     the_best_score = this_bin_matches.min()
-    print bin_label
     best_hitters = list(this_bin_matches[this_bin_matches == the_best_score].index)
-    print "\tTop", the_best_score, repr(best_hitters)
     this_bin_matches.drop(best_hitters, inplace=True)
     next_best_score = this_bin_matches.min()
     next_hitters = list(this_bin_matches[this_bin_matches == next_best_score].index)
-    print "\tNext", next_best_score, repr(next_hitters)
-    return (best_hitters, the_best_score, next_hitters, next_best_score)
+    diff_score = abs(the_best_score-next_best_score)/abs(next_best_score)
+    return (bin_label, best_hitters, diff_score)
 
-practice_hits = [taxa_stepper(ll, dist_df, bin_taxa) for ll in label_list]
+def taxa_iterator(label_list, dist_df_, bin_taxa, test_taxa_):
+    local_dists, local_tt = dist_df_.copy(), test_taxa_.copy()
+    matched_tags = []
+    while len(label_list) > 0:
+        practice_hits = [taxa_stepper(ll, local_dists, bin_taxa, local_tt, 15) for ll in label_list]
+        bin_matched, tags_matched, winning_score = sorted(practice_hits, key=lambda k: k[2], reverse=True)[0]
+        label_list.remove(bin_matched)
+        local_dists.drop(tags_matched, axis=1, inplace=True)
+        local_tt.drop(tags_matched, axis=0, inplace=True)
+        matched_tags.append({"Bin":bin_matched, "Tag":tags_matched, "Difference":winning_score})
+        print "{} matched, {} iterations remaining".format(bin_matched, len(label_list))
+    return matched_tags
+
+matched_tags = taxa_iterator(label_list, dist_df, bin_taxa, test_taxa)
+to_write = pd.DataFrame(matched_tags).set_index("Bin", verify_integrity=1).sort_values(["Difference"], ascending=False)
+match_file_n = "../Data/16S_Info/bin_tag_matches.tsv"
+to_write.to_csv(match_file_n, sep="\t", index_label="Bin", index=1, header=1)
+
+
+
+
+
+
+
+
+
+
 
 """
 X = [dist_df.ix[lab, :].values for lab in label_list]

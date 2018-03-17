@@ -98,10 +98,11 @@ def combine_replicate_pairs(replicate_trios, old_df, comp_type):
     """
     roots, p1s, p2s = zip(*replicate_trios)
     new_df = pd.DataFrame(index=roots, columns=old_df.columns)
+    corr_scores = []
     for root, p1, p2 in replicate_trios:
         if p1 in old_df.index and p2 in old_df.index:
             sub_old_df = old_df.ix[[p1, p2], :] / 2.0
-            print root, "pearson corr:", sub_old_df.T.corr().ix[p1, p2]
+            corr_scores.append(sub_old_df.T.corr().ix[p1, p2])
         elif p1 in old_df.index:
             sub_old_df = old_df.ix[[p1], :]
         elif p2 in old_df.index:
@@ -114,6 +115,7 @@ def combine_replicate_pairs(replicate_trios, old_df, comp_type):
             new_df.ix[root, :] = sub_old_df.sum()
         else:
             sys.exit("third argument must be `Raw` or `Normalized`")
+    print "Minimum replicate correlation: {}".format(np.min(corr_scores).round(5))
     if comp_type == 'Raw':
         rescale_values = (1.0 / new_df[new_df > 0].min(1))
         rescaled_df = new_df.mul(rescale_values, 0)
@@ -146,16 +148,16 @@ def time_k(old_stamp, deed_done):
     """
     time_one_stamp = time.time()
     time_one = time_one_stamp - old_stamp
-    print deed_done+(" (%05.3f s)" % (time_one))
+    #print deed_done+(" (%05.3f s)" % (time_one))
     return time_one_stamp
 
 def drop_low_conf_and_IS(label, confi_label, cutoff, df):
     df_copy = df.copy()
     df_bool = df.ix[:,confi_label] < float(cutoff)
-    print df_bool.sum(), "{}'s will be erased for low cutoff".format(label)
+    #print df_bool.sum(), "{}'s will be erased for low cutoff".format(label)
     df_copy.ix[df_bool, label] = ""
     df_bool2 = df_copy.ix[:, label].str.contains("Incertae")
-    print df_bool2.sum(), "{}'s will be erased for Incertae Sedis".format(label)
+    #print df_bool2.sum(), "{}'s will be erased for Incertae Sedis".format(label)
     df_copy.ix[df_bool2, label] = ""
     return df_copy
 
@@ -268,8 +270,6 @@ def import_dist_matrices(norm_choice, write_bool, bin_or_train="train"):
     # creates a list of root samples to create and pairs to merge to create them
     if bin_or_train == 'bin':
         replicate_trios = [(i, i+"_1.sam", i+"_2.sam") for i in sorted(smg_table.bSample.unique())]
-        print replicate_trios[0]
-        print replicate_trios[-1]
     else:
         replicate_trios = [(i, i+"_1.sam", i+"_2.sam") for i in sorted(col_corresp.keys())]
     # drops any metadata leaving only abundances
@@ -282,7 +282,7 @@ def import_dist_matrices(norm_choice, write_bool, bin_or_train="train"):
     if bin_or_train != 'bin':
         new_cols = [col_corresp[i] for i in sample_select.columns]
         sample_select.columns = new_cols
-        
+
     # creates a list of all samples that survived culling
     test_label_set = set(list(sample_select[sample_select.sum(1) != 0].index))
     print "{} otus detected in shotgun libraries".format(len(test_label_set))
@@ -311,7 +311,7 @@ def import_dist_matrices(norm_choice, write_bool, bin_or_train="train"):
         if not test_label_set.issubset(train_label_set):
             print "Train labels are a subset of test labels: {}".format(test_label_set.issubset(train_label_set))
             lost_labels = test_label_set - train_label_set
-            print "These {} labels not found:\n{}".format(len(lost_labels), lost_labels)
+            print "\t{} labels not found:".format(len(lost_labels))
         combo_trained = clr(combo_train, 0.001)
         t_twelve = time_k(time_eight, "Performed CLR on train of size {}".format(combo_train.shape))
     elif norm_type == "UNIT":
@@ -327,7 +327,7 @@ def import_dist_matrices(norm_choice, write_bool, bin_or_train="train"):
         if not test_label_set.issubset(train_label_set):
             print "Train labels are a subset of test labels: {}".format(test_label_set.issubset(train_label_set))
             lost_labels = test_label_set - train_label_set
-            print "These {} labels not found:\n{}".format(len(lost_labels), lost_labels)
+            print "\t{} labels not found:".format(len(lost_labels))
         t_twelve = time_k(time_eight, "Performed Unit normalization on train of size {}".format(combo_trained.shape))
     elif norm_type == "RAW":
         aug_abund_df = samps_by_feats[samps_by_feats.date == manual_date]
@@ -342,7 +342,7 @@ def import_dist_matrices(norm_choice, write_bool, bin_or_train="train"):
         if not test_label_set.issubset(train_label_set):
             print "Train labels are a subset of test labels: {}".format(test_label_set.issubset(train_label_set))
             lost_labels = test_label_set - train_label_set
-            print "These {} labels not found:\n{}".format(len(lost_labels), lost_labels)
+            print "\t{} labels not found:".format(len(lost_labels))
         t_twelve = time_k(time_eight, "Skipped normalization on train of size {}".format(combo_trained.shape))
 
     # create train tsv file after appending taxa series
