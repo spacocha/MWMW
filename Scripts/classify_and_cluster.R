@@ -2,32 +2,37 @@
 # Written by Keith Arora-Williams
 args = commandArgs(trailingOnly=TRUE)
 if (length(args) != 3) {
-   write("Three arguments must be provided train, test, and bin data", stderr())
-   test_file = ""
-   train_file = ""
-   bin_file = ""
+write("Using default train, test, and bin data", stderr())
+#setwd("/Users/login/Documents/MysticLakeBins/MWMW/Scripts")
+test_file = "../Data/16S_Info/smg_abund_tax_test.tsv"
+train_file = "../Data/16S_Info/otu_abund_tax_train.tsv"
+bin_file = "../Data/16S_Info/bin_abund_tax_test.tsv"
 }  else {
    train_file = args[1]
    test_file = args[2]
    bin_file = args[3]
 }
 
-library(caret)
+test_df = read.table(test_file, header=T, sep="\t")
+train_df = read.table(train_file, header=T, sep="\t")
+bin_df = read.table(bin_file, header=T, sep="\t")
+colnames(test_df)[1] <- "OTU"
+
+train_x = train_df[,colnames(train_df)[2:18]]
+train_y = train_df[,colnames(train_df)[1]]
+test_x = test_df[,colnames(train_df)[2:18]]
+test_y = test_df[,colnames(train_df)[1]]
+#tune_df = rbind(train_df, test_df)
+#train_idx = list(1:9953)
+#test_idx = list(9954:10525)
+#test_idxs = rep(test_idx, 10)
+#train_idxs = rep(train_idx, 10)
+
 library(randomForest)
+library(caret)
+set.seed(42)
 
-control <- trainControl(method = "repeatedcv", number = 10, repeats = 2,
-                            classProbs = FALSE, verboseIter = TRUE,
-                            preProcOptions=list(na.remove=TRUE,verbose=TRUE))
-tunegrid <- expand.grid(.mtry=c(1:10))
-
-rf_gridsearch <- train(quality ~ . , data=data_train,
-                           method="rf", metric="Accuracy",
-                           tuneGrid=tunegrid, trControl=control)
-print(rf_gridsearch)                                                  
-plot(rf_gridsearch)
-
-# Solve a randomForest with the tuned value for mtry
-tunedRF = randomForest(quality ~ . , data=data, subset=train, mtry=2, importance=TRUE, ntree=1000)
+tunedRF = randomForest(train_x, y=train_y,  xtest=test_x, ytest=test_y, importance=TRUE, ntree=1000)
 y_hat = predict(tunedRF, newdata=data_test)
 tab = table(y_hat, data_test$quality)
 error = 1-sum(diag(tab))/sum(tab)
