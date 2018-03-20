@@ -171,7 +171,7 @@ def l1l2clr_norm(df, n_type, psct=None):
     """
     if n_type.startswith("l"):
         mat = df.values.astype(float)
-        data_ = normalize(mat, n_type)
+        data_ = normalize(mat, norm=n_type, axis=1, copy=True)
     elif n_type == 'clr' and psct:
         mat = df.values.astype(float) + psct
         mat = (mat / mat.sum(axis=1, keepdims=True)).squeeze()
@@ -306,7 +306,7 @@ def check_taxa_hierarchies(bin_taxa_lr, taxa_df):
     return
 
 def import_bin_data(norm_type, filter_samples, write_bool, check_taxa=True, psct_val=None):
-    bin_taxa_file = "../Data/intermediate_files/bin_taxonomy_edit.tsv"
+    bin_taxa_file = "../Data/bin_taxonomy_edit.tsv"
     bin_taxa_raw = pd.read_csv(bin_taxa_file, sep="\t", index_col=0)
     good_cols = [i for i in bin_taxa_raw.columns if "%" not in i]
     good_cols.remove('Species')
@@ -315,7 +315,7 @@ def import_bin_data(norm_type, filter_samples, write_bool, check_taxa=True, psct
     if check_taxa:
         check_taxa_hierarchies(bin_taxa_lr, taxa_df)
 
-    bin_table_ = import_bin_abundances(True)
+    bin_table_ = import_bin_abundances(True).round(1)
 
     if filter_samples:
         col_sel_bins = bin_table_.T.ix[:, sorted(col_corresp.keys())]
@@ -325,13 +325,13 @@ def import_bin_data(norm_type, filter_samples, write_bool, check_taxa=True, psct
         col_sel_bins = bin_table_.T
 
     if norm_type != "raw":
-        normed_bins = l1l2clr_norm(col_sel_bins, norm_type, psct_val)
+        normed_bins = l1l2clr_norm(col_sel_bins.T, norm_type, psct_val)
         print "Performed {} scaling on bins size {}".format(norm_type, normed_bins.shape)
     else:
         normed_bins = col_sel_bins.T
         print "Performed no scaling on bins size {}".format(norm_type, normed_bins.shape)
 
-    bin_df = append_indv_col_taxa_to_df(bin_taxa_lr, normed_bins)
+    bin_df = append_indv_col_taxa_to_df(bin_taxa_lr, normed_bins.T)
 
     if write_bool:
         bin_data_fname = "bin_abund_tax_test.tsv"

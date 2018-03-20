@@ -1,34 +1,40 @@
-from create_classification_data import import_dist_matrices
+from load_classif_data import *
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
 from scipy.spatial.distance import pdist, squareform
+from sklearn.preprocessing import normalize
 
-train_df, test_df, bin_df = import_dist_matrices("UNIT", write_bool=False, bin_or_train='bin')
+tag_df = import_matched_amplicons('l1', False, False, False, psct_val=None)
+#tag_df2 = import_matched_amplicons('raw', False, False, False, psct_val=None)
+
+# TODO: test four transforms on this data to improve resolution
+bin_df = import_bin_data('l1', False, False, check_taxa=True, psct_val=None)
 
 bin_abunds = bin_df.ix[:, bin_df.columns[:17]]
-test_abunds = test_df.ix[:, bin_df.columns[:17]]
-
+tag_abunds = tag_df.ix[:, tag_df.columns[:17]]
+#tag_abunds2 = tag_df2.ix[:, tag_df2.columns[:17]]
 bin_taxa = bin_df.ix[:, bin_df.columns[17:]]
-test_taxa = test_df.ix[:, bin_df.columns[17:]]
+tag_taxa = tag_df.ix[:, tag_df.columns[17:]]
 
-mat1, mat2 = bin_abunds.values, test_abunds.values
+mat1, mat2 = bin_abunds.values, tag_abunds.values
 super_mat = np.vstack((mat1, mat2))
 full_dist =  squareform(pdist(super_mat, metric='cosine'))
 
 bin_to_tags = full_dist[:bin_abunds.shape[0], bin_abunds.shape[0]:]
-dist_df = pd.DataFrame(index=bin_abunds.index, columns=test_abunds.index, data=bin_to_tags)
+dist_df = pd.DataFrame(index=bin_abunds.index, columns=tag_abunds.index, data=bin_to_tags)
 
 label_list = bin_df.index.tolist()
 
-def taxa_stepper(bin_label, distdf, bin_taxa, testtaxa, sigfigs):
+def taxa_stepper(bin_label, distdf, bintaxa, testtaxa, sigfigs):
     this_bin_matches = distdf.ix[bin_label, :].copy().round(sigfigs)
-    this_bin_taxa = bin_taxa.ix[bin_label, :].copy()
+    this_bin_taxa = bintaxa.ix[bin_label, :].copy()
     tt_cp = testtaxa.copy()
+    score_denom = float(6 - list(this_bin_taxa.apply(len)).count(0))
     for t_label, t_name in zip(this_bin_taxa.index, this_bin_taxa.values):
         if t_name != "":
             step_1_t = tt_cp[tt_cp.ix[:, t_label] == t_name].index
-            this_bin_matches[step_1_t]-=(1./6.)
+            this_bin_matches[step_1_t]-=(1./score_denom)
         else:
             break
     the_best_score = this_bin_matches.min()
@@ -49,10 +55,10 @@ def taxa_iterator(label_list, dist_df_, bin_taxa, test_taxa_):
         local_dists.drop(tags_matched, axis=1, inplace=True)
         local_tt.drop(tags_matched, axis=0, inplace=True)
         matched_tags.append({"Bin":bin_matched, "Tag":tags_matched, "Difference":winning_score})
-        print "{} matched, {} iterations remaining".format(bin_matched, len(label_list))
+        print "{} matched to {} tags, {} iterations remaining".format(bin_matched, tags_matched, len(label_list))
     return matched_tags
 
-matched_tags = taxa_iterator(label_list, dist_df, bin_taxa, test_taxa)
+matched_tags = taxa_iterator(label_list, dist_df, bin_taxa, tag_taxa)
 to_write = pd.DataFrame(matched_tags).set_index("Bin", verify_integrity=1).sort_values(["Difference"], ascending=False)
 match_file_n = "../Data/16S_Info/bin_tag_matches.tsv"
 to_write.to_csv(match_file_n, sep="\t", index_label="Bin", index=1, header=1)
