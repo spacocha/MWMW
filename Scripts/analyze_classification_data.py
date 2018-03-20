@@ -16,18 +16,8 @@ def distance_extractor(df1, df2, dist_type, check_integrity=True):
     paired_dists = [full_dist[i, i+mat1.shape[0]] for i in range(mat1.shape[0])]
     return pd.Series(index=df1.index, data=paired_dists)
 
-def measure_separation(dist_type, matrices_in_order=None, return_data=False):
-    if not matrices_in_order:
-        test_file = "../Data/16S_Info/smg_abund_tax_test.tsv"
-        train_file = "../Data/16S_Info/otu_abund_tax_train.tsv"
-        bin_file = "../Data/16S_Info/bin_abund_tax_test.tsv"
-        test_df = pd.read_csv(test_file, sep="\t").fillna("")
-        train_df = pd.read_csv(train_file, sep="\t").fillna("")
-        bin_df = pd.read_csv(bin_file, sep="\t").fillna("")
-    else:
-        train_df, test_df, bin_df = [i.copy().reset_index(level=0) for i in matrices_in_order]
-    
-    test_df = test_df.rename(columns={test_df.columns[0]: "OTU"})
+def measure_separation(dist_type, df_A, df_B, return_data=False):
+    train_df, test_df = df_A.copy().reset_index(level=0), df_B.copy().reset_index(level=0)
     dist_choice = dist_type
     test_seqs = set(test_df.OTU)
     comprable_set = list(test_seqs & set(train_df.OTU))
@@ -36,7 +26,6 @@ def measure_separation(dist_type, matrices_in_order=None, return_data=False):
     train_c_df = train_df[train_df.OTU.isin(comprable_set)]
     test_set_df, train_set_df = test_c_df.set_index("OTU"), train_c_df.set_index("OTU")
     test_matched, train_matched = test_set_df.ix[comprable_set, abund_cols], train_set_df.ix[comprable_set, abund_cols]
-
     abund_dists = distance_extractor(train_matched, test_matched, dist_choice, True)
 
     rand_tr_idxs = np.random.choice(train_df.index, size=(len(comprable_set),), replace=False)

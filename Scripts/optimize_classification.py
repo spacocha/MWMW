@@ -1,27 +1,56 @@
-from create_classification_data import import_dist_matrices
-from analyze_classification_data import measure_separation
-import numpy as np
 import pandas as pd
+from load_classif_data import *
+from analyze_classification_data import *
+import numpy as np
 from itertools import product
 import matplotlib.pyplot as plt
 
 dist_types = ['braycurtis', 'cityblock', 'correlation', 'cosine', 'euclidean', 'mahalanobis', 'seuclidean']
-norm_choices = ["CLR", "UNIT", "RAW"]
-
-dist_list, norm_list = zip(*[(i, j) for i, j in product(dist_types, norm_choices)])
+norm_choices = ['l1', 'l2', 'raw']+['clr'+str(i) for i in range(7)]
+three_axes = [dist_types, norm_choices, norm_choices]
+dist_list, test_tf, train_tf = zip(*[(i, j, k) for i, j, k in product(*three_axes)])
 trial_no = len(dist_list)
-first_two = np.array([list(dist_list), list(norm_list)]).T
-last_three = np.zeros((trial_no, 3))
-data_ = np.hstack((first_two, last_three))
-data_cols = ['dist_met', 'norm_choice', "mean_dist", "median_dist", "pval", "sumRatio"]
+first_cols = np.array([list(dist_list), list(test_tf), list(train_tf)]).T
+last_cols = np.zeros((trial_no, 6))
+data_ = np.hstack((first_cols, last_cols))
+data_cols = ['dist_met', 'test_norm', 'trial_norm', "te_pct_val", "tr_pct_val",
+             "mean_dist", "median_dist", "pval", "sumRatio"]
 results = pd.DataFrame(index=np.arange(trial_no)+1, columns=data_cols, data=data_)
-idxd_results = results.set_index(["dist_met", "norm_choice"])
 
-for nc in norm_choices:
-    ordered_mats = import_dist_matrices(nc, write_bool=False)
-    for dt in dist_types:
-        separations = measure_separation(dt, matrices_in_order=ordered_mats, return_data=False)
-        idxd_results.loc[dt].loc[nc] = np.array(list(separations))
+# extract pseudocount value from string
+enter_pscts = lambda x:float(10.**(int(x[-1])*-1.))
+
+for tn, tp in zip(data_cols[1:3], data_cols[3:5]):
+    clr_pos = results.ix[:, tn].str.contains("clr")
+    results.ix[clr_pos, tp] = results.ix[clr_pos, tn].apply(enter_pscts)
+    results.ix[~clr_pos, tp] = None
+
+# preload distance matrices
+preload_mats = {"test":{}, "train":{}}
+for nc_nc in norm_choices:
+    if nc_nc.startswith("clr"):
+        a_pct_val = enter_pscts(nc_nc)
+        actual_nc = "clr"
+    else:
+        a_pct_val = None
+        actual_nc = nc_nc
+    preload_mats["test"][nc_nc] = import_matched_amplicons(actual_nc, True, False, False, psct_val=a_pct_val)
+    preload_mats["train"][nc_nc] = import_amplicon_matrix(actual_nc, False, None, psct_val=a_pct_val)
+
+for r_idx in results.index.tolist():
+    dt, te_nc, tr_nc = results.ix[r_idx, :].tolist()[:3]
+    a_test_df = preload_mats["test"][te_nc]
+    a_train_df = preload_mats["train"][tr_nc]
+    separations = measure_separation(dt, a_test_df, a_train_df, return_data=False)
+    results.ix[r_idx, data_cols[-4:]] = np.array(list(separations))
+
+results["neg_log_pval"] = results.pval.apply(lambda x: -1.0*np.log(x))
+results['pval_rank'] = results.neg_log_pval.rank(ascending=0)
+results['median_rank'] = results.median_dist.rank(ascending=1)
+results['mean_rank'] = results.mean_dist.rank(ascending=1)
+
+results['rank_sum'] = results.ix[:, ["pval_rank", "median_rank", "mean_rank"]].sum(1)
+results.sort_values(['rank_sum']).head()
 
 # braycurtis & UNIT
 #raw_mats = import_dist_matrices("RAW", write_bool=False)
@@ -30,6 +59,7 @@ for nc in norm_choices:
 #clr_mats = import_dist_matrices("CLR", write_bool=False)
 #clr_dists = measure_separation("cityblock", matrices_in_order=clr_mats, return_data=True)
 # cosine & UNIT
+"""
 unit_mats = import_dist_matrices("UNIT", write_bool=False)
 dist1 = measure_separation("braycurtis", matrices_in_order=unit_mats, return_data=True)
 dist2 = measure_separation("correlation", matrices_in_order=unit_mats, return_data=True)
@@ -70,3 +100,4 @@ for ax, cnt in zip(axes.ravel(), range(3)):
 axes[2].set_ylabel('count')
 fig.tight_layout()
 fig.savefig("../Data/16S_Info/best_distance_and_norming.png")
+"""
