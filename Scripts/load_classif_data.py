@@ -125,7 +125,7 @@ def combine_replicate_pairs(replicate_trios, old_df):
     rescaled_df = new_df.mul(rescale_values, 0)
     return rescaled_df
 
-def drop_low_conf_and_IS(label, confi_label, cutoff, df):
+def drop_low_conf_and_IS(label, confi_label, cutoff, df, verbose=False):
     """
     Takes a DF containing fullrank RDP classifications and removes
     low confidence assignments and any gaps in the hierarchy noted
@@ -136,33 +136,34 @@ def drop_low_conf_and_IS(label, confi_label, cutoff, df):
     df_copy.ix[df_bool, label] = ""
     df_bool2 = df_copy.ix[:, label].str.contains("Incertae")
     df_copy.ix[df_bool2, label] = ""
+    if verbose:
+        print "{} + {} dropped from {} because of low conf./gaps".format(df_bool.sum(), df_bool2.sum(), label)
     return df_copy
 
-def clean_rdp_txt(otu_taxa_file, con_cutoff):
+def clean_rdp_txt(otu_taxa_file, con_cutoff, verbosity=False):
     """
     This takes the raw fixed rank RDP file and returns a cleaned
     up 6 column hierarchy with only high confidence classifications
     """
     with open(otu_taxa_file, "r") as fh:
         raw_taxa_otu = [ i for i in fh.read().replace("%",".").replace('"', "").split("\n") if i !=""][6:]
-    taxa_cols = raw_taxa_otu[0].split(";")
-    raw_taxa_otu.remove(raw_taxa_otu[0])
+    taxa_cols = "seq;Root;Kingdom;K_con;Phylum;P_con;Class;C_con;Order;O_con;Family;F_con;Genus;G_con".split(";")
     taxa_splits = [i.split(";") for i in raw_taxa_otu]
     tax_arr = np.array(taxa_splits)
     taxa_df_raw = pd.DataFrame(index=tax_arr[:,0], columns = taxa_cols[2:], data=tax_arr[:, 2:])
     taxa_df_raw.sort_index(inplace=True)
     taxa_df_dt = taxa_df_raw.apply(pd.to_numeric, errors='ignore')
-    taxa_df_gd = drop_low_conf_and_IS('Genus', 'G_con', con_cutoff, taxa_df_dt)
-    taxa_df_fd = drop_low_conf_and_IS("Family",  "F_con", con_cutoff, taxa_df_gd)
-    taxa_df_od = drop_low_conf_and_IS("Order",  "O_con", con_cutoff, taxa_df_fd)
-    taxa_df_cd = drop_low_conf_and_IS("Class",  "C_con", con_cutoff, taxa_df_od)
-    taxa_df_pd = drop_low_conf_and_IS("Phylum",  "P_con", con_cutoff, taxa_df_cd)
-    taxa_df_kd = drop_low_conf_and_IS("Kingdom",  "K_con", con_cutoff, taxa_df_pd)
+    taxa_df_gd = drop_low_conf_and_IS('Genus', 'G_con', con_cutoff, taxa_df_dt, verbosity)
+    taxa_df_fd = drop_low_conf_and_IS("Family",  "F_con", con_cutoff, taxa_df_gd, verbosity)
+    taxa_df_od = drop_low_conf_and_IS("Order",  "O_con", con_cutoff, taxa_df_fd, verbosity)
+    taxa_df_cd = drop_low_conf_and_IS("Class",  "C_con", con_cutoff, taxa_df_od, verbosity)
+    taxa_df_pd = drop_low_conf_and_IS("Phylum",  "P_con", con_cutoff, taxa_df_cd, verbosity)
+    taxa_df_kd = drop_low_conf_and_IS("Kingdom",  "K_con", con_cutoff, taxa_df_pd, verbosity)
     # drop blank species column
     taxa_df = taxa_df_kd.drop([i for i in taxa_df_kd.columns if "_con" in i ], axis=1)
     return taxa_df
 
-taxa_df = clean_rdp_txt(otu_taxa_file, 50.0)
+taxa_df = clean_rdp_txt(otu_taxa_file, 50.0, verbosity=True)
 
 def l1l2clr_norm(df, n_type, psct=None):
     """
@@ -171,7 +172,8 @@ def l1l2clr_norm(df, n_type, psct=None):
     """
     if n_type.startswith("l"):
         mat = df.values.astype(float)
-        data_ = normalize(mat, norm=n_type, axis=1, copy=True)
+        data_, norms_ = normalize(mat, norm=n_type, axis=1, copy=True, return_norm=True)
+        print "Normalization performed along axis of length {}".format(norms_.shape)
     elif n_type == 'clr' and psct:
         mat = df.values.astype(float) + psct
         mat = (mat / mat.sum(axis=1, keepdims=True)).squeeze()
@@ -338,3 +340,35 @@ def import_bin_data(norm_type, filter_samples, write_bool, check_taxa=True, psct
         bin_df.to_csv("../Data/16S_Info/"+bin_data_fname, sep="\t", header=True, index=True)
 
     return bin_df
+
+
+def load_mgOTU_data(filtered_data, norm_type, psct_val, check_taxa):
+    if filtered_data:
+        mgOTU_cnt_f = "../Data/Metagenomic_OTUs/filtered_data/wd3_unique.f0.mat"
+        mgOTU_rdp_f = "../Data/Metagenomic_OTUs/filtered_data/wd3_unique_raw.rdp.txt"
+    else:
+        mgOTU_cnt_f = "../Data/Metagenomic_OTUs/unfiltered_data/wd4_unique.f0.mat"
+        mgOTU_rdp_f = "../Data/Metagenomic_OTUs/unfiltered_data/wd4_unique_raw.rdp.txt"
+
+    mgOTU_tax_df = clean_rdp_txt(mgOTU_rdp_f, 50.0, verbosity=True)
+    bin_taxa_file = "../Data/bin_taxonomy_edit.tsv"
+    bin_taxa_raw = pd.read_csv(bin_taxa_file, sep="\t", index_col=0)
+    good_cols = [i for i in bin_taxa_raw.columns if "%" not in i]
+    good_cols.remove('Species')
+    bin_taxa_lr = bin_taxa_raw.ix[:, good_cols].fillna("")
+    if check_taxa:
+        check_taxa_hierarchies(bin_taxa_lr, mgOTU_tax_df)
+    mg_otu_tab = pd.read_csv(mgOTU_cnt_f, sep="\t", index_col=0)
+    mg_otu_tab.columns = [i.replace("prefix_", "") for i in list(mg_otu_tab.columns)]
+    mgotu_col_sel = mg_otu_tab.drop(mg_otu_tab.columns[-4:], axis=1)
+    mgotu_cs_nz = drop_zero_cols(mgotu_col_sel.T)
+
+    if norm_type != "raw":
+        normed_bin_tags = l1l2clr_norm(mgotu_cs_nz, norm_type, psct_val)
+        print "Performed {} scaling on bins size {}".format(norm_type, normed_bins.shape)
+    else:
+        normed_bin_tags = mgotu_cs_nz
+        print "Performed no scaling on bins size {}".format(norm_type, normed_bins.shape)
+
+    mgOTU_df = append_indv_col_taxa_to_df(mgOTU_tax_df, normed_bin_tags.T)
+    return mgOTU_df

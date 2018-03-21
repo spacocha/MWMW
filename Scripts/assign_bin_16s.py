@@ -11,6 +11,9 @@ tag_df = import_matched_amplicons('l1', False, False, False, psct_val=None)
 # TODO: test four transforms on this data to improve resolution
 bin_df = import_bin_data('l1', False, False, check_taxa=True, psct_val=None)
 
+filt_mgOTUs = load_mgOTU_data(filtered_data=True, norm_type='l1', psct_val=None, check_taxa=True)
+unfilt_mgOTUs = load_mgOTU_data(filtered_data=False, norm_type='l1', psct_val=None, check_taxa=True)
+
 bin_abunds = bin_df.ix[:, bin_df.columns[:17]]
 tag_abunds = tag_df.ix[:, tag_df.columns[:17]]
 #tag_abunds2 = tag_df2.ix[:, tag_df2.columns[:17]]
