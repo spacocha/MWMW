@@ -134,7 +134,7 @@ def drop_low_conf_and_IS(label, confi_label, cutoff, df, verbose=False):
     df_copy = df.copy()
     df_bool = df.ix[:,confi_label] < float(cutoff)
     df_copy.ix[df_bool, label] = ""
-    df_bool2 = df_copy.ix[:, label].str.contains("Incertae")
+    df_bool2 = df_copy.ix[:, label].str.contains("ncertae")
     df_copy.ix[df_bool2, label] = ""
     if verbose:
         print "{} + {} dropped from {} because of low conf./gaps".format(df_bool.sum(), df_bool2.sum(), label)
