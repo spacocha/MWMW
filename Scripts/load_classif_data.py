@@ -365,10 +365,10 @@ def load_mgOTU_data(filtered_data, norm_type, psct_val, check_taxa):
 
     if norm_type != "raw":
         normed_bin_tags = l1l2clr_norm(mgotu_cs_nz, norm_type, psct_val)
-        print "Performed {} scaling on bins size {}".format(norm_type, normed_bins.shape)
+        print "Performed {} scaling on bins size {}".format(norm_type, normed_bin_tags.shape)
     else:
         normed_bin_tags = mgotu_cs_nz
-        print "Performed no scaling on bins size {}".format(norm_type, normed_bins.shape)
+        print "Performed no scaling on bins size {}".format(norm_type, normed_bin_tags.shape)
 
     mgOTU_df = append_indv_col_taxa_to_df(mgOTU_tax_df, normed_bin_tags.T)
     return mgOTU_df

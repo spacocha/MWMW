@@ -3,31 +3,8 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
 from scipy.spatial.distance import pdist, squareform
-from sklearn.preprocessing import normalize
+import os
 
-tag_df = import_matched_amplicons('l1', False, False, False, psct_val=None)
-#tag_df2 = import_matched_amplicons('raw', False, False, False, psct_val=None)
-
-# TODO: test four transforms on this data to improve resolution
-bin_df = import_bin_data('l1', False, False, check_taxa=True, psct_val=None)
-
-filt_mgOTUs = load_mgOTU_data(filtered_data=True, norm_type='l1', psct_val=None, check_taxa=True)
-unfilt_mgOTUs = load_mgOTU_data(filtered_data=False, norm_type='l1', psct_val=None, check_taxa=True)
-
-bin_abunds = bin_df.ix[:, bin_df.columns[:17]]
-tag_abunds = tag_df.ix[:, tag_df.columns[:17]]
-#tag_abunds2 = tag_df2.ix[:, tag_df2.columns[:17]]
-bin_taxa = bin_df.ix[:, bin_df.columns[17:]]
-tag_taxa = tag_df.ix[:, tag_df.columns[17:]]
-
-mat1, mat2 = bin_abunds.values, tag_abunds.values
-super_mat = np.vstack((mat1, mat2))
-full_dist =  squareform(pdist(super_mat, metric='cosine'))
-
-bin_to_tags = full_dist[:bin_abunds.shape[0], bin_abunds.shape[0]:]
-dist_df = pd.DataFrame(index=bin_abunds.index, columns=tag_abunds.index, data=bin_to_tags)
-
-label_list = bin_df.index.tolist()
 
 def taxa_stepper(bin_label, distdf, bintaxa, testtaxa, sigfigs):
     this_bin_matches = distdf.ix[bin_label, :].copy().round(sigfigs)
@@ -61,19 +38,42 @@ def taxa_iterator(label_list, dist_df_, bin_taxa, test_taxa_):
         print "{} matched to {} tags, {} iterations remaining".format(bin_matched, tags_matched, len(label_list))
     return matched_tags
 
-matched_tags = taxa_iterator(label_list, dist_df, bin_taxa, tag_taxa)
-to_write = pd.DataFrame(matched_tags).set_index("Bin", verify_integrity=1).sort_values(["Difference"], ascending=False)
-match_file_n = "../Data/16S_Info/bin_tag_matches.tsv"
-to_write.to_csv(match_file_n, sep="\t", index_label="Bin", index=1, header=1)
+
+def join_bins_and_tags(bin_df, tag_df, fname, w_dir):
+	bin_abunds = bin_df.ix[:, bin_df.columns[:17]]
+	tag_abunds = tag_df.ix[:, tag_df.columns[:17]]
+
+	bin_taxa = bin_df.ix[:, bin_df.columns[17:]]
+	tag_taxa = tag_df.ix[:, tag_df.columns[17:]]
+
+	mat1, mat2 = bin_abunds.values, tag_abunds.values
+	super_mat = np.vstack((mat1, mat2))
+	full_dist =  squareform(pdist(super_mat, metric='cosine'))
+
+	bin_to_tags = full_dist[:bin_abunds.shape[0], bin_abunds.shape[0]:]
+	dist_df = pd.DataFrame(index=bin_abunds.index, columns=tag_abunds.index, data=bin_to_tags)
+
+	label_list = bin_df.index.tolist()
+
+	matched_tags = taxa_iterator(label_list, dist_df, bin_taxa, tag_taxa)
+	to_write = pd.DataFrame(matched_tags).set_index("Bin", verify_integrity=1).sort_values(["Difference"], ascending=False)
+	match_file_n = os.path.join(w_dir, fname)
+	to_write.to_csv(match_file_n, sep="\t", index_label="Bin", index=1, header=1)
+	return (dist_df, matched_tags)
 
 
+tag_df = import_matched_amplicons('l1', False, False, False, psct_val=None)
+
+# TODO: test four transforms on this data to improve resolution
+bin_df = import_bin_data('l1', False, False, check_taxa=True, psct_val=None)
+
+filt_mgOTUs = load_mgOTU_data(filtered_data=True, norm_type='l1', psct_val=None, check_taxa=True)
+unfilt_mgOTUs = load_mgOTU_data(filtered_data=False, norm_type='l1', psct_val=None, check_taxa=True)
 
 
-
-
-
-
-
+write_dir = "../Data/Metagenomic_OTUs"
+filt_dist_df, filt_matches = join_bins_and_tags(bin_df, filt_mgOTUs, "filtered_results.tsv", write_dir)
+ufilt_dist_df, ufilt_matches = join_bins_and_tags(bin_df, unfilt_mgOTUs, "unfiltered_results.tsv", write_dir)
 
 
 """
