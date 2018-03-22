@@ -18,26 +18,37 @@ train_df = read.table(train_file, header=T, sep="\t")
 bin_df = read.table(bin_file, header=T, sep="\t")
 colnames(test_df)[1] <- "OTU"
 
-train_x = train_df[,colnames(train_df)[2:18]]
-train_y = train_df[,colnames(train_df)[1]]
-test_x = test_df[,colnames(train_df)[2:18]]
-test_y = test_df[,colnames(train_df)[1]]
-#tune_df = rbind(train_df, test_df)
-#train_idx = list(1:9953)
-#test_idx = list(9954:10525)
-#test_idxs = rep(test_idx, 10)
-#train_idxs = rep(train_idx, 10)
+# https://cran.r-project.org/web/packages/PCAmixdata/vignettes/PCAmixdata.html
 
-library(randomForest)
-library(caret)
+library(PCAmixdata)
+bin_df = read.table(bin_file, header=T, sep="\t", row.names=1)
+bin_df$Kingdom <- NULL
+edit_df = bin_df[-c(26, 18, 52), ]
+
+split <- splitmix(edit_df)
+X1 <- split$X.quanti
+X2 <- split$X.quali
+res.pcamix <- PCAmix(X.quanti=X1, X.quali=X2, rename.level=TRUE, graph=FALSE)
+par(mfrow=c(2,2))
+plot(res.pcamix,choice="ind",coloring.ind=X2$Phylum,label=T, posleg="topright", main="Observations")
+# this shows that Bins (43, 40) 4, 59, (29, 82,) (64 and 39) should be easier to identify
+plot(res.pcamix,choice="cor",main="Numerical variables")
+# this shows the primary axes of variation correspond to upper/lower water column & a control sample
+bin_df = read.table(bin_file, header=T, sep="\t", row.names=1)
+bin_df$Kingdom <- NULL
+bin_df$B9_PosControlEColiMystic <- NULL
+bin_df$H2_PosControlEBAlly <- NULL
+bin_df$H3_PosControlEMAlly <- NULL
+edit_df = bin_df[-c(26, 18, 52), ]
+split <- splitmix(edit_df)
+X1 <- split$X.quanti
+X2 <- split$X.quali
+res.pcamix2 <- PCAmix(X.quanti=X1, X.quali=X2, rename.level=TRUE, graph=FALSE)
+head(res.pcamix2$eig)
+plot(res.pcamix2,choice="ind",coloring.ind=X2$Phylum,label=T, posleg="topright", main="Observations")
+# this shows that Bin groups above can be extended to:
+# (43, 40)  (29, 82, 80) (4, 59, 78, 64 and 39) should be easier to identify
+plot(res.pcamix2,choice="cor",main="Numerical variables")
+plot(res.pcamix2,choice="sqload",coloring.var=T, leg=TRUE, posleg="topright", main="All variables")
 set.seed(42)
 
-tunedRF = randomForest(train_x, y=train_y,  xtest=test_x, ytest=test_y, importance=TRUE, ntree=1000)
-y_hat = predict(tunedRF, newdata=data_test)
-tab = table(y_hat, data_test$quality)
-error = 1-sum(diag(tab))/sum(tab)
-
-#mydata <- data
-#wss <- (nrow(mydata)-1)*sum(apply(mydata,2,var))
-#for (i in 2:15) wss[i] <- sum(kmeans(mydata, centers=i)$withinss)
-#plot(1:15, wss, type="b", xlab="Number of Clusters", ylab="Within groups sum of squares")

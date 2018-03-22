@@ -165,26 +165,33 @@ def clean_rdp_txt(otu_taxa_file, con_cutoff, verbosity=False):
 
 taxa_df = clean_rdp_txt(otu_taxa_file, 50.0, verbosity=True)
 
-def l1l2clr_norm(df, n_type, psct=None):
+def l1l2clr_norm(df, n_type, n_axes, psct=None):
     """
     Accepts and returns df with [n_samples, n_features] after performing 
     either center-log transform or 'l1' or 'l2' normalization, as specified.
     """
-    if n_type.startswith("l"):
-        mat = df.values.astype(float)
-        data_, norms_ = normalize(mat, norm=n_type, axis=1, copy=True, return_norm=True)
-        print "Normalization performed along axis of length {}".format(norms_.shape)
-    elif n_type == 'clr' and psct:
-        mat = df.values.astype(float) + psct
-        mat = (mat / mat.sum(axis=1, keepdims=True)).squeeze()
-        lmat = np.log(mat.astype(float))
-        gm = lmat.mean(axis=-1, keepdims=True)
-        data_ = (lmat - gm).squeeze()
-    else:
-        raise ValueError("l1/l2/clr must be specified and psuedocount value as well if clr")
-    return pd.DataFrame(index=df.index, columns=df.columns, data=data_)
+    new_df = df.copy()
+    for this_axis in list(n_axes):
+        if this_axis == 'c':
+            df = df.T
+        if n_type.startswith("l"):
+            mat = df.values.astype(float)
+            data_, norms_ = normalize(mat, norm=n_type, axis=1, copy=True, return_norm=True)
+            print "Normalization performed along axis of length {}".format(norms_.shape)
+        elif n_type == 'clr' and psct:
+            mat = df.values.astype(float) + psct
+            mat = (mat / mat.sum(axis=1, keepdims=True)).squeeze()
+            lmat = np.log(mat.astype(float))
+            gm = lmat.mean(axis=-1, keepdims=True)
+            data_ = (lmat - gm).squeeze()
+        else:
+            raise ValueError("l1/l2/clr must be specified and psuedocount value as well if clr")
+        if this_axis == 'c':
+            data_ = data_.T
+        df = pd.DataFrame(index=new_df.index, columns=new_df.columns, data=data_)
+    return df
 
-def import_amplicon_matrix(norm_type, write_bool, test_label_set=None, psct_val=None):
+def import_amplicon_matrix(norm_type, norm_axes, write_bool, test_label_set=None, psct_val=None):
     otu_matrix_file = "../Data/16S_Info/unique.dbOTU.nonchimera.mat.rdp.local.tsv"
     # load in test data
     otu_table = pd.read_csv(otu_matrix_file, sep="\t", index_col=0)
@@ -217,7 +224,7 @@ def import_amplicon_matrix(norm_type, write_bool, test_label_set=None, psct_val=
         print "\t{} labels not found:".format(len(lost_labels))
 
     if norm_type != "raw":
-        normed_otus = l1l2clr_norm(combo_train, norm_type, psct_val)
+        normed_otus = l1l2clr_norm(combo_train, norm_type, norm_axes, psct_val)
         print "Performed {} scaling on matched amplicons size {}".format(norm_type, normed_otus.shape)
     else:
         normed_otus = combo_train
@@ -231,7 +238,7 @@ def import_amplicon_matrix(norm_type, write_bool, test_label_set=None, psct_val=
 
     return train_df
 
-def import_matched_amplicons(norm_type, filter_samples, write_bool, return_labels, psct_val=None):
+def import_matched_amplicons(norm_type, norm_axes, filter_samples, write_bool, return_labels, psct_val=None):
     """
     """
     shotgun_abunds = "../Data/16S_Info/dbOTUbySample.tsv"
@@ -254,7 +261,7 @@ def import_matched_amplicons(norm_type, filter_samples, write_bool, return_label
 
     sample_select_t = sample_select.T
     if norm_type != "raw":
-        normed_tags = l1l2clr_norm(sample_select_t, norm_type, psct_val)
+        normed_tags = l1l2clr_norm(sample_select_t, norm_type, norm_axes, psct_val)
         print "Performed {} scaling on matched amplicons size {}".format(norm_type, normed_tags.shape)
     else:
         normed_tags = sample_select_t
@@ -307,7 +314,7 @@ def check_taxa_hierarchies(bin_taxa_lr, taxa_df):
         print taxa_diff
     return
 
-def import_bin_data(norm_type, filter_samples, write_bool, check_taxa=True, psct_val=None):
+def import_bin_data(norm_type, norm_axes, filter_samples, write_bool, check_taxa=True, psct_val=None):
     bin_taxa_file = "../Data/bin_taxonomy_edit.tsv"
     bin_taxa_raw = pd.read_csv(bin_taxa_file, sep="\t", index_col=0)
     good_cols = [i for i in bin_taxa_raw.columns if "%" not in i]
@@ -327,7 +334,7 @@ def import_bin_data(norm_type, filter_samples, write_bool, check_taxa=True, psct
         col_sel_bins = bin_table_.T
 
     if norm_type != "raw":
-        normed_bins = l1l2clr_norm(col_sel_bins.T, norm_type, psct_val)
+        normed_bins = l1l2clr_norm(col_sel_bins.T, norm_type, norm_axes, psct_val)
         print "Performed {} scaling on bins size {}".format(norm_type, normed_bins.shape)
     else:
         normed_bins = col_sel_bins.T
@@ -342,7 +349,7 @@ def import_bin_data(norm_type, filter_samples, write_bool, check_taxa=True, psct
     return bin_df
 
 
-def load_mgOTU_data(filtered_data, norm_type, psct_val, check_taxa):
+def load_mgOTU_data(filtered_data, norm_type, norm_axes, psct_val, check_taxa):
     if filtered_data:
         mgOTU_cnt_f = "../Data/Metagenomic_OTUs/filtered_data/wd3_unique.f0.mat"
         mgOTU_rdp_f = "../Data/Metagenomic_OTUs/filtered_data/wd3_unique_raw.rdp.txt"
@@ -364,7 +371,7 @@ def load_mgOTU_data(filtered_data, norm_type, psct_val, check_taxa):
     mgotu_cs_nz = drop_zero_cols(mgotu_col_sel.T)
 
     if norm_type != "raw":
-        normed_bin_tags = l1l2clr_norm(mgotu_cs_nz, norm_type, psct_val)
+        normed_bin_tags = l1l2clr_norm(mgotu_cs_nz, norm_type, norm_axes, psct_val)
         print "Performed {} scaling on bins size {}".format(norm_type, normed_bin_tags.shape)
     else:
         normed_bin_tags = mgotu_cs_nz

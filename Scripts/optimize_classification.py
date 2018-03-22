@@ -50,7 +50,7 @@ results['median_rank'] = results.median_dist.rank(ascending=1)
 results['mean_rank'] = results.mean_dist.rank(ascending=1)
 
 results['rank_sum'] = results.ix[:, ["pval_rank", "median_rank", "mean_rank"]].sum(1)
-results.sort_values(['rank_sum']).head()
+final_results = results.sort_values(['rank_sum']).reset_index().drop(["index"], 1)
 
 # braycurtis & UNIT
 #raw_mats = import_dist_matrices("RAW", write_bool=False)
