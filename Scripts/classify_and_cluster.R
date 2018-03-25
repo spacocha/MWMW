@@ -52,3 +52,13 @@ plot(res.pcamix2,choice="cor",main="Numerical variables")
 plot(res.pcamix2,choice="sqload",coloring.var=T, leg=TRUE, posleg="topright", main="All variables")
 set.seed(42)
 
+
+
+
+
+
+
+
+
+
+

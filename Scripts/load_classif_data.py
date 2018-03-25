@@ -216,6 +216,10 @@ def import_amplicon_matrix(norm_type, norm_axes, write_bool, test_label_set=None
     row_set_abunds = aug_abund_df.ix[:, aug_abund_df.columns[:-5]]
     combo_train_df = combine_replicate_pairs(putative_rep_trios, row_set_abunds)
     combo_train = drop_zero_cols(combo_train_df)
+    top_1000 = combo_train.sum().sort_values(ascending=False)[:500].index
+    print top_1000[0], combo_train.sum()[top_1000[0]]
+    print top_1000[-1], combo_train.sum()[top_1000[-1]]
+    combo_train = combo_train.ix[:, top_1000]
 
     if test_label_set:
         train_label_set = set(list(combo_train.columns))
