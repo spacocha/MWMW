@@ -12,8 +12,8 @@ step 6: map reads back
 import pandas as pd
 import os, sys
 ## import
-hmm_df = pd.read_csv("All_HMM_Hits_raw.tsv", sep="\t")
-knum_df = pd.read_csv("Select_Annotations.tsv", sep="\t", usecols=[0, 1, 5])
+hmm_df = pd.read_csv(sys.argv[-1]+"/All_HMM_Hits_raw.tsv", sep="\t")
+knum_df = pd.read_csv(sys.argv[-1]+"/Select_Annotations.tsv", sep="\t", usecols=[0, 1, 5])
 
 ## preprocess
 def edit_pname(p_str):
@@ -26,7 +26,7 @@ def edit_pname(p_str):
 
 ## merge
 knum_df["ProteinID"] = knum_df.Protein_Name.apply(edit_pname)
-all_annots_df = knum_df.ix[:, ["Bin_Name", "ProteinID", "K_number"]].copy()
+all_annots_df = knum_df.ix[:, ["Bin_Name", "ProteinID", "K_number_1"]].copy()
 all_annots_df.columns = list(hmm_df.columns)
 all_annots_df = all_annots_df.append(hmm_df, ignore_index=True)
 
@@ -61,12 +61,14 @@ def parse_gff_line(r):
     prot_name = r[-1].split("locus_tag=")[-1].split(";")[0]
     contig_name = r[0]
     start_n, end_n = int(r[3]), int(r[4])
+    if prot_name == 'GOOLCNIJ_01261' or prot_name == 'GOOLCNIJ_01258':
+        print (prot_name, {"cID": contig_name, "start": start_n, "end": end_n})
     return (prot_name, {"cID": contig_name, "start": start_n, "end": end_n})
 
 # b, gff_p = bin_names[0], gff_paths[0]
 for b, gff_p in zip(bin_names, gff_paths):
     sub_df = all_annots_df[all_annots_df.Bin == b]
-    annot_idx = {i:j for i, j in zip(sub_df.ProteinID.tolist(), sub_df.index.tolist())}
+    annot_idx = [(i,j) for i, j in zip(list(sub_df.ProteinID.values), list(sub_df.index))]
     print "Reading {}'s annotations from:\n\t{}".format(b, gff_p)
     with open(gff_p, "r") as th:
         content = th.read().split("\n")
@@ -75,11 +77,16 @@ for b, gff_p in zip(bin_names, gff_paths):
     parsed_annots = [parse_gff_line(r) for r in recs]
     anno_dic = {i[0]:i[1] for i in parsed_annots}
     assert len(anno_dic.keys()) == len(parsed_annots)
-    for pID, idx in annot_idx.items():
+    for pID, idx in annot_idx:
         all_annots_df.ix[idx, "Start"] = anno_dic[pID]['start']
         all_annots_df.ix[idx, "End"] = anno_dic[pID]['end']
         all_annots_df.ix[idx, "Contig"] = anno_dic[pID]['cID']
+        if pID == 'GOOLCNIJ_01261' or pID == 'GOOLCNIJ_01258':
+            print idx
+            print all_annots_df.ix[idx, :]
 
+print all_annots_df.Contig.isnull().sum()
+sys.exit()
 bin_fnas = sorted(all_annots_df.FASTA.unique())
 bin_names = [os.path.basename(i).split(".")[0] for i in bin_fnas]
 
@@ -112,10 +119,13 @@ for b, p in zip(bin_names, bin_fnas):
     print "Pulling sequences for {}".format(b)
     seq_dict = pull_sequences(p)
     sub_df = all_annots_df[all_annots_df.Bin == b]
-    annot_idx = [(i, j) for i, j in zip(sub_df.Contig.tolist(), sub_df.index.tolist())]
-    for cID, idx in annot_idx:
+    for idx in sub_df.index:
         s_ = sub_df.ix[idx, "Start"]
         e_ = sub_df.ix[idx, "End"]
+        cID = sub_df.ix[idx, 'Contig']
+        print "CID =", cID 
+        print "IDX =", idx
+        print sub_df.ix[idx, :]
         seq_ = seq_dict[cID]
         est_len = e_-s_
         if est_len < 250:

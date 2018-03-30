@@ -2,11 +2,11 @@ import pandas as pd
 import sys
 from collections import Counter
 
-fasta_file = "AllProteinsRenamed.faa"
+fasta_file = sys.argv[-1]+"/AllProteinsRenamed.faa"
 with open(fasta_file, "r") as ff_h:
     headers = [i[1:].split()[0] for i in ff_h.read().split("\n") if i != "" and i.startswith(">")]
 
-annotation_file = "mystic_kegg_annotations.txt"
+annotation_file = sys.argv[-1]+"/mystic_kegg_annotations.txt"
 with open(annotation_file, "r") as af_h:
     annots = [i.split("\t") for i in af_h.read().split("\n") if i != ""]
 
@@ -23,7 +23,7 @@ for ra in real_annots:
     else:
         sys.exit("Need more rows")
 
-taxonomy_file = "mystic_kegg_taxonomy.tsv"
+taxonomy_file = sys.argv[-1]+"/mystic_kegg_taxonomy.tsv"
 with open(taxonomy_file, "r") as th:
     recs = [i.split("\t") for i in th.read().split("\n") if i != ""]
 
@@ -35,7 +35,19 @@ for r in recs:
     if r[1] != "":
         prot_name = r[0][5:]
         rec_dict = {}
-        rec_dict['K-number'] = r[1]
+        if "," in r[1]:
+            assert len(r[1].split(",")) < 4
+            rec_dict['K-number_1'] = r[1].split(",")[0]
+            rec_dict['K-number_2'] = r[1].split(",")[1]
+            if len(r[1].split(",")) == 3: 
+                rec_dict['K-number_3'] = r[1].split(",")[2]
+            else:
+                rec_dict['K-number_3'] = ""
+        else:
+            rec_dict['K-number_1'] = r[1]
+            rec_dict['K-number_2'] = ""
+            rec_dict['K-number_3'] = ""
+
         rec_dict['Kingdom'] = r[2]
         rec_dict['Class'] = r[3]
         rec_dict['Genus'] = r[4]
@@ -61,7 +73,9 @@ for h in headers:
     master_dict["KO_Annot_3"] = stacked_annots[h][3]
 
     if rec_dicts.has_key(h):
-        master_dict['K_number'] = rec_dicts[h]['K-number']
+        master_dict['K_number_1'] = rec_dicts[h]['K-number_1']
+        master_dict['K_number_2'] = rec_dicts[h]['K-number_2']
+        master_dict['K_number_3'] = rec_dicts[h]['K-number_3']
         master_dict['Kingdom'] = rec_dicts[h]['Kingdom']
         master_dict['Class'] = rec_dicts[h]['Class']
         master_dict['Genus'] = rec_dicts[h]['Genus']
@@ -71,10 +85,10 @@ for h in headers:
     master_dicts.append(master_dict)
 
 master_df = pd.DataFrame(master_dicts)
-b1 = master_df.K_number.isnull()
+b1 = master_df.K_number_1.isnull()
 b2 = master_df.KO_Annot_1.isnull()
 clean_master = master_df[~(b1 & b2)]
-b3 = clean_master.K_number.isnull()
+b3 = clean_master.K_number_1.isnull()
 b4 = clean_master.KO_Annot_1.isnull()
 
 print "All annotation classification scores (n={})".format(clean_master.shape[0])
@@ -95,7 +109,8 @@ just_KOs = clean_master[~b4 & b3]
 print "Annotation File (only) K-numbers (n={})".format(just_KOs.shape[0])
 
 ordered_cols = ["Protein_Name", "Bin_Name", "KO_Annot_1","KO_Annot_2", "KO_Annot_3",
-                "K_number", "Kingdom", "Class", "Genus", "GHOSTX_score", "KEGG_GenesID"]
+                "K_number_1", "K_number_2", "K_number_3", "Kingdom", "Class", "Genus", 
+                "GHOSTX_score", "KEGG_GenesID"]
 
 print "Filtering out GHOSTX scores below 100, see code for citation link"
 # https://www.hindawi.com/journals/bmri/2016/8124636/
@@ -103,21 +118,27 @@ print "Filtering out GHOSTX scores below 100, see code for citation link"
 clean_master = clean_master[clean_master.GHOSTX_score > 100]
 
 clean_master = clean_master[ordered_cols]
-clean_master.to_csv("Aggregated_Annotations.tsv", sep="\t", index=False)
+clean_master.to_csv(sys.argv[-1]+"/Aggregated_Annotations.tsv", sep="\t", index=False)
 
-select_K_nums = ["K08738", "K14028", "K10535", "K10944", "K10945", "K10946", "K00370"
-                 "K00362", "K00368", "K00376", "K02567", "K03385", "K04561", "K15864"
-                 "K00399", "K00400", "K00401", "K00402", "K17222", "K17223", "K17224"
-                 "K17225", "K17226", "K17227", "K00394", "K00958", "K11180", "K11181"]
+select_K_nums = ["K00362", "K00363", "K00368", "K00370", "K00371", "K00376", "K00394", 
+                 "K00399", "K00400", "K00401", "K00402", "K00958", "K02305", "K02567", 
+                 "K02568", "K03385", "K04561", "K07218", "K08738", "K10535", "K10944", 
+                 "K10945", "K10946", "K11180", "K11181", "K14028", "K15864", "K16255", 
+                 "K16257", "K16258", "K16259", "K17222", "K17223", "K17224", "K17225", 
+                 "K17226", "K17227"]
 
 select_bools_1 = [clean_master.KO_Annot_1 == i for i in select_K_nums]
 select_bools_2 = [clean_master.KO_Annot_2 == i for i in select_K_nums]
 select_bools_3 = [clean_master.KO_Annot_3 == i for i in select_K_nums]
-select_bools_4 = [clean_master.K_number == i for i in select_K_nums]
+select_bools_4 = [clean_master.K_number_1 == i for i in select_K_nums]
+select_bools_5 = [clean_master.K_number_2 == i for i in select_K_nums]
+select_bools_6 = [clean_master.K_number_3 == i for i in select_K_nums]
 
-select_bools = select_bools_1 + select_bools_2 + select_bools_3 + select_bools_4
+select_bools = select_bools_1 + select_bools_2 + select_bools_3 + select_bools_4 + select_bools_5 + select_bools_6
 
 select_master = clean_master.copy()
+
+print "Select boolean filters length = {}".format(len(select_bools))
 
 for idx, sb in enumerate(select_bools):
     select_master["Filter_{}".format(idx)] = sb
@@ -135,7 +156,7 @@ print "\tSTD: {}".format(select_master.GHOSTX_score.std())
 print "\tMax: {}".format(select_master.GHOSTX_score.max())
 print "\tMin: {}".format(select_master.GHOSTX_score.min())
 
-select_master.to_csv("Select_Annotations.tsv", sep="\t", index=False)
+select_master.to_csv(sys.argv[-1]+"/Select_Annotations.tsv", sep="\t", index=False)
 
 bin_numbers = sorted(list(select_master.Bin_Name.unique()))
 
@@ -150,11 +171,15 @@ for idx, this_bin in enumerate(bin_numbers):
     bin_df = select_master[select_master.Bin_Name == this_bin]
     countdown = countdown - bin_df.shape[0]
     print "{} has {} recs, {} remaining".format(this_bin, bin_df.shape[0], countdown)    
-    class_1 = list(bin_df.K_number.dropna())
+    class_1 = list(bin_df.K_number_1.dropna())
+    class_2 = list(bin_df.K_number_2.dropna())
+    class_3 = list(bin_df.K_number_3.dropna())
     print "Precount: {}".format(sum(k_counts_by_bin[idx].values()))
     k_counts_by_bin[idx].update(class_1)
+    k_counts_by_bin[idx].update(class_2)
+    k_counts_by_bin[idx].update(class_3)
     print "Post-count: {}".format(sum(k_counts_by_bin[idx].values()))
 
 bin_k_df = pd.DataFrame(index=bin_numbers,data=k_counts_by_bin, columns=select_K_nums)
-bin_k_df.to_csv("Select_Ks_By_Bin.tsv", sep="\t", index_label="Bin")
+bin_k_df.to_csv(sys.argv[-1]+"/Select_Ks_By_Bin.tsv", sep="\t", index_label="Bin")
 
