@@ -67,8 +67,7 @@ def parse_gff_line(r):
 
 # b, gff_p = bin_names[0], gff_paths[0]
 for b, gff_p in zip(bin_names, gff_paths):
-    sub_df = all_annots_df[all_annots_df.Bin == b]
-    annot_idx = [(i,j) for i, j in zip(list(sub_df.ProteinID.values), list(sub_df.index))]
+    good_hits = all_annots_df[all_annots_df.Bin == b].index
     print "Reading {}'s annotations from:\n\t{}".format(b, gff_p)
     with open(gff_p, "r") as th:
         content = th.read().split("\n")
@@ -77,16 +76,14 @@ for b, gff_p in zip(bin_names, gff_paths):
     parsed_annots = [parse_gff_line(r) for r in recs]
     anno_dic = {i[0]:i[1] for i in parsed_annots}
     assert len(anno_dic.keys()) == len(parsed_annots)
-    for pID, idx in annot_idx:
+    for idx in good_hits:
+        pID = all_annots_df.ix[idx, 'ProteinID']
         all_annots_df.ix[idx, "Start"] = anno_dic[pID]['start']
         all_annots_df.ix[idx, "End"] = anno_dic[pID]['end']
         all_annots_df.ix[idx, "Contig"] = anno_dic[pID]['cID']
-        if pID == 'GOOLCNIJ_01261' or pID == 'GOOLCNIJ_01258':
+        if idx == 369:
             print idx
             print all_annots_df.ix[idx, :]
-
-print all_annots_df.Contig.isnull().sum()
-sys.exit()
 bin_fnas = sorted(all_annots_df.FASTA.unique())
 bin_names = [os.path.basename(i).split(".")[0] for i in bin_fnas]
 
@@ -118,14 +115,13 @@ def cut_gene_seq(s_, e_, seq_, pad_n):
 for b, p in zip(bin_names, bin_fnas):
     print "Pulling sequences for {}".format(b)
     seq_dict = pull_sequences(p)
-    sub_df = all_annots_df[all_annots_df.Bin == b]
-    for idx in sub_df.index:
-        s_ = sub_df.ix[idx, "Start"]
-        e_ = sub_df.ix[idx, "End"]
-        cID = sub_df.ix[idx, 'Contig']
+    good_hits_ = all_annots_df[all_annots_df.Bin == b].index
+    for idx in good_hits_:
+        s_ = all_annots_df.ix[idx, "Start"]
+        e_ = all_annots_df.ix[idx, "End"]
+        cID = all_annots_df.ix[idx, 'Contig']
         print "CID =", cID 
         print "IDX =", idx
-        print sub_df.ix[idx, :]
         seq_ = seq_dict[cID]
         est_len = e_-s_
         if est_len < 250:
@@ -137,7 +133,7 @@ for b, p in zip(bin_names, bin_fnas):
         ins_len = len(oligo)
         all_annots_df.ix[idx, "Sequence"] = oligo
         all_annots_df.ix[idx, "Insert_Len"] = ins_len
-    print "\t Min seq length is {}".format(all_annots_df.ix[zip(*annot_idx)[1], "Insert_Len"].min())
+    print "\t Min seq length is {}".format(all_annots_df.ix[ good_hits_ , "Insert_Len"].min())
 
 print "{} sequences were not found".format(all_annots_df.Sequence.isnull().sum())
 
