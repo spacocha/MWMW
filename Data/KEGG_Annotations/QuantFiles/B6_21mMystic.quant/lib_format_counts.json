@@ -1,0 +1,22 @@
+{
+    "read_files": "( /home-3/karoraw1@jhu.edu/scratch/metaWRAP_Out/QC_Renamed/B6_21mMystic_1.fastq, /home-3/karoraw1@jhu.edu/scratch/metaWRAP_Out/QC_Renamed/B6_21mMystic_2.fastq )",
+    "expected_format": "IU",
+    "compatible_fragment_ratio": 0.9978821037769149,
+    "num_compatible_fragments": 101772,
+    "num_assigned_fragments": 101988,
+    "num_consistent_mappings": 79662,
+    "num_inconsistent_mappings": 23975,
+    "strand_mapping_bias": 0.502472948206171,
+    "MSF": 0,
+    "OSF": 21,
+    "ISF": 39634,
+    "MSR": 0,
+    "OSR": 16,
+    "ISR": 40028,
+    "SF": 11705,
+    "SR": 12053,
+    "MU": 0,
+    "OU": 0,
+    "IU": 0,
+    "U": 0
+}

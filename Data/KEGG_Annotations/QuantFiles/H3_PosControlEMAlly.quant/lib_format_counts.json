@@ -1,0 +1,22 @@
+{
+    "read_files": "( /home-3/karoraw1@jhu.edu/scratch/metaWRAP_Out/QC_Renamed/H3_PosControlEMAlly_1.fastq, /home-3/karoraw1@jhu.edu/scratch/metaWRAP_Out/QC_Renamed/H3_PosControlEMAlly_2.fastq )",
+    "expected_format": "IU",
+    "compatible_fragment_ratio": 0.9954994678424813,
+    "num_compatible_fragments": 32737,
+    "num_assigned_fragments": 32885,
+    "num_consistent_mappings": 19622,
+    "num_inconsistent_mappings": 14588,
+    "strand_mapping_bias": 0.4964835388849251,
+    "MSF": 0,
+    "OSF": 9,
+    "ISF": 9880,
+    "MSR": 0,
+    "OSR": 10,
+    "ISR": 9742,
+    "SF": 7166,
+    "SR": 7272,
+    "MU": 0,
+    "OU": 0,
+    "IU": 0,
+    "U": 0
+}

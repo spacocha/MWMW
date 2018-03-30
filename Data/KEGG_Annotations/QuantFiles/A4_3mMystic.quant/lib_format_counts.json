@@ -1,0 +1,22 @@
+{
+    "read_files": "( /home-3/karoraw1@jhu.edu/scratch/metaWRAP_Out/QC_Renamed/A4_3mMystic_1.fastq, /home-3/karoraw1@jhu.edu/scratch/metaWRAP_Out/QC_Renamed/A4_3mMystic_2.fastq )",
+    "expected_format": "IU",
+    "compatible_fragment_ratio": 0.9984905919280973,
+    "num_compatible_fragments": 58213,
+    "num_assigned_fragments": 58301,
+    "num_consistent_mappings": 32438,
+    "num_inconsistent_mappings": 26479,
+    "strand_mapping_bias": 0.493433627227326,
+    "MSF": 0,
+    "OSF": 3,
+    "ISF": 16432,
+    "MSR": 0,
+    "OSR": 5,
+    "ISR": 16006,
+    "SF": 13015,
+    "SR": 13376,
+    "MU": 0,
+    "OU": 0,
+    "IU": 0,
+    "U": 0
+}

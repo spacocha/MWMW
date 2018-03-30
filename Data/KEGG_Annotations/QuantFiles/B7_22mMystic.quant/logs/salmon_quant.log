@@ -1,0 +1,31 @@
+[2018-03-29 23:54:17.308] [jointLog] [info] parsing read library format
+[2018-03-29 23:54:17.308] [jointLog] [info] There is 1 library.
+[2018-03-29 23:54:17.427] [jointLog] [info] Loading Quasi index
+[2018-03-29 23:54:17.427] [jointLog] [info] Loading 32-bit quasi index
+[2018-03-29 23:54:18.224] [jointLog] [info] done
+[2018-03-29 23:54:18.224] [jointLog] [info] Index contained 9986 targets
+[2018-03-29 23:54:33.011] [jointLog] [info] Computed 8513 rich equivalence classes for further processing
+[2018-03-29 23:54:33.011] [jointLog] [info] Counted 112582 total reads in the equivalence classes 
+[2018-03-29 23:54:33.045] [jointLog] [warning] 0.000664778% of fragments were shorter than the k used to build the index (21).
+If this fraction is too large, consider re-building the index with a smaller k.
+The minimum read size found was 20.
+
+
+[2018-03-29 23:54:33.046] [jointLog] [warning] Only 112582 fragments were mapped, but the number of burn-in fragments was set to 5000000.
+The effective lengths have been computed using the observed mappings.
+
+[2018-03-29 23:54:33.046] [jointLog] [info] Mapping rate = 2.20124%
+
+[2018-03-29 23:54:33.046] [jointLog] [info] finished quantifyLibrary()
+[2018-03-29 23:54:33.048] [jointLog] [info] Starting optimizer
+[2018-03-29 23:54:33.051] [jointLog] [info] Marked 0 weighted equivalence classes as degenerate
+[2018-03-29 23:54:33.053] [jointLog] [info] iteration = 0 | max rel diff. = 14.6944
+[2018-03-29 23:54:33.096] [jointLog] [info] iteration = 100 | max rel diff. = 1.00645e-05
+[2018-03-29 23:54:33.097] [jointLog] [info] Finished optimizer
+[2018-03-29 23:54:33.097] [jointLog] [info] writing output 
+
+[2018-03-29 23:54:33.012] [fileLog] [info] 
+At end of round 0
+==================
+Observed 5114492 total fragments (5114492 in most recent round)
+

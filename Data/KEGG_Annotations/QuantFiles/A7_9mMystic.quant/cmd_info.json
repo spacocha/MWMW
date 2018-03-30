@@ -1,0 +1,10 @@
+{
+    "salmon_version": "0.9.1",
+    "meta": [],
+    "index": "/home-3/karoraw1@jhu.edu/scratch/MWMW/Data/KEGG_Annotations/AGS_Sal_Ind",
+    "libType": "IU",
+    "mates1": "/home-3/karoraw1@jhu.edu/scratch/metaWRAP_Out/QC_Renamed/A7_9mMystic_1.fastq",
+    "mates2": "/home-3/karoraw1@jhu.edu/scratch/metaWRAP_Out/QC_Renamed/A7_9mMystic_2.fastq",
+    "output": "/home-3/karoraw1@jhu.edu/scratch/MWMW/Data/KEGG_Annotations/QuantFiles/A7_9mMystic.quant",
+    "auxDir": "aux_info"
+}
