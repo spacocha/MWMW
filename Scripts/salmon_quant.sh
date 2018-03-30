@@ -26,6 +26,7 @@ while read sample R1s R2s; do
     salmon quant --meta -i $sq_dir/AGS_Sal_Ind --libType IU -1 $B_A_S/$R1s -2 $B_A_S/$R2s -o $sq_dir/QuantFiles/${sample}.quant;
 done < $B_A_S/samples_names.txt
 
-#cd QuantFiles
-#python summarize_salmon.py
-#python concatenate_salmon.py
+sc_dir=`pwd`
+cd $sq_dir/QuantFiles
+python summarize_salmon.py
+python $sc_dir/concatenate_salmon.py $sq_dir
