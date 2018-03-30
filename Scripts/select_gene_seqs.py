@@ -61,8 +61,6 @@ def parse_gff_line(r):
     prot_name = r[-1].split("locus_tag=")[-1].split(";")[0]
     contig_name = r[0]
     start_n, end_n = int(r[3]), int(r[4])
-    if prot_name == 'GOOLCNIJ_01261' or prot_name == 'GOOLCNIJ_01258':
-        print (prot_name, {"cID": contig_name, "start": start_n, "end": end_n})
     return (prot_name, {"cID": contig_name, "start": start_n, "end": end_n})
 
 # b, gff_p = bin_names[0], gff_paths[0]
@@ -120,8 +118,6 @@ for b, p in zip(bin_names, bin_fnas):
         s_ = all_annots_df.ix[idx, "Start"]
         e_ = all_annots_df.ix[idx, "End"]
         cID = all_annots_df.ix[idx, 'Contig']
-        print "CID =", cID 
-        print "IDX =", idx
         seq_ = seq_dict[cID]
         est_len = e_-s_
         if est_len < 250:
@@ -137,9 +133,9 @@ for b, p in zip(bin_names, bin_fnas):
 
 print "{} sequences were not found".format(all_annots_df.Sequence.isnull().sum())
 
-all_annots_df.to_csv("Integrated_Annotations_with_Seqs.tsv", sep="\t", index=False)
+all_annots_df.to_csv(sys.argv[-1]+"/Integrated_Annotations_with_Seqs.tsv", sep="\t", index=False)
 
-with open("Annotated_Gene_Seqs.fa", "w") as ags_h:
+with open(sys.argv[-1]+"/Annotated_Gene_Seqs.fa", "w") as ags_h:
     for idx in all_annots_df.index:
         header = ">"+"_".join(list(all_annots_df.ix[idx, ["Bin","ProteinID"]]))
         sequence = all_annots_df.ix[idx, "Sequence"]

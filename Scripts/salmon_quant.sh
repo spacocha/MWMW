@@ -7,7 +7,7 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=24
 #SBATCH --mem=100G
-#SBATCH --partition=lrgmem
+#SBATCH --partition=gpu
 #SBATCH --mail-type=END
 #SBATCH --mail-user=k.arorawilliams2gmail.com
 #SBATCH --error=sq.err
@@ -15,7 +15,8 @@
 
 source activate metawrap2-env
 sq_dir=/home-3/karoraw1@jhu.edu/scratch/MWMW/Data/KEGG_Annotations
-#salmon index -k 21 -p 12 -t $sq_dir/Annotated_Gene_Seqs.fa -i $sq_dir/AGS_Sal_Ind
+python select_gene_seqs.py $sq_dir
+salmon index -k 21 -p 12 -t $sq_dir/Annotated_Gene_Seqs.fa -i $sq_dir/AGS_Sal_Ind
 
 B_A_S=/home-3/karoraw1@jhu.edu/scratch/metaWRAP_Out/QC_Renamed
 

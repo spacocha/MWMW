@@ -1,35 +1,35 @@
-[2018-03-29 23:49:29.285] [jointLog] [info] parsing read library format
-[2018-03-29 23:49:29.285] [jointLog] [info] There is 1 library.
-[2018-03-29 23:49:29.412] [jointLog] [info] Loading Quasi index
-[2018-03-29 23:49:29.413] [jointLog] [info] Loading 32-bit quasi index
-[2018-03-29 23:49:30.197] [jointLog] [info] done
-[2018-03-29 23:49:30.197] [jointLog] [info] Index contained 9986 targets
-[2018-03-29 23:49:55.398] [jointLog] [info] Computed 8014 rich equivalence classes for further processing
-[2018-03-29 23:49:55.398] [jointLog] [info] Counted 136207 total reads in the equivalence classes 
-[2018-03-29 23:49:55.434] [jointLog] [warning] 0.000333518% of fragments were shorter than the k used to build the index (21).
-If this fraction is too large, consider re-building the index with a smaller k.
-The minimum read size found was 20.
-
-
-[2018-03-29 23:49:55.435] [jointLog] [warning] Only 136207 fragments were mapped, but the number of burn-in fragments was set to 5000000.
-The effective lengths have been computed using the observed mappings.
-
-[2018-03-29 23:49:55.435] [jointLog] [info] Mapping rate = 1.56647%
-
-[2018-03-29 23:49:55.435] [jointLog] [info] finished quantifyLibrary()
-[2018-03-29 23:49:55.436] [jointLog] [info] Starting optimizer
-[2018-03-29 23:49:55.440] [jointLog] [info] Marked 0 weighted equivalence classes as degenerate
-[2018-03-29 23:49:55.441] [jointLog] [info] iteration = 0 | max rel diff. = 14.0899
-[2018-03-29 23:49:55.474] [jointLog] [info] iteration = 100 | max rel diff. = 0.0710315
-[2018-03-29 23:49:55.399] [fileLog] [info] 
+[2018-03-30 00:41:34.013] [jointLog] [info] parsing read library format
+[2018-03-30 00:41:34.013] [jointLog] [info] There is 1 library.
+[2018-03-30 00:41:34.088] [jointLog] [info] Loading Quasi index
+[2018-03-30 00:41:34.090] [jointLog] [info] Loading 32-bit quasi index
+[2018-03-30 00:41:34.886] [jointLog] [info] done
+[2018-03-30 00:41:34.886] [jointLog] [info] Index contained 10237 targets
+[2018-03-30 00:41:58.556] [fileLog] [info] 
 At end of round 0
 ==================
 Observed 8695171 total fragments (8695171 in most recent round)
 
-[2018-03-29 23:49:55.499] [jointLog] [info] iteration = 200 | max rel diff. = 0.0187442
-[2018-03-29 23:49:55.525] [jointLog] [info] iteration = 300 | max rel diff. = 0.0101482
-[2018-03-29 23:49:55.548] [jointLog] [info] iteration = 400 | max rel diff. = 0.0104277
-[2018-03-29 23:49:55.557] [jointLog] [info] iteration = 438 | max rel diff. = 0.00971446
-[2018-03-29 23:49:55.559] [jointLog] [info] Finished optimizer
-[2018-03-29 23:49:55.559] [jointLog] [info] writing output 
+[2018-03-30 00:41:58.555] [jointLog] [info] Computed 8272 rich equivalence classes for further processing
+[2018-03-30 00:41:58.555] [jointLog] [info] Counted 143074 total reads in the equivalence classes 
+[2018-03-30 00:41:58.567] [jointLog] [warning] 0.000333518% of fragments were shorter than the k used to build the index (21).
+If this fraction is too large, consider re-building the index with a smaller k.
+The minimum read size found was 20.
+
+
+[2018-03-30 00:41:58.568] [jointLog] [warning] Only 143074 fragments were mapped, but the number of burn-in fragments was set to 5000000.
+The effective lengths have been computed using the observed mappings.
+
+[2018-03-30 00:41:58.568] [jointLog] [info] Mapping rate = 1.64544%
+
+[2018-03-30 00:41:58.568] [jointLog] [info] finished quantifyLibrary()
+[2018-03-30 00:41:58.569] [jointLog] [info] Starting optimizer
+[2018-03-30 00:41:58.573] [jointLog] [info] Marked 0 weighted equivalence classes as degenerate
+[2018-03-30 00:41:58.574] [jointLog] [info] iteration = 0 | max rel diff. = 14.0876
+[2018-03-30 00:41:58.593] [jointLog] [info] iteration = 100 | max rel diff. = 0.071161
+[2018-03-30 00:41:58.610] [jointLog] [info] iteration = 200 | max rel diff. = 0.0186776
+[2018-03-30 00:41:58.627] [jointLog] [info] iteration = 300 | max rel diff. = 0.0102107
+[2018-03-30 00:41:58.643] [jointLog] [info] iteration = 400 | max rel diff. = 0.0104881
+[2018-03-30 00:41:58.649] [jointLog] [info] iteration = 436 | max rel diff. = 0.00979679
+[2018-03-30 00:41:58.650] [jointLog] [info] Finished optimizer
+[2018-03-30 00:41:58.650] [jointLog] [info] writing output 
 

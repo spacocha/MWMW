@@ -11,23 +11,23 @@
     "gc_bias_correct": false,
     "num_bias_bins": 4096,
     "mapping_type": "mapping",
-    "num_targets": 9986,
+    "num_targets": 10237,
     "serialized_eq_classes": false,
     "eq_class_properties": [],
     "length_classes": [
-        765,
+        762,
         1047,
-        1356,
-        1941,
-        15915
+        1359,
+        1932,
+        15741
     ],
-    "index_seq_hash": "ed75a23325c376ed41d1e0acd5becc28193b2d19c4a30d9c9380fbdab437c18d",
-    "index_name_hash": "c222e19b54baad0fea56170406e36ef55258b7f4ee9112dde1bd399bf968d46c",
+    "index_seq_hash": "9ee9f41f33cae091cfb1759d4d2ca6ac38136609e215f7b3995c9b04c9f1eff6",
+    "index_name_hash": "e572cb00de42f3a6a10ad964009c864f6c1df6cd76d0d462aab7099a4f66d3e0",
     "num_bootstraps": 0,
     "num_processed": 5114492,
-    "num_mapped": 112582,
-    "percent_mapped": 2.201235235092752,
+    "num_mapped": 115157,
+    "percent_mapped": 2.251582366342542,
     "call": "quant",
-    "start_time": "Thu Mar 29 23:54:17 2018",
-    "end_time": "Thu Mar 29 23:54:33 2018"
+    "start_time": "Fri Mar 30 00:45:57 2018",
+    "end_time": "Fri Mar 30 00:46:12 2018"
 }
