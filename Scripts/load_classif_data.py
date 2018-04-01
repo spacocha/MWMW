@@ -163,7 +163,7 @@ def clean_rdp_txt(otu_taxa_file, con_cutoff, verbosity=False):
     taxa_df = taxa_df_kd.drop([i for i in taxa_df_kd.columns if "_con" in i ], axis=1)
     return taxa_df
 
-taxa_df = clean_rdp_txt(otu_taxa_file, 50.0, verbosity=True)
+taxa_df = clean_rdp_txt(otu_taxa_file, 50.0, verbosity=False)
 
 def l1l2clr_norm(df, n_type, n_axes, psct=None):
     """
@@ -216,9 +216,11 @@ def import_amplicon_matrix(norm_type, norm_axes, write_bool, test_label_set=None
     row_set_abunds = aug_abund_df.ix[:, aug_abund_df.columns[:-5]]
     combo_train_df = combine_replicate_pairs(putative_rep_trios, row_set_abunds)
     combo_train = drop_zero_cols(combo_train_df)
-    top_1000 = combo_train.sum().sort_values(ascending=False)[:500].index
-    print top_1000[0], combo_train.sum()[top_1000[0]]
-    print top_1000[-1], combo_train.sum()[top_1000[-1]]
+    top_1000 = combo_train.sum().sort_values(ascending=False)[:1000].index
+    ab_thresh = len(top_1000)
+    print "Lowest abunandance sum after thresholding to top {} is {} at {}".format(ab_thresh, 
+                                                                                   top_1000[-1], 
+                                                                                   combo_train.sum()[top_1000[-1]])
     combo_train = combo_train.ix[:, top_1000]
 
     if test_label_set:

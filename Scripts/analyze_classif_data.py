@@ -4,6 +4,12 @@ from scipy.spatial.distance import pdist, squareform
 import numpy as np
 import os, sys
 
+def sum_error(matches, bins, dists):
+    errors = [dists.ix[j, i] - dists.ix[j, :].min() for i, j in zip(matches, bins)]
+    for e, b in zip(errors, bins):
+        print b, round(float(e), 3)
+    return sum(errors)
+
 def distance_extractor(df1, df2, dist_type, check_integrity=True):
     assert df1.shape[0] > df1.shape[1]
     assert df1.shape == df2.shape
