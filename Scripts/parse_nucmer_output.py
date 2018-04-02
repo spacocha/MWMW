@@ -13,6 +13,7 @@ for qr in fs:
     query_bins.append(".".join(splits_))
 
 for this_f in fs:
+    print this_f
     with open(this_f) as fh:
         content = [i.split("\t") for i in fh.read().split("\n")[3:] if i != ""]
 
@@ -28,8 +29,8 @@ for this_f in fs:
         ref_total +=  df[df.Ref_Name == this_contig].ix[:, "[LEN R]"].astype(float).unique()[0]
 
     for that_contig in df.Query_Name.unique():
-        q_covd += df[df.Query_Name == this_contig].ix[:, "[LEN 2]"].astype(float).sum()/100.0
-        q_total += df[df.Query_Name == this_contig].ix[:, "[LEN Q]"].astype(float).unique()[0]
+        q_covd += df[df.Query_Name == that_contig].ix[:, "[LEN 2]"].astype(float).sum()
+        q_total += df[df.Query_Name == that_contig].ix[:, "[LEN Q]"].astype(float).unique()[0]
 
     query_frac_aln.append(q_covd/q_total)
     ref_frac_aln.append(ref_covd/ref_total)
