@@ -1,11 +1,18 @@
-import os
+import os, sys
 import pandas as pd
 
-data_dir = "../Data/Thrash_Libs/mwR_containment"
+data_dir = sys.argv[-1]
+type_name = sys.argv[-2]
+
 fs = [i for i in os.listdir(data_dir) if i.endswith(".srt.tsv")]
 sfs = sorted(fs)
 bins_fs = [i.split(".srt")[0] for i in sfs]
-bins = [i.split(".fa")[0] for i in sfs]
+
+if type_name == 'ours':
+    bins = [i.split(".fa")[0] for i in sfs]
+elif type_name == 'theirs':
+    bins = [i.split(".")[0] for i in sfs]
+
 sps = [os.path.join(data_dir, i) for i in sfs]
 
 def parse_containment(fn):
