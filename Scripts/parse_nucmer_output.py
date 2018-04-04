@@ -81,7 +81,8 @@ final_df4 = final_df3.drop(['mash_match_1', "mash_match_2"], axis=1)
 final_df4.columns = ['their bin', 'their bin length', 'aligned length', 'our bin length',
                      "fraction of their bin aligned", "fraction of our bin aligned"] + list(final_df4.columns[-2:])
 print final_df4.head()
-final_df4.to_csv("../Data/Thrash_Libs/reciprocal_algnment.tsv", sep="\t", index=False, header=True, index_label="our bin")
+final_df4.name = 'our bin'
+final_df4.to_csv("../Data/Thrash_Libs/reciprocal_alignment.tsv", sep="\t", index=True, header=True, index_label="our bin")
 
 
 print "ref >90% covered: {}".format((final_df.ref_covered > 0.9).sum())
