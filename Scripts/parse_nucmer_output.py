@@ -7,6 +7,8 @@ import numpy as np
 coord_dir = "../Data/Thrash_Libs/coords"
 my_bins_dir = "../Data/Thrash_Libs/my_bins"
 their_bins_dir = "../Data/Thrash_Libs/their_bins"
+sensitivity_file = "../Data/Thrash_Libs/mwR_containment/bin_specificity.tsv"
+
 fs = [i for i in os.listdir(coord_dir) if i.endswith(".txt")]
 ref_bins = [i.split("_")[2][-5:] for i in fs]
 
@@ -35,35 +37,46 @@ for idx, this_f in enumerate(ps):
     print this_f
     with open(this_f) as fh:
         content = [i.split("\t") for i in fh.read().split("\n")[3:] if i != ""]
-
+    
     content_cols = content[0][:-1]
     content_cols.extend(["Ref_Name", "Query_Name"])
     ref_covd, ref_total, q_covd, q_total = 0, 0, 0, 0
     data_ = np.array(content[1:])
-
+    
     df = pd.DataFrame(data=data_, columns=content_cols)
-
+    
     for this_contig in df.Ref_Name.unique():
         ref_covd += df[df.Ref_Name == this_contig].ix[:, "[LEN 1]"].astype(float).sum()
         ref_total +=  df[df.Ref_Name == this_contig].ix[:, "[LEN R]"].astype(float).unique()[0]
-
+    
     for that_contig in df.Query_Name.unique():
         q_covd += df[df.Query_Name == that_contig].ix[:, "[LEN 2]"].astype(float).sum()
         q_total += df[df.Query_Name == that_contig].ix[:, "[LEN Q]"].astype(float).unique()[0]
-
+    
     query_frac_aln.append(q_covd/q_total)
     ref_frac_aln.append(ref_covd/ref_total)
     query_aln_len.append(q_covd)
     ref_aln_len.append(ref_covd)
 
-data_final = np.array([ref_bins, ref_frac_aln, ref_aln_len, ref_g_size, query_bins, query_frac_aln, query_aln_len, query_g_size]).T
-final_cols = ["ref_bins", "ref_frac_alnd", "ref_alnd_length", "ref_g_size", "query_bins", "query_frac_aln", "query_alnd_length", "query_g_size"]
-final_df = pd.DataFrame(data=data_final, columns=final_cols)
+data_final = np.array([ref_bins, ref_frac_aln, ref_aln_len, ref_g_size, query_frac_aln, query_aln_len, query_g_size]).T
+final_cols = ["ref_bins", "ref_frac_alnd", "ref_alnd_length", "ref_g_size", "query_frac_aln", "query_alnd_length", "query_g_size"]
+final_df = pd.DataFrame(data=data_final, columns=final_cols, index=query_bins)
 print final_df.head()
 final_df = final_df.apply(pd.to_numeric, errors='ignore')
 final_df["ref_covered"] = final_df.ref_alnd_length / final_df.ref_g_size
 final_df["query_covered"] = final_df.query_alnd_length / final_df.query_g_size
-final_df.to_csv("../Data/Thrash_Libs/reciprocal_algnment.tsv", sep="\t", index=False, header=True)
+print final_df.ix[:, ["ref_frac_alnd", "ref_covered"]].corr()
+final_df_pre = final_df.drop(["ref_frac_alnd", "ref_alnd_length", "query_frac_aln"], axis=1)
+sens_srs = pd.read_csv(sensitivity_file, sep="\t", header=None, index_col=0)
+final_df2 = pd.concat([final_df_pre, sens_srs], axis=1, verify_integrity=True)
+final_df2.columns = list(final_df2.columns)[:-2] + ['mash_match', 'sensitivity']
+assert (final_df2.ref_bins == final_df2.mash_match).sum() == final_df2.shape[0]
+final_df3 = final_df2.drop(['mash_match'], axis=1)
+final_df3.columns = ['their bin', 'their bin length', 'aligned length', 'our bin length',
+                     "fraction of their bin aligned", "fraction of our bin aligned",
+                     'specificity across their bins']
+print final_df3.head()
+final_df3.to_csv("../Data/Thrash_Libs/reciprocal_algnment.tsv", sep="\t", index=False, header=True, index_label="our bin")
 
 
 print "ref >90% covered: {}".format((final_df.ref_covered > 0.9).sum())
