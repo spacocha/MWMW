@@ -25,17 +25,18 @@ best_match = [parse_containment(i) for i in sps]
 sample_sheet_f = os.path.join(data_dir, "master_containment.tsv")
 with open(sample_sheet_f, "w") as ofh:
     for i, j in zip(bins_fs, best_match):
-        k="_".join(i.split(".")[:-1])
-        l=j.split(".")[0]
+        k = i.split(".")[0]
+        l=".".join(j.split(".")[:2])
         ofh.write("{}\t{}\t{}\t{}\n".format(i, j, k, l))
 
 
 fix_name= lambda x: x.split(".")[0]
+fix_name_2= lambda x: ".".join(x.split(".")[:2])
 fix_hash= lambda x: float(x.split("/")[0]) / float(x.split("/")[1])
 
 def measure_specificity(path_, bin_):
     df = pd.read_csv(path_, sep="\t", header=None)
-    df['ref_match_name'] = df.ix[:, 4].apply(fix_name)
+    df['ref_match_name'] = df.ix[:, 4].apply(fix_name_2)
     df['hash_ratios'] = df.ix[:, 1].apply(fix_hash)
     sensitivity_ = df.hash_ratios.max() / df.hash_ratios.sum()
     name_ = df.ix[0, 'ref_match_name']
