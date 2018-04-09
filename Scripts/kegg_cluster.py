@@ -1,14 +1,25 @@
 """
+# this option reads all the individual flat files in the specified dir into a single csv
 python kegg_cluster.py -f ../Data/KEGG_Annotations/KO_Database/TO_Files
+
+# this option was for debugging
 python kegg_cluster.py -t ../Data/KEGG_Annotations/KO_Database/KO_by_TO_Table.tsv 
+
+# this option reads in the output of [one of the other scripts in this repo] and reformats
+# to match the output of the -f option above
 python kegg_cluster.py -b ../Data/KEGG_Annotations/Aggregated_Annotations.tsv
+
+# this option collects the output of the '-b' and '-f' and ....
+python kegg_cluster.py -bt
+
 """
 
-import os, sys
+import os, sys, urllib2, time
 import pandas as pd
 import numpy as np
 from itertools import chain
 from scipy.spatial.distance import pdist, squareform, cdist
+from scipy.stats import spearmanr
 
 args = sys.argv
 
@@ -63,32 +74,64 @@ if '-bt' in args:
     TO_df, Bin_df = full_rep_TO.ix[:, common_kos], full_rep_bin.ix[:, common_kos]
     assert TO_df.isnull().sum().sum() == 0
     assert Bin_df.isnull().sum().sum() == 0
-    bin_26 = Bin_df.ix['bin_26', :].values.reshape(1, len(common_kos))
-    dist_26_seuc = pd.Series(data=cdist(bin_26, TO_df.values, 'seuclidean').flatten(), index=TO_df.index)
-    dist_26_euc = pd.Series(data=cdist(bin_26, TO_df.values, 'euclidean').flatten(), index=TO_df.index)
-    dist_26_cos = pd.Series(data=cdist(bin_26, TO_df.values, 'cosine').flatten(), index=TO_df.index)
-    dist_26_cor = pd.Series(data=cdist(bin_26, TO_df.values, 'correlation').flatten(), index=TO_df.index)
-    # T00784 ecy, ECOLX, 409438; Escherichia coli O152:H28 SE11 (commensal strain)
-    # T00944 ebr, 413997; Escherichia coli B REL606
-    print dist_26_seuc.argmin()
-    bin_52 = Bin_df.ix['bin_52', :].values.reshape(1, len(common_kos))
-    dist_52s = pd.Series(data=cdist(bin_52, TO_df.values, 'seuclidean').flatten(), index=TO_df.index)
-    # T00647 Microcystis aeruginosa NIES-843
-    def match_a_bin(binname, bindf, todf, col_set):
-        a_bin_annots = bindf.ix[binname, :].values.reshape(1, len(col_set))
-        bin_dists = pd.Series(data=cdist(a_bin_annots, todf.values, 'seuclidean').flatten(), index=todf.index)
-        print "{}\t{}\t{}\t".format(binname, bin_dists.argmin(), bin_dists.min())
-        return (binname, bin_dists.argmin(), bin_dists.min())
+    
+    def match_a_bin(binname, bindf, todf, dist_str, n_matches):
+        if dist_str == 'spearman_corr':
+            a_bin_annots = bindf.ix[binname, :].values
+            sp_dists = [spearmanr( np.vstack((a_bin_annots, todf.ix[i,:].values)).T)[0] for i in todf.index]
+            sp_d_arr = np.array(sp_dists)
+            match_df = pd.Series(index=todf.index, data=sp_d_arr).sort_values(ascending=False)[:n_matches]
+        else:
+            a_bin_annots = bindf.ix[binname, :].values.reshape(1, bindf.shape[1])
+            data_dist_mat = cdist(a_bin_annots, todf.values, dist_str).flatten()
+            match_df = pd.Series(index=todf.index, data=data_dist_mat).sort_values()[:n_matches]
+            
+        match_tuples = zip(match_df.index, match_df.values)
+        match_flat = list(chain.from_iterable(match_tuples))
+        return match_flat
 
-    matches = [match_a_bin(i, Bin_df, TO_df, common_kos) for i in Bin_df.index]
+    n_matches_ = 5
+    spr_matches, sce_matches = [], []
+    for i_bin in Bin_df.index:
+        print i_bin, "is being matched"
+        sce_matches.append(match_a_bin(i_bin, Bin_df, TO_df, 'seuclidean', n_matches_))
+        spr_matches.append(match_a_bin(i_bin, Bin_df, TO_df, 'spearman_corr', n_matches_))
 
+    output_columns = [('Hit {}'.format(i), 'Score {}'.format(i)) for i in xrange(1,n_matches_+1)]
+    out_cols = list(chain.from_iterable(output_columns))
+    non_para_idx = [i+"_a" for i in Bin_df.index]
+    para_idx = [i+"_b" for i in Bin_df.index]
+    para_df = pd.DataFrame(index=para_idx, data=np.array(sce_matches), columns=out_cols)
+    nonpara_df = pd.DataFrame(index=non_para_idx, data=np.array(spr_matches), columns=out_cols)
 
+    hit_cols = [i for i in out_cols if "Hit" in i]
+    non_para_matches = set(nonpara_df.ix[:, hit_cols].values.flatten())
+    non_para_matches.update(set(para_df.ix[:, hit_cols].values.flatten()))
 
+    print len(non_para_matches), "TO names will be fetched"
 
-    #dist_mat = squareform(pdist(full_df.values, 'correlation'))
-    # save this as a pickle
-    # 
-    # plot distributions
+    def fetch_name(this_to):
+        pre_url = "http://rest.kegg.jp/find/genome/"
+        data = urllib2.urlopen(pre_url+this_to).read()
+        this_tos_name = data.strip().split(";")[-1].strip()
+        print this_to
+        time.sleep(2.5)
+        return ": ".join([this_to, this_tos_name])
+    
+    to_name_dict = {u:fetch_name(u) for u in list(non_para_matches)}
+    fix_name = lambda x: to_name_dict[x]
+
+    para_df['metric'] = ['standardized euclidean dist'] * para_df.shape[0]
+    nonpara_df['metric'] = ['spearman correlation'] * nonpara_df.shape[0]
+
+    for hc in hit_cols:
+        nonpara_df.ix[:, hc] = nonpara_df.ix[:, hc].apply(fix_name)
+        para_df.ix[:, hc] = para_df.ix[:, hc].apply(fix_name)
+
+    assert (para_df.columns == nonpara_df.columns).sum() == len(nonpara_df.columns) == len(para_df.columns)
+
+    output_df = para_df.append(nonpara_df).sort_index()
+    output_df.to_csv("../Data/min_ko_distance_genomes.tsv", sep="\t", )
     
 
 
