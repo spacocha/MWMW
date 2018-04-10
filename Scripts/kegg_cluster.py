@@ -131,7 +131,7 @@ if '-bt' in args:
         data = urllib2.urlopen(pre_url+this_to).read()
         this_tos_name = data.strip().split(";")[-1].strip()
         print ": ".join([this_to, this_tos_name])
-        time.sleep(2.2)
+        time.sleep(2.)
         return ": ".join([this_to, this_tos_name])
     
     to_name_dict = {u:fetch_name(u) for u in list(non_para_matches)}
@@ -147,7 +147,7 @@ if '-bt' in args:
     assert (para_df.columns == nonpara_df.columns).sum() == len(nonpara_df.columns) == len(para_df.columns)
 
     output_df = para_df.append(nonpara_df).sort_index()
-    output_df.to_csv("../Data/min_ko_distance_genomes.tsv", sep="\t", index_label="Bin")
+    output_df.to_csv("../Data/min_ko_distance_genomes_normed2x.tsv", sep="\t", index_label="Bin")
     
 
 
