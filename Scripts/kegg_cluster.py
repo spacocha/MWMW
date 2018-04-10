@@ -71,7 +71,21 @@ if '-bt' in args:
     print "KOs found in the bins: {}".format(full_rep_bin.shape[1])
     print "Found in both data sets: {}".format(len(common_kos))
     print "Found only in the bins: {}".format(len(bin_only_kos))
-    TO_df, Bin_df = full_rep_TO.ix[:, common_kos], full_rep_bin.ix[:, common_kos]
+    TO_df_pre, Bin_df_pre = full_rep_TO.ix[:, common_kos], full_rep_bin.ix[:, common_kos]
+    from sklearn.preprocessing import normalize
+    def unit_norm_row_col(df):
+        mat = df.values.T
+        print df.index[0], df.shape, df.columns[0]
+        nmat, norms_ = normalize(mat, norm='l1', axis=0, return_norm=True)
+        print norms_.shape, "normalizing along columns"
+        nmat_2, norms_ = normalize(nmat, norm='l1', axis=1, return_norm=True)
+        print norms_.shape, "normalizing along rows"
+        norm_df = pd.DataFrame(index=df.index, columns=df.columns, data=nmat_2.T)
+        return norm_df
+
+    TO_df, Bin_df = unit_norm_row_col(TO_df_pre), unit_norm_row_col(Bin_df_pre)
+
+
     assert TO_df.isnull().sum().sum() == 0
     assert Bin_df.isnull().sum().sum() == 0
     
@@ -105,6 +119,8 @@ if '-bt' in args:
     nonpara_df = pd.DataFrame(index=non_para_idx, data=np.array(spr_matches), columns=out_cols)
 
     hit_cols = [i for i in out_cols if "Hit" in i]
+    score_cols = out_cols[0]
+    print (nonpara_df.ix[:, score_cols] == para_df.ix[:, score_cols]).sum(), "aggrements between distance metrics"
     non_para_matches = set(nonpara_df.ix[:, hit_cols].values.flatten())
     non_para_matches.update(set(para_df.ix[:, hit_cols].values.flatten()))
 
@@ -114,8 +130,8 @@ if '-bt' in args:
         pre_url = "http://rest.kegg.jp/find/genome/"
         data = urllib2.urlopen(pre_url+this_to).read()
         this_tos_name = data.strip().split(";")[-1].strip()
-        print this_to
-        time.sleep(2.5)
+        print ": ".join([this_to, this_tos_name])
+        time.sleep(2.2)
         return ": ".join([this_to, this_tos_name])
     
     to_name_dict = {u:fetch_name(u) for u in list(non_para_matches)}
@@ -131,7 +147,7 @@ if '-bt' in args:
     assert (para_df.columns == nonpara_df.columns).sum() == len(nonpara_df.columns) == len(para_df.columns)
 
     output_df = para_df.append(nonpara_df).sort_index()
-    output_df.to_csv("../Data/min_ko_distance_genomes.tsv", sep="\t", )
+    output_df.to_csv("../Data/min_ko_distance_genomes.tsv", sep="\t", index_label="Bin")
     
 
 
