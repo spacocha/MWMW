@@ -47,6 +47,6 @@ def open_read_split(path_):
 parsed_blasts = [open_read_split(i) for i in faa_fs] + [open_read_split(i) for i in ffn_fs]
 good_data = [x for x in parsed_blasts if x is not None]
 master_df = pd.concat(good_data, ignore_index=True).drop(["start", "end", "length"], axis=1)
-master_df.to_csv("../Data/Aggregate_Iron_Annots.tsv"), sep="\t")
+master_df.to_csv("../Data/Aggregate_Iron_Annots.tsv", sep="\t")
 # output bin, protein, fe_red_geobacter/fe_red_rhodoferax
 
