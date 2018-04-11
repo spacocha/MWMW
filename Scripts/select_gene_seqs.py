@@ -41,7 +41,7 @@ all_annots_df.ix[dup_entries.index[0], "Annotation"] = merged_annotation
 all_annots_df.drop([dup_entries.index[1]], inplace=True)
 print all_annots_df.head()
 all_annots_df.to_csv("../Data/KEGG_Annotations/bin_protein_annotation.tsv", sep="\t", index=False)
-sys.exit()
+
 ## make space for new data
 all_annots_df["Start"] = pd.Series(data=[None]*all_annots_df.shape[0], index=all_annots_df.index)
 all_annots_df["End"] = pd.Series(data=[None]*all_annots_df.shape[0], index=all_annots_df.index)
