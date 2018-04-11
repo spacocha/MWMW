@@ -18,12 +18,11 @@ sq_dir=/home-3/karoraw1@jhu.edu/scratch/MWMW/Data/KEGG_Annotations
 # python parse_KEGG_data.py
 # python parse_HMM_data.py
 python select_gene_seqs.py $sq_dir
-salmon index -k 21 -p 12 -t $sq_dir/Annotated_Gene_Seqs.fa -i $sq_dir/AGS_Sal_Ind
-
+salmon index -k 21 -p 12 -t $sq_dir/Annotated_Gene_Seqs_wFe.fa -i $sq_dir/AGS_Sal_Ind
 B_A_S=/home-3/karoraw1@jhu.edu/scratch/metaWRAP_Out/QC_Renamed
 
+rm -rf $sq_dir/QuantFiles
 mkdir -p $sq_dir/QuantFiles
-
 while read sample R1s R2s; do
     salmon quant --meta -i $sq_dir/AGS_Sal_Ind --libType IU -1 $B_A_S/$R1s -2 $B_A_S/$R2s -o $sq_dir/QuantFiles/${sample}.quant;
 done < $B_A_S/samples_names.txt

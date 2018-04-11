@@ -5,4 +5,4 @@ q_fs = [(i.split(".")[0], pd.read_csv(i,sep="\t", index_col=0)) for i in sorted(
 for i, j in q_fs:
     j.columns = [i]
 full_df = pd.concat(zip(*q_fs)[1], 1)
-full_df.to_csv(sys.argv[-1]+"/gene_abundances_raw.tsv", sep="\t", index_label="Gene_Sequence")
+full_df.to_csv(sys.argv[-1]+"/gene_abundances_raw_wFe.tsv", sep="\t", index_label="Gene_Sequence")

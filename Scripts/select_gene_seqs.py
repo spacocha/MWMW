@@ -1,4 +1,6 @@
 """
+python select_gene_seqs.py ../Data/KEGG_Annotations
+
 step 1: make a table of bin number, protein id, and select annotation type (k num or hmm) 
 step 2: parse GFF to get contig number & locus information (add +20 bp on each side if possible)
 step 3: parse *.fna to pull trimmed sequence
@@ -14,6 +16,7 @@ import os, sys
 ## import
 hmm_df = pd.read_csv(sys.argv[-1]+"/All_HMM_Hits_raw.tsv", sep="\t")
 knum_df = pd.read_csv(sys.argv[-1]+"/Select_Annotations.tsv", sep="\t", usecols=[0, 1, 5])
+iron_df = pd.read_csv(sys.argv[-1]+"/Aggregate_Iron_Annots.tsv", sep="\t", index_col=0)
 
 ## preprocess
 def edit_pname(p_str):
@@ -28,8 +31,9 @@ def edit_pname(p_str):
 knum_df["ProteinID"] = knum_df.Protein_Name.apply(edit_pname)
 all_annots_df = knum_df.ix[:, ["Bin_Name", "ProteinID", "K_number_1"]].copy()
 all_annots_df.columns = list(hmm_df.columns)
-all_annots_df = all_annots_df.append(hmm_df, ignore_index=True)
-
+iron_df.columns = list(hmm_df.columns)
+some_annots_df = all_annots_df.append(hmm_df, ignore_index=True)
+all_annots_df = some_annots_df.append(iron_df, ignore_index=True)
 ## edit redundancy
 dup_entries = all_annots_df[all_annots_df.ProteinID == 'IJDLJFPM_212255']
 merged_annotation = "--".join(dup_entries.Annotation.tolist())
@@ -135,7 +139,7 @@ print "{} sequences were not found".format(all_annots_df.Sequence.isnull().sum()
 
 all_annots_df.to_csv(sys.argv[-1]+"/Integrated_Annotations_with_Seqs.tsv", sep="\t", index=False)
 
-with open(sys.argv[-1]+"/Annotated_Gene_Seqs.fa", "w") as ags_h:
+with open(sys.argv[-1]+"/Annotated_Gene_Seqs_wFe.fa", "w") as ags_h:
     for idx in all_annots_df.index:
         header = ">"+"_".join(list(all_annots_df.ix[idx, ["Bin","ProteinID"]]))
         sequence = all_annots_df.ix[idx, "Sequence"]
