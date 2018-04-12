@@ -102,6 +102,7 @@ replace_names = lambda x: ko_names[x].split(";")[0]
 anno_df2 = anno_df.reset_index()
 anno_df2['Annotation'] = anno_df2.Annotation.apply(replace_names)
 anno_df2.set_index("Annotation", inplace=True, verify_integrity=True)
+print anno_df2.head()
 to_cluster = anno_df2.values 
 
 row_clusters = linkage(to_cluster, method='ward', metric='euclidean')
@@ -111,7 +112,15 @@ plt.figure(1, figsize=(8,8), dpi=1200)
 row_dendr = dendrogram(row_clusters, labels=list(anno_df2.index))
 plt.tight_layout()
 plt.gcf()
-plt.savefig("../Data/annotation_clusters.png", dpi=1200)
+plt.savefig("../Data/annotation_clusters_euclid.png", dpi=1200)
+
+plt.figure(2, figsize=(8,8), dpi=1200)
+row_clusters2 = linkage(to_cluster, method='complete', metric='correlation')
+row_dendr = dendrogram(row_clusters2, labels=list(anno_df2.index))
+plt.tight_layout()
+plt.gcf()
+plt.savefig("../Data/annotation_clusters_corr.png", dpi=1200)
+
 
 
 
