@@ -20,6 +20,17 @@ import numpy as np
 from itertools import chain
 from scipy.spatial.distance import pdist, squareform, cdist
 from scipy.stats import spearmanr
+from sklearn.preprocessing import normalize
+
+def unit_norm_row_col(df):
+    mat = df.values.T
+    print df.index[0], df.shape, df.columns[0]
+    nmat, norms_ = normalize(mat, norm='l1', axis=0, return_norm=True)
+    print norms_.shape, "normalizing along columns"
+    nmat_2, norms_ = normalize(nmat, norm='l1', axis=1, return_norm=True)
+    print norms_.shape, "normalizing along rows"
+    norm_df = pd.DataFrame(index=df.index, columns=df.columns, data=nmat_2.T)
+    return norm_df
 
 args = sys.argv
 
@@ -72,17 +83,6 @@ if '-bt' in args:
     print "Found in both data sets: {}".format(len(common_kos))
     print "Found only in the bins: {}".format(len(bin_only_kos))
     TO_df_pre, Bin_df_pre = full_rep_TO.ix[:, common_kos], full_rep_bin.ix[:, common_kos]
-    from sklearn.preprocessing import normalize
-    def unit_norm_row_col(df):
-        mat = df.values.T
-        print df.index[0], df.shape, df.columns[0]
-        nmat, norms_ = normalize(mat, norm='l1', axis=0, return_norm=True)
-        print norms_.shape, "normalizing along columns"
-        nmat_2, norms_ = normalize(nmat, norm='l1', axis=1, return_norm=True)
-        print norms_.shape, "normalizing along rows"
-        norm_df = pd.DataFrame(index=df.index, columns=df.columns, data=nmat_2.T)
-        return norm_df
-
     TO_df, Bin_df = unit_norm_row_col(TO_df_pre), unit_norm_row_col(Bin_df_pre)
 
 
