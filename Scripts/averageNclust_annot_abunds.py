@@ -9,7 +9,6 @@ import numpy as np
 from scipy.cluster.hierarchy import linkage
 from kegg_cluster import unit_norm_row_col
 
-
 # read in protein annotation lookup table
 protein_fxn_df = pd.read_csv("../Data/KEGG_Annotations/bin_protein_annotation.tsv", sep="\t")
 
@@ -60,7 +59,7 @@ protein_fxn_df_filt.reset_index(inplace=True)
 
 # load protein abundances (excluding control columns) & normalize by sample and then by row
 prot_abunds = pd.read_csv("../Data/KEGG_Annotations/gene_abundances_raw_wFe.tsv", sep="\t", usecols=range(15))
-norm = False
+norm = 1
 if norm == True:
     normed_abunds = unit_norm_row_col(prot_abunds.ix[:, prot_abunds.columns[1:]].T).T
     normed_abunds['Gene_Sequence'] = prot_abunds.Gene_Sequence
@@ -155,14 +154,6 @@ plt.tight_layout()
 plt.gcf()
 plt.savefig("../Data/KEGG_Annotations/Averaged_Select_Annots/raw_corr_heatmap.png", dpi=1000)
 
-
-
-
-
-
-
-
-
 # Write out raw data for sarah & other plotting routines
 anno_df3 = anno_df.copy()
 anno_df3['dispersion'] = dispersion_srs
@@ -174,21 +165,15 @@ data_table_fn = "../Data/KEGG_Annotations/Averaged_Select_Annots/Annotation_Abun
 anno_df4.to_csv(data_table_fn, sep="\t", index=True, header=True)
 
 # define anchors for each process
-
-#'K10535': "Ammonia Oxidation (oxygen)" # hao (next step in pathway, produces nitrite)
-#'K00368': "Denitrification ? " # nirk (produces nitrite from NO)
-
-
-#'K00376': "Denitrification (Sum)"      # nosZ 
-#'K11180': "Sulfate Reduction + Sulfur Oxidation (Sum)" # dsrA
-#'K11181': "Sulfate Reduction + Sulfur Oxidation (Sum)" # dsrB
-#"K00399": "Methanogenesis" # mcrA
-# NA  mxaG    Methane Oxidation (Sum)
-# NA  mxaC    Methane Oxidation (Sum)
-# NA  mxaK    Methane Oxidation (Sum)
-# NA  mxaL    Methane Oxidation (Sum)
-#"fe_red_geobacter": "Iron Reduction"
-#"fe_red_rhodoferax": "Iron Reduction"
-
-
-
+gene_proc_map = {'hao K10535':  "Ammonia Oxidation (oxygen)",
+                 'nirK K00368': "Ammonia Oxidation (oxygen)", 
+                 'nosZ K00376': "Denitrification (Sum)",
+                 'nirD K00363': "Denitrification (Sum)",
+                 'dsrA K11180': "Sulfate Reduction + Sulfur Oxidation (Sum)",
+                 'dsrB K11181': "Sulfate Reduction + Sulfur Oxidation (Sum)",
+                 "mcrA K00399": "Methanogenesis",
+                 "mxaG K16255": "C1 oxidation (Sum)",
+                 "mxaC K16257":"C1 oxidation (Sum)",
+                 "mxaL K16259": "C1 oxidation (Sum)",
+                 "fe_red_geobacter": "Iron Reduction",
+                 "fe_red_rhodoferax": "Iron Reduction"}

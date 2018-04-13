@@ -31,7 +31,7 @@ rec_dicts = {}
 for r in recs:
     assert len(r) == 7
     assert r[0][:5] == "user:"
-
+    
     if r[1] != "":
         prot_name = r[0][5:]
         rec_dict = {}
@@ -47,7 +47,7 @@ for r in recs:
             rec_dict['K-number_1'] = r[1]
             rec_dict['K-number_2'] = ""
             rec_dict['K-number_3'] = ""
-
+        
         rec_dict['Kingdom'] = r[2]
         rec_dict['Class'] = r[3]
         rec_dict['Genus'] = r[4]
@@ -60,7 +60,7 @@ master_dicts = []
 for h in headers:
     master_dict = {}
     master_dict["Protein_Name"] = h
-
+    
     if h[:3] == "bin":
         master_dict["Bin_Name"] = "_".join(h.split("_")[:2])
     elif h[:8] == "unbinned":
@@ -71,7 +71,7 @@ for h in headers:
     master_dict["KO_Annot_1"] = stacked_annots[h][1]
     master_dict["KO_Annot_2"] = stacked_annots[h][2]
     master_dict["KO_Annot_3"] = stacked_annots[h][3]
-
+    
     if rec_dicts.has_key(h):
         master_dict['K_number_1'] = rec_dicts[h]['K-number_1']
         master_dict['K_number_2'] = rec_dicts[h]['K-number_2']
@@ -81,7 +81,7 @@ for h in headers:
         master_dict['Genus'] = rec_dicts[h]['Genus']
         master_dict['KEGG_GenesID'] = rec_dicts[h]['KEGG GenesID']
         master_dict['GHOSTX_score'] = float(rec_dicts[h]['GHOSTX score'])
-
+    
     master_dicts.append(master_dict)
 
 master_df = pd.DataFrame(master_dicts)
@@ -146,7 +146,7 @@ for idx, sb in enumerate(select_bools):
 print "Filter columns added equal {} - {}".format(select_master.shape[1],
                                                   clean_master.shape[1])
 
-select_master = select_master[select_master.select_dtypes([bool]).any(1)]   
+select_master = select_master[select_master.select_dtypes([bool]).any(1)]
 
 select_master.drop([i for i in list(select_master.columns) if "Filter_" in i], axis=1, inplace=True)
 
@@ -170,7 +170,7 @@ for a_bin in bin_numbers:
 for idx, this_bin in enumerate(bin_numbers):    
     bin_df = select_master[select_master.Bin_Name == this_bin]
     countdown = countdown - bin_df.shape[0]
-    print "{} has {} recs, {} remaining".format(this_bin, bin_df.shape[0], countdown)    
+    print "{} has {} recs, {} remaining".format(this_bin, bin_df.shape[0], countdown)
     class_1 = list(bin_df.K_number_1.dropna())
     class_2 = list(bin_df.K_number_2.dropna())
     class_3 = list(bin_df.K_number_3.dropna())
