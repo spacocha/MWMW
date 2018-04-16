@@ -11,6 +11,7 @@ UniqueCount	AmbigCount
 4	0
 14	0
 1	0
+1	0
 2	0
 2	0
 0	1
@@ -42,6 +43,7 @@ UniqueCount	AmbigCount
 11	0
 14	0
 19	0
+3	0
 1	0
 1	0
 2	0
@@ -52,6 +54,8 @@ UniqueCount	AmbigCount
 24	3
 27	0
 12	0
+3	0
+3	0
 0	0
 2	0
 1	0
@@ -71,6 +75,7 @@ UniqueCount	AmbigCount
 5	1
 0	0
 2	0
+3	0
 1	0
 8	0
 16	0
@@ -84,7 +89,9 @@ UniqueCount	AmbigCount
 91	0
 153	0
 2	0
+17	1
 108	0
+18	0
 64	0
 36	0
 51	0
@@ -98,6 +105,7 @@ UniqueCount	AmbigCount
 0	0
 0	0
 3	0
+1	0
 8	0
 26	0
 15	0
@@ -123,6 +131,7 @@ UniqueCount	AmbigCount
 1	0
 0	0
 11	1
+7	0
 2	0
 2	0
 0	0
@@ -140,6 +149,7 @@ UniqueCount	AmbigCount
 2	0
 10	0
 28	3
+5	0
 5	0
 5	0
 2	0
@@ -171,6 +181,7 @@ UniqueCount	AmbigCount
 19	0
 6	0
 2	0
+4	0
 9	0
 10	0
 11	0
@@ -194,6 +205,7 @@ UniqueCount	AmbigCount
 0	0
 0	0
 1	0
+2	0
 1	0
 2	0
 5	0
@@ -205,6 +217,7 @@ UniqueCount	AmbigCount
 0	0
 0	0
 0	0
+1	0
 0	4
 923	18
 8	6
@@ -221,12 +234,17 @@ UniqueCount	AmbigCount
 1	0
 0	0
 0	0
+0	0
 1	1
 2	0
+0	0
+3	0
 3	0
 0	0
 0	0
+0	0
 2	0
+4	0
 0	0
 1	0
 2	0
@@ -239,6 +257,8 @@ UniqueCount	AmbigCount
 1	0
 5	0
 2	0
+2	0
+0	0
 2	0
 4	0
 0	0
@@ -265,6 +285,7 @@ UniqueCount	AmbigCount
 4	0
 0	0
 6	0
+5	0
 2	1
 1	0
 0	0
@@ -289,6 +310,7 @@ UniqueCount	AmbigCount
 96	0
 40	26
 87	0
+165	0
 0	1
 1	0
 1	0
@@ -324,6 +346,8 @@ UniqueCount	AmbigCount
 2	0
 0	0
 1	0
+1	0
+6	0
 12	0
 4	0
 0	0
@@ -332,6 +356,8 @@ UniqueCount	AmbigCount
 3	0
 5	0
 1	0
+3	0
+4	0
 8	0
 9	0
 2	0
@@ -343,11 +369,14 @@ UniqueCount	AmbigCount
 0	0
 1	0
 0	0
+2	1
+6	0
 0	0
 3	0
 2	0
 1	0
 4	0
+1	0
 4	0
 3	1
 0	1
@@ -389,6 +418,7 @@ UniqueCount	AmbigCount
 3	0
 0	0
 0	0
+0	0
 7	0
 0	0
 0	0
@@ -405,6 +435,7 @@ UniqueCount	AmbigCount
 0	0
 4	1
 3	5
+3	3
 5	0
 1	0
 1	0
@@ -413,8 +444,11 @@ UniqueCount	AmbigCount
 2	0
 0	0
 0	0
+3	0
+2	0
 0	0
 4	0
+8	0
 10	0
 12	0
 0	0
@@ -422,6 +456,7 @@ UniqueCount	AmbigCount
 9	4
 28	0
 8	26
+0	0
 1	0
 2	0
 0	0
@@ -432,6 +467,9 @@ UniqueCount	AmbigCount
 2	0
 3	0
 27	1
+6	0
+10	3
+27	1
 0	0
 2	0
 0	0
@@ -441,20 +479,26 @@ UniqueCount	AmbigCount
 99	0
 4	0
 2	0
+1	0
 0	0
+0	1
 14	0
+9	0
 4	0
 1	0
 0	0
 4	0
 9	0
+1	0
 5	0
 22	7
 5	0
 21	0
 1	1
 7	0
+4	0
 0	0
+7	0
 3	1
 0	0
 0	0
@@ -471,7 +515,10 @@ UniqueCount	AmbigCount
 2	2
 6	0
 7	1
+0	0
 5	0
+0	0
+0	0
 5	0
 3	0
 10	0
@@ -481,6 +528,7 @@ UniqueCount	AmbigCount
 18	1
 1	0
 333	24
+8	0
 0	0
 10	1
 0	0
@@ -489,12 +537,15 @@ UniqueCount	AmbigCount
 0	0
 63	24
 0	0
+0	0
 9	0
 3	0
+7	0
 3	0
 7	4
 1	1
 6	0
+9	0
 0	0
 0	0
 1	0
@@ -514,6 +565,7 @@ UniqueCount	AmbigCount
 0	0
 6	0
 3	0
+7	0
 0	0
 4	0
 1	0
@@ -529,11 +581,15 @@ UniqueCount	AmbigCount
 2	0
 0	1
 1	0
+5	0
 4	0
 1	0
-7	0
 2	0
 7	0
+15	0
+2	0
+7	0
+4	0
 0	0
 0	0
 4	0
@@ -541,6 +597,7 @@ UniqueCount	AmbigCount
 0	0
 4	0
 1	0
+8	0
 0	0
 0	0
 0	0
@@ -576,7 +633,11 @@ UniqueCount	AmbigCount
 0	0
 1	1
 2	0
+5	1
+0	1
 7	1
+0	0
+6	1
 0	0
 3	0
 1	0
@@ -585,8 +646,10 @@ UniqueCount	AmbigCount
 1	0
 2	0
 2	0
+1	0
 0	0
 14	1
+3	0
 1	0
 0	0
 0	0
@@ -599,6 +662,7 @@ UniqueCount	AmbigCount
 0	0
 1	0
 0	0
+12	0
 0	0
 0	7
 0	0
@@ -619,6 +683,7 @@ UniqueCount	AmbigCount
 7	0
 1	0
 2	1
+0	0
 2	0
 22	0
 1	2
@@ -627,7 +692,7 @@ UniqueCount	AmbigCount
 1	0
 0	0
 9	0
-14	2
+14	1
 63	17
 17	7
 1	0
@@ -664,7 +729,9 @@ UniqueCount	AmbigCount
 2	0
 0	0
 1	0
+1	0
 3	0
+18	0
 2	0
 8	0
 0	0
@@ -693,10 +760,12 @@ UniqueCount	AmbigCount
 8	0
 1	0
 3	0
+5	0
 23	0
 0	0
 1	0
 1	0
+12	0
 2	0
 4	0
 0	1
@@ -715,9 +784,11 @@ UniqueCount	AmbigCount
 1	0
 30	4
 0	0
+1	0
 0	1
 24	0
 3	0
+0	0
 0	1
 2	0
 1	0
@@ -4671,7 +4742,7 @@ UniqueCount	AmbigCount
 190	0
 226	1
 286	0
-291	2
+290	2
 230	146
 165	1
 482	0
@@ -5071,7 +5142,7 @@ UniqueCount	AmbigCount
 15	0
 2	2
 2	2
-6	0
+5	0
 0	0
 1	0
 17	0
@@ -7136,7 +7207,7 @@ UniqueCount	AmbigCount
 3	0
 17	49
 8	0
-10	0
+8	0
 4	0
 2	0
 0	0
@@ -7237,7 +7308,7 @@ UniqueCount	AmbigCount
 0	0
 3	0
 26	0
-28	0
+30	0
 0	0
 1	0
 3	0
@@ -8137,7 +8208,7 @@ UniqueCount	AmbigCount
 6	0
 1	1
 5	0
-10	0
+11	0
 0	0
 1	0
 3	0
@@ -10994,7 +11065,7 @@ UniqueCount	AmbigCount
 0	0
 0	0
 1	0
-12	0
+10	1
 29	0
 101	0
 5	0
@@ -11606,7 +11677,7 @@ UniqueCount	AmbigCount
 1	0
 1	0
 0	0
-1	0
+0	0
 2	0
 3	0
 5	0
@@ -11929,7 +12000,7 @@ UniqueCount	AmbigCount
 9	0
 2	0
 4	0
-3	0
+4	0
 12	0
 10	0
 51	0
@@ -12248,7 +12319,7 @@ UniqueCount	AmbigCount
 7	0
 23	0
 0	0
-1	1
+0	1
 0	0
 10	1
 0	0
@@ -12326,7 +12397,7 @@ UniqueCount	AmbigCount
 16	0
 1	0
 0	0
-3	0
+2	0
 6	2
 2	0
 0	0

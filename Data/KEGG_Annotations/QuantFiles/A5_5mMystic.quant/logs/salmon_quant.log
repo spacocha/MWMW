@@ -1,35 +1,35 @@
-[2018-04-10 23:05:09.864] [jointLog] [info] parsing read library format
-[2018-04-10 23:05:09.864] [jointLog] [info] There is 1 library.
-[2018-04-10 23:05:10.039] [jointLog] [info] Loading Quasi index
-[2018-04-10 23:05:10.040] [jointLog] [info] Loading 32-bit quasi index
-[2018-04-10 23:05:11.075] [jointLog] [info] done
-[2018-04-10 23:05:11.075] [jointLog] [info] Index contained 13313 targets
-[2018-04-10 23:05:33.044] [jointLog] [info] Computed 11058 rich equivalence classes for further processing
-[2018-04-10 23:05:33.044] [jointLog] [info] Counted 190076 total reads in the equivalence classes 
-[2018-04-10 23:05:33.045] [fileLog] [info] 
-At end of round 0
-==================
-Observed 8695171 total fragments (8695171 in most recent round)
-
-[2018-04-10 23:05:33.060] [jointLog] [warning] 0.000333518% of fragments were shorter than the k used to build the index (21).
+[2018-04-13 18:57:09.543] [jointLog] [info] parsing read library format
+[2018-04-13 18:57:09.543] [jointLog] [info] There is 1 library.
+[2018-04-13 18:57:09.644] [jointLog] [info] Loading Quasi index
+[2018-04-13 18:57:09.644] [jointLog] [info] Loading 32-bit quasi index
+[2018-04-13 18:57:10.699] [jointLog] [info] done
+[2018-04-13 18:57:10.699] [jointLog] [info] Index contained 13384 targets
+[2018-04-13 18:57:32.630] [jointLog] [info] Computed 11117 rich equivalence classes for further processing
+[2018-04-13 18:57:32.630] [jointLog] [info] Counted 190558 total reads in the equivalence classes 
+[2018-04-13 18:57:32.645] [jointLog] [warning] 0.000333518% of fragments were shorter than the k used to build the index (21).
 If this fraction is too large, consider re-building the index with a smaller k.
 The minimum read size found was 20.
 
 
-[2018-04-10 23:05:33.062] [jointLog] [warning] Only 190076 fragments were mapped, but the number of burn-in fragments was set to 5000000.
+[2018-04-13 18:57:32.647] [jointLog] [warning] Only 190558 fragments were mapped, but the number of burn-in fragments was set to 5000000.
 The effective lengths have been computed using the observed mappings.
 
-[2018-04-10 23:05:33.062] [jointLog] [info] Mapping rate = 2.18599%
+[2018-04-13 18:57:32.647] [jointLog] [info] Mapping rate = 2.19154%
 
-[2018-04-10 23:05:33.062] [jointLog] [info] finished quantifyLibrary()
-[2018-04-10 23:05:33.063] [jointLog] [info] Starting optimizer
-[2018-04-10 23:05:33.068] [jointLog] [info] Marked 0 weighted equivalence classes as degenerate
-[2018-04-10 23:05:33.068] [jointLog] [info] iteration = 0 | max rel diff. = 19.5464
-[2018-04-10 23:05:33.092] [jointLog] [info] iteration = 100 | max rel diff. = 0.072177
-[2018-04-10 23:05:33.113] [jointLog] [info] iteration = 200 | max rel diff. = 0.0185815
-[2018-04-10 23:05:33.133] [jointLog] [info] iteration = 300 | max rel diff. = 0.0102896
-[2018-04-10 23:05:33.154] [jointLog] [info] iteration = 400 | max rel diff. = 0.0105643
-[2018-04-10 23:05:33.161] [jointLog] [info] iteration = 433 | max rel diff. = 0.00971428
-[2018-04-10 23:05:33.161] [jointLog] [info] Finished optimizer
-[2018-04-10 23:05:33.161] [jointLog] [info] writing output 
+[2018-04-13 18:57:32.647] [jointLog] [info] finished quantifyLibrary()
+[2018-04-13 18:57:32.648] [jointLog] [info] Starting optimizer
+[2018-04-13 18:57:32.653] [jointLog] [info] Marked 0 weighted equivalence classes as degenerate
+[2018-04-13 18:57:32.653] [jointLog] [info] iteration = 0 | max rel diff. = 19.5465
+[2018-04-13 18:57:32.679] [jointLog] [info] iteration = 100 | max rel diff. = 0.0721629
+[2018-04-13 18:57:32.700] [jointLog] [info] iteration = 200 | max rel diff. = 0.0185787
+[2018-04-13 18:57:32.721] [jointLog] [info] iteration = 300 | max rel diff. = 0.010288
+[2018-04-13 18:57:32.630] [fileLog] [info] 
+At end of round 0
+==================
+Observed 8695171 total fragments (8695171 in most recent round)
+
+[2018-04-13 18:57:32.742] [jointLog] [info] iteration = 400 | max rel diff. = 0.0105628
+[2018-04-13 18:57:32.748] [jointLog] [info] iteration = 433 | max rel diff. = 0.00968952
+[2018-04-13 18:57:32.749] [jointLog] [info] Finished optimizer
+[2018-04-13 18:57:32.749] [jointLog] [info] writing output 
 
