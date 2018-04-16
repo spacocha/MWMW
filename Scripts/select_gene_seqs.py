@@ -16,7 +16,7 @@ import os, sys
 ## import
 hmm_df = pd.read_csv(sys.argv[-1]+"/All_HMM_Hits_raw.tsv", sep="\t")
 knum_df = pd.read_csv(sys.argv[-1]+"/Select_Annotations.tsv", sep="\t", usecols=[0, 1, 5])
-iron_df = pd.read_csv(sys.argv[-1]+"/Aggregate_Iron_Annots.tsv", sep="\t", index_col=0)
+iron_df = pd.read_csv(sys.argv[-1]+"/Aggregate_Iron_Annots2.tsv", sep="\t", index_col=0)
 
 ## preprocess
 def edit_pname(p_str):

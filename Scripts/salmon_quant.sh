@@ -17,7 +17,7 @@ source activate metawrap2-env
 sq_dir=../Data/KEGG_Annotations
 # python parse_KEGG_data.py $sq_dir
 # python parse_HMM_data.py
-#python select_gene_seqs.py $sq_dir
+python select_gene_seqs.py $sq_dir
 salmon index -k 21 -p 12 -t $sq_dir/Annotated_Gene_Seqs_wFe.fa -i $sq_dir/AGS_Sal_Ind
 B_A_S=/home-3/karoraw1@jhu.edu/scratch/metaWRAP_Out/QC_Renamed
 
