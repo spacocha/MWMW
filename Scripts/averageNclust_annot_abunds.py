@@ -213,7 +213,7 @@ to_write = anno_df_final.copy()
 to_write.ix["mcrA K00399", :] *= 0
 to_write.ix["mcrA K00399", :] += float(1)/14
 to_write['Process'] = pd.Series(gene_proc_map)
-to_write.columns = [to_write.columns[-1]]+ list(to_write.columns[:-1])
+to_write = to_write.ix[:, [to_write.columns[-1]]+ list(to_write.columns[:-1])]
 to_write.to_excel(fpg_fn, sheet_name='Relative Abundances', index_label="Annotation", verbose=True)
 
 
