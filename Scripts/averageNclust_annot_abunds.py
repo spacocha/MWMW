@@ -10,11 +10,19 @@ from scipy.cluster.hierarchy import linkage
 from kegg_cluster import unit_norm_row_col
 
 # read in protein annotation lookup table
-protein_fxn_df = pd.read_csv("../Data/KEGG_Annotations/bin_protein_annotation.tsv", sep="\t")
+protein_fxn_df_raw = pd.read_csv("../Data/KEGG_Annotations/bin_protein_annotation.tsv", sep="\t")
 
-# fix wierd name I made leaving just KO
-wierd_idx = protein_fxn_df[protein_fxn_df.Annotation == 'K04561--nitric_oxide_reductase_norB'].index
-protein_fxn_df.ix[wierd_idx, "Annotation"] = ["K04561"]*len(wierd_idx)
+# fix wierd name I made, leaving just the KO version
+wierd_idx = protein_fxn_df_raw[protein_fxn_df_raw.Annotation == 'K04561--nitric_oxide_reductase_norB'].index
+protein_fxn_df_raw.ix[wierd_idx, "Annotation"] = ["K04561"]*len(wierd_idx)
+
+# ~ 56 proteins got annotated as multiple things, since all the annotation categories we retain cover
+# distinct functions, I just dumped them all as spurious. It is 1.07% of the annotations
+prot_id_vec = protein_fxn_df_raw.ix[:, "ProteinID"]
+uniq_ids, uniq_cnts = np.unique(prot_id_vec.values, return_counts=1)
+suspect_annotations = uniq_ids[uniq_cnts == 2]
+susp_annot = protein_fxn_df_raw.ix[:, "ProteinID"].isin(suspect_annotations) == False
+protein_fxn_df = protein_fxn_df_raw[susp_annot]
 
 # extract IDs assocated w/ iron reduction
 iron_annots = [i for i in protein_fxn_df.Annotation.unique() if 'fe_red_' in i]
@@ -53,7 +61,7 @@ protein_fxn_df['gene_idx'] = protein_fxn_df.Bin + "_" + protein_fxn_df.ProteinID
 # NOTE: each instance of "gene_idx" may be annotated multiple times
 
 # drop annotations corresponding to proteins that were flagged as duplicates by Salmon
-protein_fxn_df.drop([8814, 11137, 12395], axis=0, inplace=True)
+#protein_fxn_df.drop([8814, 11137, 12395], axis=0, inplace=True)
 protein_fxn_df_filt = protein_fxn_df[protein_fxn_df.Annotation.isin(kept_annots)]
 protein_fxn_df_filt.reset_index(inplace=True)
 
@@ -68,7 +76,7 @@ else:
 
 # filter to retain only those in `kept_annots` & drop more duplicate proteins that went unmapped 
 prot_abunds_filt_pre = normed_abunds[normed_abunds.Gene_Sequence.isin(protein_fxn_df_filt.gene_idx.unique())]
-prot_abunds_filt_pre.drop([13292, 11125, 5915, 11093, 10488, 10672, 10772, 10914, 6247], axis=0, inplace=True)
+#prot_abunds_filt_pre.drop([13292, 11125, 5915, 11093, 10488, 10672, 10772, 10914, 6247], axis=0, inplace=True)
 prot_abunds_filt = prot_abunds_filt_pre.reset_index()
 
 # ensure 1-to-1 mapping between annotation lookup and values read back from salmon output
@@ -86,8 +94,8 @@ for d_n, anno_n in product(numeric_cols, protein_fxn_df_filt.index):
         # make sure multiple/missing entries are caught
         assert this_slice.shape[0] == 1
     except AssertionError:
-        print this_slice
-        assert this_slice.shape[0] == 1
+        print this_slice.ix[this_slice.index[1], "index"]
+        raise ValueError("There are wierd duplicate gene abundances, unrelated to colliding annotations")
     to_append.ix[anno_n, d_n] = this_slice[d_n][this_slice.index[0]]
 
 assert to_append.isnull().sum().sum() == 0
@@ -138,7 +146,6 @@ plt.tight_layout()
 plt.gcf()
 plt.savefig("../Data/KEGG_Annotations/Averaged_Select_Annots/annotation_clusters_corr.png", dpi=1000)
 
-
 # reorder rows with respect to the clustering
 row_dendr2 = dendrogram(row_clusters2, labels=list(anno_df2.index), no_plot=True)
 reordered_index = [anno_df2.index[i] for i in row_dendr2['leaves']]
@@ -148,7 +155,7 @@ df_rowclust = anno_df2.ix[reordered_index, :]
 plt.clf()
 fig = plt.figure(3, figsize=(8,8), dpi=1000)
 ax_is = fig.add_subplot(111)
-a_cmap=sns.cubehelix_palette(8, start=.5, rot=-.75, as_cmap=True)
+a_cmap = sns.cubehelix_palette(dark=0, light=1, as_cmap=True)
 cax = sns.heatmap(df_rowclust, ax=ax_is, cmap=a_cmap)
 plt.tight_layout()
 plt.gcf()
@@ -165,15 +172,48 @@ data_table_fn = "../Data/KEGG_Annotations/Averaged_Select_Annots/Annotation_Abun
 anno_df4.to_csv(data_table_fn, sep="\t", index=True, header=True)
 
 # define anchors for each process
-gene_proc_map = {'hao K10535':  "Ammonia Oxidation (oxygen)",
-                 'nirK K00368': "Ammonia Oxidation (oxygen)", 
-                 'nosZ K00376': "Denitrification (Sum)",
-                 'nirD K00363': "Denitrification (Sum)",
-                 'dsrA K11180': "Sulfate Reduction + Sulfur Oxidation (Sum)",
-                 'dsrB K11181': "Sulfate Reduction + Sulfur Oxidation (Sum)",
-                 "mcrA K00399": "Methanogenesis",
-                 "mxaG K16255": "C1 oxidation (Sum)",
-                 "mxaC K16257":"C1 oxidation (Sum)",
-                 "mxaL K16259": "C1 oxidation (Sum)",
-                 "fe_red_geobacter": "Iron Reduction",
-                 "fe_red_rhodoferax": "Iron Reduction"}
+
+from collections import OrderedDict
+gene_proc_map = OrderedDict()
+gene_proc_map['hao K10535'] = "Ammonia Oxidation (oxygen)"
+gene_proc_map['nirK K00368'] = "Ammonia Oxidation (oxygen)"
+gene_proc_map['nosZ K00376'] = "Denitrification (Sum)"
+gene_proc_map['nirD K00363'] = "Denitrification (Sum)"
+gene_proc_map['dsrA K11180'] = "Sulfate Reduction + Sulfur Oxidation (Sum)"
+gene_proc_map['dsrB K11181'] = "Sulfate Reduction + Sulfur Oxidation (Sum)"
+gene_proc_map["mcrA K00399"] = "Methanogenesis"
+gene_proc_map["mxaG K16255"] = "C1 oxidation (Sum)"
+gene_proc_map["mxaC K16257"] = "C1 oxidation (Sum)"
+gene_proc_map["mxaL K16259"] = "C1 oxidation (Sum)"
+gene_proc_map["fe_red_geobacter"] = "Iron Reduction"
+gene_proc_map["fe_red_rhodoferax"] = "Iron Reduction"
+
+
+anno_df_final = anno_df2.ix[gene_proc_map.keys(), :]
+to_cluster_final = anno_df_final.values
+clean_clusters = linkage(to_cluster_final, method='complete', metric='correlation')
+final_dendro = dendrogram(clean_clusters, labels=list(anno_df_final.index), no_plot=True)
+final_ro_index = [anno_df_final.index[i] for i in final_dendro['leaves']]
+final_rowclust = anno_df_final.ix[final_ro_index, :]
+
+# plot heatmap
+plt.clf()
+fig = plt.figure(4, figsize=(8,8), dpi=1000)
+ax_is = fig.add_subplot(111)
+a_cmap = sns.cubehelix_palette(dark=0, light=1, as_cmap=True)
+cax = sns.heatmap(final_rowclust, ax=ax_is, cmap=a_cmap)
+plt.tight_layout()
+plt.gcf()
+plt.savefig("../Data/KEGG_Annotations/Averaged_Select_Annots/final_proc_genes_heatmap.png", dpi=1000)
+
+fpg_fn = "../Data/calibration_data/final_proc_genes_metaWRAP.xlsx"
+to_write = anno_df_final.copy()
+# methanogenesis annotations are super suspect. setting them to a single flat value 
+# allowing calibration to dial them  to wherever they need to be 
+to_write.ix["mcrA K00399", :] *= 0
+to_write.ix["mcrA K00399", :] += float(1)/14
+to_write['Process'] = pd.Series(gene_proc_map)
+to_write.columns = [to_write.columns[-1]]+ list(to_write.columns[:-1])
+to_write.to_excel(fpg_fn, sheet_name='Relative Abundances', index_label="Annotation", verbose=True)
+
+
