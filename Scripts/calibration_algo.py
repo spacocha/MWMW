@@ -13,65 +13,53 @@ import cPickle as pickle
 import pandas as pd
 import numpy as np
 import os, sys
-from calibration_functions import run_model, fill_param_dict, best_val
-from calibration_functions import load_param_dict, load_optimization_var_list
-from observed_data import load_chem_data, load_gene_data
+from calibration_functions import run_model, sample_params, best_val
 from multiprocessing.dummy import Pool as ThreadPool
 from multiprocessing import cpu_count
 
-    
-def run_calibration(results_loc, load_file, settings, bool_key, obs_data, n_samplings, to_optimize)
-    ## Calculate the number of threads possible
+
+def run_calibration(idx, results_loc, save_file, settings, bool_key, obs_data, n_trials, mod_type, stds, last_score, converged_):
+    # Calculate the number of threads possible
     thread_est = cpu_count()
-    # TODO: add a check for an aborted previous run 
     
-    # Step 0: Check for a save file to determine if it is initial or a restart
-    if load_file == 'init':
-        print "Starting new optimization with settings for {}".format(optimize_option)
+    # Determine if it is initial run or a restart
+    if idx == 1:
+        print "Starting new optimization with settings for {}".format(mod_type)
         init_bool = True
-        stds = None
-        last_score = -1.01
-        convergence_bool = False
     else:
         init_bool = False
-        with open(load_file, "rb") as pickle_h:
-            pickle_pack = pickle.load(pickle_h)
-        stds, to_optimize, last_score, params, convergence_bool = pickle_pack
     
+    # determine which variables are left to optimize
     not_optimized = settings[settings.ix[:, bool_key]].index.tolist()
-    
     # create a directory for each model run output
-    lake_dirs = [os.path.join(results_loc, "lake_"+str(i))  for i in range(1,n_samplings+1)]
+    lake_dirs = [os.path.join(results_loc, "lake_"+str(i))  for i in range(1,n_trials+1)]
     # create a filename for the output
-    result_str = ["run_{}.mat".format(i) for i in range(1,n_samplings+1)]
+    result_str = ["run_{}.mat".format(i) for i in range(1,n_trials+1)]
     # create paths for the output
     result_paths = [os.path.join(j, i) for i, j in zip(result_str, lake_dirs)]
-    # 
-    parameter_df = fill_param_dict(params, init_bool, n_samplings, 0.0, to_optimize, stds)
+    # fill a df with param choices 
+    parameter_df = sample_params(settings, init_bool, n_trials, not_optimized, mod_type, stds)
 
-    # Step 3.5 Run the model n number of times
-    if not convergence_bool:
-        score_vector = pd.Series(index=parameter_df.index,data = np.zeros((n_samplings)))
+    # run the model n_trials number of times if it hasn't converged
+    if not converged_:
+        score_vector = pd.Series(index=parameter_df.index, data=np.zeros((n_trials)))
 
         model_args = []
-        for trial_n in range(1, n_samplings+1):
+        for trial_n in range(1, n_trials+1):
             arg1 = parameter_df.ix[trial_n, :]
             arg2 = result_paths[trial_n-1]
-            arg3 = copy(super_obs)
+            arg3 = obs_data.copy()
             arg4 = 'gene_objective'
             model_args.append((arg1, arg2, arg3, arg4))
         
         parallelism = True
         
         if not parallelism:
-                
             score_list = []
             for d, p, o, s in model_args:
                 print os.path.basename(p)
-                score_list.append(run_model((d, p, o, s)))
-                
+                score_list.append(run_model((d, p, o, s)))   
         else:
-        
             score_list = []
             pool = ThreadPool(thread_est)
             results = pool.map(run_model, model_args)
@@ -79,11 +67,11 @@ def run_calibration(results_loc, load_file, settings, bool_key, obs_data, n_samp
             pool.join()
             score_list=results
         
-        score_vector[range(1, n_samplings+1)] = score_list
+        score_vector[range(1, n_trials+1)] = score_list
 
     else:
         score_vector = pd.Series(index=parameter_df.index,
-                                 data = np.ones((n_samplings))*last_score)
+                                 data = np.ones((n_trials))*last_score)
 
 parameter_df['score'] = score_vector
 parameter_df.to_csv(parameter_df_f)

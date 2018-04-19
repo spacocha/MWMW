@@ -5,6 +5,8 @@ Created on Wed Jul 19 19:44:45 2017
 
 @author: login
 """
+import subprocess32 as sp
+import platform
 from scipy.interpolate import interp1d
 from collections import OrderedDict
 import pandas as pd
@@ -19,39 +21,34 @@ import cPickle as pickle
 def combine_similar_procs(mod_df, obs_df):
     mod_df2, obs_df2 = mod_df.copy(), obs_df.copy()
     
-    mo_cols = ['Methane Oxidation (nitrate)', 
-               'Methane Oxidation (oxygen)',
-               'Methane Oxidation (sulfate)']
+    mo_cols = ['C1 Oxidation (nitrate)', 
+               'C1 Oxidation (oxygen)',
+               'C1 Oxidation (sulfate)']
     
-    mod_df2.loc[:, 'Methane Oxidation (Sum)'] = mod_df2.loc[:, mo_cols[0]] + \
-                                                mod_df2.loc[:, mo_cols[1]] + \
-                                                mod_df2.loc[:, mo_cols[2]] 
+    mod_df2.loc[:, 'C1 Oxidation (Sum)'] = mod_df2.loc[:, mo_cols].sum(1)
     
     srso_cols = ['Sulfate Reduction + Sulfur Oxidation (Sum)',
-                 'Sulfur Oxidation (nitrate)', 'Sulfur Oxidation (oxygen)',
+                 'Sulfur Oxidation (nitrate)', 
+                 'Sulfur Oxidation (oxygen)',
                  'Sulfate Reduction']
                  
-    mod_df2.loc[:, srso_cols[0]] = mod_df2.loc[:, srso_cols[1]] + \
-                                   mod_df2.loc[:, srso_cols[2]] + \
-                                   mod_df2.loc[:, srso_cols[3]]
+    mod_df2.loc[:, srso_cols[0]] = mod_df2.loc[:, srso_cols[1:]].sum(1)
     
-    dn_cols = ['Denitrification (Sum)', 'Denitrification',
-               'Iron Oxidation (nitrate)', 'Methane Oxidation (nitrate)',
+    dn_cols = ['Denitrification (Sum)', 
+               'Denitrification',
+               'Iron Oxidation (nitrate)', 
+               'C1 Oxidation (nitrate)',
                'Sulfur Oxidation (nitrate)']
     
-    mod_df2.loc[:, dn_cols[0]] = mod_df2.loc[:, dn_cols[1]] + \
-                                 mod_df2.loc[:, dn_cols[2]] + \
-                                 mod_df2.loc[:, dn_cols[3]] + \
-                                 mod_df2.loc[:, dn_cols[4]]
+    mod_df2.loc[:, dn_cols[0]] = mod_df2.loc[:, dn_cols[1:]].sum(1)
     
     # drop all model data that is not scorable
     grp1 = set(obs_df2.columns)
-    grp2 = set(mod_df2.columns)                 
+    grp2 = set(mod_df2.columns)
     odd_cols = list(grp1.symmetric_difference(grp2))
-    mod_df2.drop(odd_cols, axis=1, inplace=True)
-    return mod_df2
+    matched_model = mod_df2.drop(odd_cols, axis=1)
+    return matched_model
     
-
 def recreate_opt_sequence(path, opt_opt):
     if opt_opt == 'optimum':
         opt_type = 'new_model'
@@ -71,30 +68,6 @@ def recreate_opt_sequence(path, opt_opt):
         var_trace.append(dropped)
         starting_point.remove(list(dropped)[0])
     return var_trace
-
-def load_optimization_var_list(opt_option_str):
-    """
-    If 'old_model' is specified, only parameters available in the old model can be loaded
-    for optimization, but if the 'new_model' is specified, then the additional precipitation
-    and mass action rate constant can be optimized. 
-    """
-    if opt_option_str == 'old_model':
-        to_optimize = [('nitrogen_ratio'), ('carbon_source_from_5e4'), ('diffusion_constant'), 
-                       ('primary_ox_rate_const'), ('C'), ('N-'), ('CH4'), ('S-'), 
-                       ('nitrogen_source'), ('oxygen_source'), ('fe_precipitation'), 
-                       ('carbon_precip'), ('ma_op_fe_n_rate_const') ]
-
-    elif opt_option_str == 'new_model':
-        to_optimize = [('ma_op_s_n_rate_const'), ('nitrogen_ratio'), ('carbon_source_from_5e4'), 
-                       ('diffusion_constant'), ('primary_ox_rate_const'), ('C'), 
-                       ('ma_op_fe_n_rate_const'), ('N-'), ('CH4'), ('sminus_precipitation'), 
-                       ('ma_op_ch4_n_rate_const'), ('S-'), ('nitrogen_source'), ('oxygen_source'), 
-                       ('fe_precipitation'), ('carbon_precip')]
-    else:
-        sys.exit("illegal optimization option specified on command line")
-
-    return to_optimize
-
 
 def importratesandconcs_mod(path_, type_str=None):
     """
@@ -125,9 +98,9 @@ def importratesandconcs_mod(path_, type_str=None):
     rate_idxs[2] = "Sulfur Oxidation (oxygen)"
     rate_idxs[3] = "Iron Oxidation (nitrate)"
     rate_idxs[4] = "Sulfur Oxidation (nitrate)"
-    rate_idxs[5] = "Methane Oxidation (oxygen)"
-    rate_idxs[6] = "Methane Oxidation (nitrate)"
-    rate_idxs[7] = "Methane Oxidation (sulfate)"
+    rate_idxs[5] = "C1 Oxidation (oxygen)"
+    rate_idxs[6] = "C1 Oxidation (nitrate)"
+    rate_idxs[7] = "C1 Oxidation (sulfate)"
     rate_idxs[8] = "Aerobic Heterotrophy"
     rate_idxs[9] = "Denitrification"
     rate_idxs[10] = "Iron Reduction"
@@ -198,17 +171,17 @@ def importratesandconcs_mod(path_, type_str=None):
         
         return full_df
     else:
-        return new_mat_dict    
+        return new_mat_dict 
     
 def copyDirectory(src, dest):
     try:
         shutil.copytree(src, dest)
     except shutil.Error as e:
         print "error: %s" % e
-        sys.exit("do")
+        raise OSError('doink')
     except OSError as e:
         print "error: %s" % e
-        sys.exit("rae")
+        raise OSError('doink')
 
 def turn_mat_into_single_df(mat):
     columns = ['nitrate', 'sulfate', 'iron(II)', 'oxygen' ]
@@ -282,10 +255,12 @@ def score_results(obs_df_, data_df_, score_type):
     obs_df, data_df = obs_df_.copy(), data_df_.copy()
     bool1 = data_df.index.isin(obs_df.index)
     bool2 = obs_df.index.isin(data_df.index)
+    assert (bool2.sum() > 0) and (bool1.sum() > 0)
     sub_data_df = data_df[bool1]
     sub_obs_df = obs_df[bool2]
     sub_data_df = combine_similar_procs(sub_data_df, sub_obs_df)
-    
+    assert sub_obs_df.shape == sub_data_df.shape
+
     # drop all columns that aren't related to the specific objective
     if score_type == 'gene_objective':
         pass
@@ -307,7 +282,7 @@ def score_results(obs_df_, data_df_, score_type):
         
         obs_vec_nn = obs_vec[bool_11]
         mod_vec_nn = mod_vec[bool_22]
-
+        
         obs_vec_std = standard_scale_df(obs_vec_nn)
         data_vec_std = standard_scale_df(mod_vec_nn)
         
@@ -321,14 +296,9 @@ def score_results(obs_df_, data_df_, score_type):
     print r2_array.sum()
     return r2_array.sum()
 
-import subprocess as sp
-import platform
-
 def run_model(arg_tuple):
-    
     subdf, out_f, obs_data, score_type = arg_tuple
     print os.path.basename(out_f)
-    
     if platform.system() == 'Linux':
         run_cmd = ""
     else:
@@ -338,7 +308,6 @@ def run_model(arg_tuple):
     model_loc = os.path.dirname(out_f)
     source_dir = os.path.join(os.getcwd(), 'lake_model')
     copyDirectory(source_dir, model_loc)
-    
     input_args_loc = os.path.join(model_loc, 'baseline.txt')
     # write out the parameter set into the right location
     subdf.T.to_csv(input_args_loc, header=False, index=False, float_format='%g')
@@ -352,68 +321,41 @@ def run_model(arg_tuple):
     output_loc = os.path.join(model_loc, 'outFile.txt')
     
     with open(output_loc, 'w') as out_h:
-        out_h.write(out_f)
+        out_h.write(os.path.abspath(out_f))
+    
     # run the model 
-    p = sp.Popen(run_cmd, cwd=model_loc, shell=True, 
-                 stderr=sp.PIPE, stdout=sp.PIPE)
+    p = sp.Popen(run_cmd, cwd=model_loc, shell=True, stderr=sp.PIPE, stdout=sp.PIPE)
     stdout, stderr = p.communicate()
 
     # pull results & return them to memory
-    
     results_df = importratesandconcs_mod(out_f, 'full df')
     
     r2 = score_results(obs_data, results_df, score_type)
     shutil.rmtree(model_loc)
     return r2
-
-def param_lims():
-    limits = {'carbon_source_from_5e4': (1e4, 1e5),
-              'sminus_precipitation': (0, 0.4),
-              'ma_op_s_n_rate_const': (0, 0.5),
-              'ma_op_ch4_n_rate_const': (0, 100),
-              'S-': (0,1.36),
-              'nitrogen_source': (0, 193),
-              'nitrogen_ratio': (0, 0.1),
-              'oxygen_source': (6.6e2, 6.6e4),
-              'methane_source': (0, 8e5),
-              'fe_precipitation': (0, 0.4),
-              'carbon_precip': (0, 0.4),
-              'diffusion_constant': (5, 158),
-              'ma_op_fe_n_rate_const': (0.6, 3), 
-              'primary_ox_rate_const': (3.0e-5,3.0),
-              'C':(0, 2.8), 'N-': (0, 8.24), 'CH4': (0, 10.)}
-    return limits
-
-def sample_params(params, init_bool, n_samplings, zero_pct, to_optimize, stds):
     
-    parameter_mat = np.zeros ( (n_samplings, len(params.keys()))) 
-    parameter_df = pd.DataFrame(index=np.arange(1,n_samplings+1),
-                                columns=params.keys(), data=parameter_mat)
-    for idx, key in enumerate(params.keys()):
+def sample_params(settings, init_bool, n_trials, to_optimize, mod_type, stds):
+    # create a matrix with trials in rows & parameter names in columns
+    parameter_mat = np.zeros((n_trials, len(settings.index)))
+    # use this in a dataframe 
+    parameter_df = pd.DataFrame(index=np.arange(1,n_trials+1), columns=settings.index, data=parameter_mat)
+    for key in settings.index:
         # start at the defaults
-        this_mean = params[key]
-
+        this_mean = settings.ix[key, mod_type]        
         # only randomize for paramters that need optimization
         if key in to_optimize:
             if init_bool:
-                low_, high_ = limits_[key]
-                this_sample = abs(np.random.uniform(low_, high_, (n_samplings,1)))
+                low_, high_ = settings.ix[key, ['lower_limit', 'upper_limit']].values
+                this_sample = abs(np.random.uniform(low_, high_, (n_trials,1)))
             else:
                 this_std = stds[key]
                 this_sample = abs(np.random.normal(this_mean, abs(this_std)+np.finfo(float).eps, 
-                                                   (n_samplings,1)))
+                                                  (n_trials,1)))
         else:
-            this_sample = np.ones((n_samplings,1))*this_mean
+            this_sample = np.ones((n_trials,1))*this_mean
             
-        if key != 't_max':
-            this_sample = np.vstack((this_sample, np.zeros((n_zeros,1))))
-        else:
-            this_sample = np.vstack((this_sample, np.ones((n_zeros,1))*this_mean ))
         np.random.shuffle(this_sample)
-        
-        # create dataframe
         parameter_df.ix[:, key] = this_sample
-
     return parameter_df
 
 def best_val(param_df, variable):
@@ -429,108 +371,7 @@ def apply_conc_multiplier(param_subdf, f_name):
     conc0 = pd.read_csv(f_name, header=None)
     for c_num, mult in zip(col_no, multiplier):
         conc0.ix[:, c_num] *= mult
+
     conc0.to_csv(f_name, float_format="%g", header=False, index=False)
     return None
-    
-def load_param_dict(type_str):
-    """
-    This function loads and ordered dict containing the parameters supplied to the lake
-    model, to be written out into a csv in the specified order. The options include 'midpoint'
-    which starts the optmization at the midpoint of the proscribed limits for all parameters, 
-    'default', which loads the default parameters supplied by Sarah at the start of all of this,
-    or 'midpoint-default' which starts the optimization at the midpoints of all the parameters, but
-    turns off all the new precipitation & mass action rate constants that were added based on the 
-    analysis of the metagenomic model
-    """
-    
-    if type_str == 'midpoint':
-        params['oxygen_bubble_rate'] = 0.0
-        params['nitrogen_source'] = 96.5
-        params['nitrogen_ratio'] = 0.05
-        params['carbon_source_from_5e4'] = 5.5e4
-        params['oxygen_source'] = 6.6e3
-        params['methane_source'] = 2830.0
-        params['t_max'] = 0.4
-        params['sminus_precipitation'] = 0.2
-        params['fe_precipitation'] = 0.2
-        params['carbon_precip'] = 0.2
-        params['diffusion_constant'] = 50
-        params['ma_op_o_fe_rate_const'] = 10
-        params['ma_op_o_n_rate_const'] = 5.0
-        params['ma_op_o_s_rate_const'] = 0.16
-        params['ma_op_fe_n_rate_const'] = 1.0
-        params['ma_op_s_n_rate_const'] = 0.25
-        params['ma_op_ch4_o_rate_const'] = 1e4
-        params['ma_op_ch4_n_rate_const'] = 50.0
-        params['ma_op_ch4_s_rate_const'] = 0.01
-        params['primary_ox_rate_const'] = 1.5
-        params['c_lim_o'] = 20.0
-        params['c_lim_n'] = 5.0
-        params['c_lim_fe'] = 0.1
-        params['c_lim_s'] = 30
-        params['C'] = 1.
-        params['N-'] = 1.
-        params['S-'] = 1.
-        params['CH4'] = 1.
-    elif type_str == 'default':
-        params['oxygen_bubble_rate'] = 0.0
-        params['nitrogen_source'] = 0.0
-        params['nitrogen_ratio'] = 0.1
-        params['carbon_source_from_5e4'] = 9.4e4
-        params['oxygen_source'] = 6.6e3
-        params['methane_source'] = 2830.0
-        params['t_max'] = 0.4
-        params['sminus_precipitation'] = 0.
-        params['fe_precipitation'] = 0.3
-        params['carbon_precip'] = 0.3
-        params['diffusion_constant'] = 50
-        params['ma_op_o_fe_rate_const'] = 10
-        params['ma_op_o_n_rate_const'] = 5.0
-        params['ma_op_o_s_rate_const'] = 0.16
-        params['ma_op_fe_n_rate_const'] = 1.0
-        params['ma_op_s_n_rate_const'] = 0.
-        params['ma_op_ch4_o_rate_const'] = 1e4
-        params['ma_op_ch4_n_rate_const'] = 0.
-        params['ma_op_ch4_s_rate_const'] = 0.01
-        params['primary_ox_rate_const'] = 1.
-        params['c_lim_o'] = 20.0
-        params['c_lim_n'] = 5.0
-        params['c_lim_fe'] = 0.1
-        params['c_lim_s'] = 30
-        params['C'] = 1.
-        params['N-'] = 1.
-        params['S-'] = 1.
-        params['CH4'] = 1.
-    elif 'default-midpoint':
-        params['oxygen_bubble_rate'] = 0.0
-        params['nitrogen_source'] = 0.0
-        params['nitrogen_ratio'] = 0.05
-        params['carbon_source_from_5e4'] = 5.5e4
-        params['oxygen_source'] = 6.6e3
-        params['methane_source'] = 2830.0
-        params['t_max'] = 0.4
-        params['sminus_precipitation'] = 0.0
-        params['fe_precipitation'] = 0.2
-        params['carbon_precip'] = 0.2
-        params['diffusion_constant'] = 50
-        params['ma_op_o_fe_rate_const'] = 10
-        params['ma_op_o_n_rate_const'] = 5.0
-        params['ma_op_o_s_rate_const'] = 0.16
-        params['ma_op_fe_n_rate_const'] = 1.0
-        params['ma_op_s_n_rate_const'] = 0.0
-        params['ma_op_ch4_o_rate_const'] = 1e4
-        params['ma_op_ch4_n_rate_const'] = 0.0
-        params['ma_op_ch4_s_rate_const'] = 0.01
-        params['primary_ox_rate_const'] = 1.5
-        params['c_lim_o'] = 20.0
-        params['c_lim_n'] = 5.0
-        params['c_lim_fe'] = 0.1
-        params['c_lim_s'] = 30
-        params['C'] = 1.
-        params['N-'] = 1.
-        params['S-'] = 1.
-        params['CH4'] = 1.
-    else:
-        sys.exit("'midpoint' or 'default' are valid types for param dicts")
-    return params
 
