@@ -1,0 +1,29 @@
+Parameter	new_model	new_model_bool	old_model	old_model_bool	upper_limit	lower_limit
+oxygen_bubble_rate	0.0	False	0.0	False		
+nitrogen_source	96.5	True	0.0	True	193.0	0.0
+nitrogen_ratio	0.05	True	0.05	True	0.1	0.0
+carbon_source_from_5e4	55000.0	True	55000.0	True	100000.0	10000.0
+oxygen_source	6600.0	True	6600.0	True	66000.0	660.0
+methane_source	2830.0	False	2830.0	False	800000.0	0.0
+t_max	0.4	False	0.4	False		
+sminus_precipitation	0.2	True	0.0	False	0.4	0.0
+fe_precipitation	0.2	True	0.2	True	0.4	0.0
+carbon_precip	0.2	True	0.2	True	0.4	0.0
+diffusion_constant	50.0	True	50.0	True	158.0	5.0
+ma_op_o_fe_rate_const	10.0	False	10.0	False		
+ma_op_o_n_rate_const	5.0	False	5.0	False		
+ma_op_o_s_rate_const	0.16	False	0.16	False		
+ma_op_fe_n_rate_const	1.0	True	1.0	True	3.0	0.6
+ma_op_s_n_rate_const	0.25	True	0.0	False	0.5	0.0
+ma_op_ch4_o_rate_const	10000.0	False	10000.0	False		
+ma_op_ch4_n_rate_const	50.0	True	0.0	False	100.0	0.0
+ma_op_ch4_s_rate_const	0.01	False	0.01	False		
+primary_ox_rate_const	1.5	True	1.5	True	3.0	3e-05
+c_lim_o	20.0	False	20.0	False		
+c_lim_n	5.0	False	5.0	False		
+c_lim_fe	0.1	False	0.1	False		
+c_lim_s	30.0	False	30.0	False		
+C	1.0	True	1.0	True	2.8	0.0
+N-	1.0	True	1.0	True	8.24	0.0
+S-	1.0	True	1.0	True	1.36	0.0
+CH4	1.0	True	1.0	True	10.0	0.0

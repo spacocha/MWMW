@@ -1,12 +1,12 @@
+from sklearn.preprocessing import MinMaxScaler
 import seaborn as sns
-from scipy.cluster.hierarchy import dendrogram
+from scipy.cluster.hierarchy import dendrogram, linkage
 from itertools import product
 import matplotlib.pyplot as plt
 import time
 import pandas as pd
 import urllib2
 import numpy as np
-from scipy.cluster.hierarchy import linkage
 from kegg_cluster import unit_norm_row_col
 
 # read in protein annotation lookup table
@@ -217,3 +217,21 @@ to_write = to_write.ix[:, [to_write.columns[-1]]+ list(to_write.columns[:-1])]
 to_write.to_excel(fpg_fn, sheet_name='Relative Abundances', index_label="Annotation", verbose=True)
 
 
+# exact formatting for calibration
+dists_only = to_write.drop(['Process', 'A1_FB_ShallowInflow'], axis=1)
+real_dists_mat = dists_only.T.values
+X = MinMaxScaler().fit_transform(real_dists_mat).T
+real_dists_std2 = pd.DataFrame(data=X, columns=dists_only.columns, index=dists_only.index)
+real_dists_std2.columns = [int(i.split("_")[1].split("m")[0]) for i in real_dists_std2.columns]
+real_dists_std2['Process'] = to_write.Process
+process_df_sq = real_dists_std2.groupby(by='Process').mean()
+process_df = process_df_sq.unstack()
+process_df = process_df.reset_index()
+process_df.columns = ['Depth', 'Process', 'Value']
+process_df['Date'] = pd.to_datetime(['08-12-2013']*process_df.shape[0])
+process_df = process_df.set_index(['Date', 'Depth'])
+process_df = process_df.pivot_table(values='Value', index=process_df.index, columns=['Process'])
+process_df.index = pd.MultiIndex.from_tuples(process_df.index)
+process_df.index.names = ['Date', 'Depth']
+process_df.to_csv("../Data/calibration_data/gene_data.tsv", sep="\t", index=True, header=True)
+process_df.to_csv("gene_data.tsv", sep="\t", index=True, header=True)
