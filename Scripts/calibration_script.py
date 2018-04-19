@@ -9,6 +9,7 @@ Created on Wed Jul 19 11:23:35 2017
 
 import sys, os
 import pandas as pd
+from calibration_functions import cal_iteration
 
 # this is where all the input data & output data lives
 results_loc = "../Data/calibration_results"
@@ -54,12 +55,18 @@ for model_run_col in [0, 2]:
     converged_ = False
 
     for idx in xrange(1,iterations+1):
-        trail_result = run_calibration(idx, results_subdir, save_files[idx-1], settings, bool_key, obs_data, 
-        	                           n_samplings[idx-1], mod_type, stds, last_score, converged_)
-        stds, last_score, convergence_bool, settings = trail_result
+        trial_result = cal_iteration(idx, results_subdir, save_files[idx-1], settings, bool_key, obs_data, 
+        	                         n_samplings[idx-1], mod_type, stds, last_score, converged_)
+        std_deviations, settings, this_score, winner, converged_ = trial_result
 
 
 
 
+
+
+
+#results_loc = results_subdir
+#save_file = save_files[idx-1]
+#n_trials = n_samplings[idx-1]
 
 

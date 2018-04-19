@@ -6,17 +6,130 @@ Created on Wed Jul 19 19:44:45 2017
 @author: login
 """
 import subprocess32 as sp
-import platform
+import cPickle as pickle
+import pandas as pd
+import platform, shutil, sys, os
 from scipy.interpolate import interp1d
 from collections import OrderedDict
-import pandas as pd
-pd.options.mode.chained_assignment = None
 import numpy as np
 from scipy.io import loadmat
-import shutil, sys, os
 from sklearn.metrics import r2_score
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
-import cPickle as pickle
+from sklearn.feature_selection import f_regression
+from sklearn.linear_model import LinearRegression
+from multiprocessing.dummy import Pool as ThreadPool
+from multiprocessing import cpu_count
+
+def cal_iteration(idx, results_loc, save_file, settings, bool_key, obs_data, n_trials, mod_type, stds, last_score, converged_):
+    # Calculate the number of threads possible
+    thread_est = cpu_count()
+    
+    # Determine if it is initial run or a restart
+    if idx == 1:
+        print "Starting new optimization with settings for {}".format(mod_type)
+        init_bool = True
+    else:
+        init_bool = False
+    
+    # determine which variables are left to optimize
+    not_optimized = settings[settings.ix[:, bool_key]].index.tolist()
+    # create a directory for each model run output
+    lake_dirs = [os.path.join(results_loc, "lake_"+str(i))  for i in range(1,n_trials+1)]
+    # create a filename for the output
+    result_str = ["run_{}.mat".format(i) for i in range(1,n_trials+1)]
+    # create paths for the output
+    result_paths = [os.path.join(j, i) for i, j in zip(result_str, lake_dirs)]
+    # fill a df with param choices 
+    parameter_df = sample_params(settings, init_bool, n_trials, not_optimized, mod_type, stds)
+
+    # run the model n_trials number of times if it hasn't converged
+    if not converged_:
+        score_vector = pd.Series(index=parameter_df.index, data=np.zeros((n_trials)))
+
+        model_args = []
+        for trial_n in range(1, n_trials+1):
+            arg1 = parameter_df.ix[trial_n, :]
+            arg2 = result_paths[trial_n-1]
+            arg3 = obs_data.copy()
+            arg4 = 'gene_objective'
+            model_args.append((arg1, arg2, arg3, arg4))
+        
+        parallelism = True
+        
+        if not parallelism:
+            score_list = []
+            for d, p, o, s in model_args:
+                print os.path.basename(p)
+                score_list.append(run_model((d, p, o, s)))   
+        else:
+            pool = ThreadPool(thread_est)
+            score_list = pool.map(run_model, model_args)
+            pool.close()
+            pool.join()
+            
+        score_vector[range(1, n_trials+1)] = score_list
+    else:
+        score_vector = pd.Series(index=parameter_df.index,
+                                 data = np.ones((n_trials))*last_score)
+    
+    parameter_df_f = os.path.join(results_loc, "trial_data_{}.csv".format(idx))
+    parameter_df['score'] = score_vector
+    parameter_df.to_csv(parameter_df_f)
+     
+    # Step 4: Perform an F-test to identify the most sensitive parameter & fix it
+    # Note: F-test is insensitive to range, but the model is most sensitive to the 
+    # range of the input values
+    x_df = parameter_df.ix[:, to_optimize]
+    F_vals, p_vals = f_regression(x_df.values, score_vector.values)
+    p_series = pd.Series(index=x_df.columns, data=p_vals)
+
+    # check to see if no parameters make a difference
+    if p_series.isnull().sum() == len(p_series):
+        p_series[0] = 0.05
+        convergence_bool = True
+
+    winner = p_series[p_series == p_series.min()].index[0]
+
+    # Step 5: Take the best value for that parameter and those not requiring optimization
+    # Ensure this run beats the last run
+
+    if last_score > parameter_df.score.max():
+        previous_pdf_f = os.path.join(results_loc, "trial_data_{}.csv".format(idx-1))
+        previous_pdf = pd.read_csv(previous_pdf_f, index_col=0)
+        opt_value = best_val(previous_pdf, winner)
+        print "Previous run had a better value, using that instead"
+    else:
+        opt_value = best_val(parameter_df, winner)
+
+    if not converged_:
+        print "{} is the most sensitive variable".format(winner)
+    else:
+        print "Converged at maximum, no further optimization necessary"
+    
+    not_optimized.remove(winner)
+    settings.ix[winner, mod_type] = opt_value
+    settings.ix[winner, bool_key] = False
+
+    # Step 6: Perform regression on the remaining optimizable params 
+    std_deviations = {}
+    for t_o in not_optimized:
+        lr = LinearRegression()
+        y = parameter_df.ix[:, 'score'].values
+        x = parameter_df.ix[:, t_o].values
+        lr.fit(y.reshape(-1, 1),x)
+        best_guess = lr.predict(np.array([[y.max()]]))
+        std_deviations[t_o] = abs(best_guess - settings.ix[t_o, mod_type])
+        settings.ix[t_o, mod_type] = best_guess
+
+    this_score = parameter_df.score.max()
+    improvement = (this_score-last_score)
+    print "{:.2f}, a change of {:.1%}".format(this_score, improvement)
+
+    dump_f = os.path.join(results_loc, save_file)
+    dump_c = (std_deviations, settings, this_score, winner, converged_)
+    with open(dump_f, "wb") as dump_h:
+        pickle.dump( dump_c, dump_h )
+    return dump_c
 
 def combine_similar_procs(mod_df, obs_df):
     mod_df2, obs_df2 = mod_df.copy(), obs_df.copy()
@@ -293,8 +406,8 @@ def score_results(obs_df_, data_df_, score_type):
         print "{}: {}".format(col_, r2_array[idx])
         
     r2_array[r2_array < -1.] = -1.
-    print r2_array.sum()
-    return r2_array.sum()
+    print r2_array.mean()
+    return r2_array.mean()
 
 def run_model(arg_tuple):
     subdf, out_f, obs_data, score_type = arg_tuple
@@ -325,7 +438,7 @@ def run_model(arg_tuple):
     
     # run the model 
     p = sp.Popen(run_cmd, cwd=model_loc, shell=True, stderr=sp.PIPE, stdout=sp.PIPE)
-    stdout, stderr = p.communicate()
+    stdout, stderr = p.communicate(timeout=60.*5)
 
     # pull results & return them to memory
     results_df = importratesandconcs_mod(out_f, 'full df')
@@ -371,7 +484,6 @@ def apply_conc_multiplier(param_subdf, f_name):
     conc0 = pd.read_csv(f_name, header=None)
     for c_num, mult in zip(col_no, multiplier):
         conc0.ix[:, c_num] *= mult
-
     conc0.to_csv(f_name, float_format="%g", header=False, index=False)
     return None
 
