@@ -8,6 +8,7 @@ Created on Wed Jul 19 11:23:35 2017
 ## Load required libraries 
 
 import sys, os
+import cPickle as pickle
 import pandas as pd
 import numpy as np
 from calibration_functions import cal_iteration, run_model
