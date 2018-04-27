@@ -16,11 +16,11 @@ from scipy.io import loadmat
 from sklearn.metrics import r2_score
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
 from sklearn.feature_selection import f_regression
-from sklearn.linear_model import LinearRegression
+from sklearn.isotonic import IsotonicRegression
 from multiprocessing.dummy import Pool as ThreadPool
 from multiprocessing import cpu_count
 
-def cal_iteration(idx, results_loc, save_file, settings, bool_key, obs_data, n_trials, mod_type, stds, last_score, converged_):
+def cal_iteration(idx, res_loc, save_f, settings, bool_key, obs_data, n_trials, mod_type, stds, last_score, conv_, param_trace):
     # Calculate the number of threads possible
     thread_est = cpu_count()
     
@@ -34,7 +34,7 @@ def cal_iteration(idx, results_loc, save_file, settings, bool_key, obs_data, n_t
     # determine which variables are left to optimize
     not_optimized = settings[settings.ix[:, bool_key]].index.tolist()
     # create a directory for each model run output
-    lake_dirs = [os.path.join(results_loc, "lake_"+str(i))  for i in range(1,n_trials+1)]
+    lake_dirs = [os.path.join(res_loc, "lake_"+str(i))  for i in range(1,n_trials+1)]
     # create a filename for the output
     result_str = ["run_{}.mat".format(i) for i in range(1,n_trials+1)]
     # create paths for the output
@@ -43,7 +43,7 @@ def cal_iteration(idx, results_loc, save_file, settings, bool_key, obs_data, n_t
     parameter_df = sample_params(settings, init_bool, n_trials, not_optimized, mod_type, stds)
 
     # run the model n_trials number of times if it hasn't converged
-    if not converged_:
+    if not conv_:
         score_vector = pd.Series(index=parameter_df.index, data=np.zeros((n_trials)))
 
         model_args = []
@@ -72,61 +72,68 @@ def cal_iteration(idx, results_loc, save_file, settings, bool_key, obs_data, n_t
         score_vector = pd.Series(index=parameter_df.index,
                                  data = np.ones((n_trials))*last_score)
     
-    parameter_df_f = os.path.join(results_loc, "trial_data_{}.csv".format(idx))
+    parameter_df_f = os.path.join(res_loc, "trial_data_{}.csv".format(idx))
     parameter_df['score'] = score_vector
     parameter_df.to_csv(parameter_df_f)
      
     # Step 4: Perform an F-test to identify the most sensitive parameter & fix it
     # Note: F-test is insensitive to range, but the model is most sensitive to the 
     # range of the input values
-    x_df = parameter_df.ix[:, to_optimize]
+    x_df = parameter_df.ix[:, not_optimized]
     F_vals, p_vals = f_regression(x_df.values, score_vector.values)
     p_series = pd.Series(index=x_df.columns, data=p_vals)
 
     # check to see if no parameters make a difference
+    print "{} variables were insensitive".format(p_series.isnull().sum())
     if p_series.isnull().sum() == len(p_series):
         p_series[0] = 0.05
-        convergence_bool = True
-
+        conv_ = True
+    
     winner = p_series[p_series == p_series.min()].index[0]
 
     # Step 5: Take the best value for that parameter and those not requiring optimization
     # Ensure this run beats the last run
+    param_hist = param_trace[mod_type]
+    best_score = param_hist.ix["score", :].max()
 
-    if last_score > parameter_df.score.max():
-        previous_pdf_f = os.path.join(results_loc, "trial_data_{}.csv".format(idx-1))
-        previous_pdf = pd.read_csv(previous_pdf_f, index_col=0)
-        opt_value = best_val(previous_pdf, winner)
+    if best_score > parameter_df.score.max():
+        best_run = param_hist.T[param_hist.T.score == best_score]
+        opt_value = best_run.ix[:, winner].values[-1]
+        this_score = best_score
         print "Previous run had a better value, using that instead"
     else:
         opt_value = best_val(parameter_df, winner)
+        this_score = parameter_df.score.max()
 
-    if not converged_:
+    improvement = (this_score-last_score)
+    print "{:.2f}, a change of {:.1%}".format(this_score, improvement)
+
+    if not conv_:
         print "{} is the most sensitive variable".format(winner)
     else:
         print "Converged at maximum, no further optimization necessary"
     
-    not_optimized.remove(winner)
-    settings.ix[winner, mod_type] = opt_value
-    settings.ix[winner, bool_key] = False
-
+    if idx != 1:
+        print "Real Iteration"
+        not_optimized.remove(winner)
+        settings.ix[winner, mod_type] = opt_value
+        settings.ix[winner, bool_key] = False
+    else:
+        print "All parameters will be regressed (burn in iteration)"
+    
     # Step 6: Perform regression on the remaining optimizable params 
     std_deviations = {}
     for t_o in not_optimized:
-        lr = LinearRegression()
+        lr = IsotonicRegression()
         y = parameter_df.ix[:, 'score'].values
         x = parameter_df.ix[:, t_o].values
-        lr.fit(y.reshape(-1, 1),x)
-        best_guess = lr.predict(np.array([[y.max()]]))
-        std_deviations[t_o] = abs(best_guess - settings.ix[t_o, mod_type])
+        lr.fit(y,x)
+        best_guess = lr.predict(np.array([y.max()]))
+        std_deviations[t_o] = abs(best_guess - settings.ix[t_o, mod_type])[0]
         settings.ix[t_o, mod_type] = best_guess
-
-    this_score = parameter_df.score.max()
-    improvement = (this_score-last_score)
-    print "{:.2f}, a change of {:.1%}".format(this_score, improvement)
-
-    dump_f = os.path.join(results_loc, save_file)
-    dump_c = (std_deviations, settings, this_score, winner, converged_)
+    
+    dump_f = os.path.join(res_loc, save_f)
+    dump_c = (std_deviations, settings, this_score, winner, conv_)
     with open(dump_f, "wb") as dump_h:
         pickle.dump( dump_c, dump_h )
     return dump_c
@@ -403,15 +410,15 @@ def score_results(obs_df_, data_df_, score_type):
         model_vals = data_vec_std.values
         
         r2_array[idx] = r2_score(model_vals, obs_vals)
-        print "{}: {}".format(col_, r2_array[idx])
+        #print "{}: {}".format(col_, r2_array[idx])
         
     r2_array[r2_array < -1.] = -1.
-    print r2_array.mean()
+    #print r2_array.mean()
     return r2_array.mean()
 
 def run_model(arg_tuple):
     subdf, out_f, obs_data, score_type = arg_tuple
-    print os.path.basename(out_f)
+    print os.path.basename(out_f).split(".")[0]
     if platform.system() == 'Linux':
         run_cmd = ""
     else:
@@ -438,7 +445,7 @@ def run_model(arg_tuple):
     
     # run the model 
     p = sp.Popen(run_cmd, cwd=model_loc, shell=True, stderr=sp.PIPE, stdout=sp.PIPE)
-    stdout, stderr = p.communicate(timeout=60.*5)
+    stdout, stderr = p.communicate(timeout=int(60.*5))
 
     # pull results & return them to memory
     results_df = importratesandconcs_mod(out_f, 'full df')
