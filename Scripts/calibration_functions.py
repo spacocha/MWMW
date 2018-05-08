@@ -16,7 +16,8 @@ from scipy.io import loadmat
 from sklearn.metrics import r2_score
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
 from sklearn.feature_selection import f_regression
-from sklearn.isotonic import IsotonicRegression
+from sklearn.linear_model import LinearRegression
+
 from multiprocessing.dummy import Pool as ThreadPool
 from multiprocessing import cpu_count
 
@@ -41,6 +42,14 @@ def cal_iteration(idx, res_loc, save_f, settings, bool_key, obs_data, n_trials, 
     result_paths = [os.path.join(j, i) for i, j in zip(result_str, lake_dirs)]
     # fill a df with param choices 
     parameter_df = sample_params(settings, init_bool, n_trials, not_optimized, mod_type, stds)
+    
+    print "Search space covereage:"
+    for no_v in not_optimized:
+        srch_spce = settings.ix[no_v, "upper_limit"] - settings.ix[no_v, "lower_limit"]
+        samp_spce = parameter_df.ix[:, no_v].max() - parameter_df.ix[:, no_v].min()
+        cov_pct = samp_spce / float(srch_spce)
+        print "\t{}: {:.2%}".format(no_v, cov_pct)
+
 
     # run the model n_trials number of times if it hasn't converged
     if not conv_:
@@ -124,11 +133,11 @@ def cal_iteration(idx, res_loc, save_f, settings, bool_key, obs_data, n_trials, 
     # Step 6: Perform regression on the remaining optimizable params 
     std_deviations = {}
     for t_o in not_optimized:
-        lr = IsotonicRegression()
-        y = parameter_df.ix[:, 'score'].values
-        x = parameter_df.ix[:, t_o].values
+        lr = LinearRegression()
+        y = parameter_df.ix[:, 'score'].values.reshape(-1, 1)
+        x = parameter_df.ix[:, t_o].values.reshape(-1, 1)
         lr.fit(y,x)
-        best_guess = lr.predict(np.array([y.max()]))
+        best_guess = lr.predict(np.array([[y.max()]]))
         std_deviations[t_o] = abs(best_guess - settings.ix[t_o, mod_type])[0]
         settings.ix[t_o, mod_type] = best_guess
     
@@ -384,6 +393,8 @@ def score_results(obs_df_, data_df_, score_type):
     # drop all columns that aren't related to the specific objective
     if score_type == 'gene_objective':
         pass
+    elif score_type == 'print_objective':
+        pass
     elif score_type == 'conc_objective':
         to_keep = set(['Fe-', 'N+', 'S+', 'O'])
         all_cols = set(sub_obs_df.columns)
@@ -406,15 +417,21 @@ def score_results(obs_df_, data_df_, score_type):
         obs_vec_std = standard_scale_df(obs_vec_nn)
         data_vec_std = standard_scale_df(mod_vec_nn)
         
+        # change this so it returns rss instead
+        # 
         obs_vals = obs_vec_std.values        
         model_vals = data_vec_std.values
-        
-        r2_array[idx] = r2_score(model_vals, obs_vals)
+        r2_array[idx] = abs(model_vals - obs_vals).sum()*-1
+        #r2_array[idx] = r2_score(model_vals, obs_vals)
         #print "{}: {}".format(col_, r2_array[idx])
         
-    r2_array[r2_array < -1.] = -1.
-    #print r2_array.mean()
-    return r2_array.mean()
+    #r2_array[r2_array < -1.] = -1.
+
+    if score_type == 'print_objective':
+        print r2_array.sum()
+        return None
+    else:
+        return r2_array.mean()
 
 def run_model(arg_tuple):
     subdf, out_f, obs_data, score_type = arg_tuple

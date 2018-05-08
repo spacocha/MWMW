@@ -7,14 +7,14 @@ Created on Wed Jul 19 11:23:35 2017
 """
 ## Load required libraries 
 
+from calibration_functions import cal_iteration, run_model, sample_params, best_val
 import sys, os
 import cPickle as pickle
 import pandas as pd
 import numpy as np
-from calibration_functions import cal_iteration, run_model
 
 # this is where all the input data & output data lives
-results_loc = "../Data/calibration_results"
+results_loc = "../Data/calibration_results2"
 in_data_loc = "../Data/calibration_data"
 
 # this is a table with 2n+2 columns (n = # of models)
@@ -30,7 +30,7 @@ obs_data = chem_df.join(gene_df)
 
 # these are the number of trials in each run 
 n_samplings = [1600, 1600,  1600,  800,  800,  800,  800,  800,  400,  400,  400,  400,  100,  100,  100,  100, 100]
-
+n_samplings = [10]*17
 # make the output if necessary
 if not os.path.exists(results_loc):
     os.mkdir(results_loc)
@@ -61,10 +61,8 @@ for model_run_col in [0, 2]:
     save_files = ['save'+"{:02}.p".format(i) for i in range(1,iterations+1)]
     
     # preallocate space for deviations per iteration & parameter value choices per iteration
-    dev_trace[mod_type] = pd.DataFrame(index=to_optimize, 
-                                       columns=range(iterations))    
-    param_trace[mod_type] = pd.DataFrame(index=list(to_optimize)+["score"], 
-                                         columns=range(iterations+1))
+    dev_trace[mod_type] = pd.DataFrame(index=to_optimize, columns=range(iterations))
+    param_trace[mod_type] = pd.DataFrame(index=list(to_optimize)+["score"], columns=range(iterations+1))
     
     # initial run conditions
     last_score = run_model((settings.ix[:, mod_type], 
@@ -79,11 +77,11 @@ for model_run_col in [0, 2]:
     
     stds, converged_ = None, False
 
-    for idx in xrange(1,iterations+1):
+    for idx in range(1,iterations+1):
         trial_result = cal_iteration(idx, results_subdir, save_files[idx-1], settings, bool_key, obs_data, 
                                      n_samplings[idx-1], mod_type, stds, last_score, converged_, param_trace)
         stds, settings, last_score, winner, converged_ = trial_result
-        dev_trace[mod_type].ix[stds.keys(), idx] = pd.Series(stds)
+        dev_trace[mod_type].ix[stds.keys(), idx-1] = pd.Series(stds)
         param_trace[mod_type].ix[to_optimize, idx] = settings.ix[to_optimize, mod_type]
         param_trace[mod_type].ix['score', idx] = last_score
         
