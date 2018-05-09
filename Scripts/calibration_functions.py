@@ -5,6 +5,7 @@ Created on Wed Jul 19 19:44:45 2017
 
 @author: login
 """
+import matplotlib.pyplot as plt
 import subprocess32 as sp
 import cPickle as pickle
 import pandas as pd
@@ -23,7 +24,7 @@ from multiprocessing import cpu_count
 
 def cal_iteration(idx, res_loc, save_f, settings, bool_key, obs_data, n_trials, mod_type, stds, last_score, conv_, param_trace):
     # Calculate the number of threads possible
-    thread_est = cpu_count()
+    thread_est = cpu_count() - 1
     
     # Determine if it is initial run or a restart
     if idx == 1:
@@ -138,8 +139,8 @@ def cal_iteration(idx, res_loc, save_f, settings, bool_key, obs_data, n_trials, 
         x = parameter_df.ix[:, t_o].values.reshape(-1, 1)
         lr.fit(y,x)
         best_guess = lr.predict(np.array([[y.max()]]))
-        std_deviations[t_o] = abs(best_guess - settings.ix[t_o, mod_type])[0]
-        settings.ix[t_o, mod_type] = best_guess
+        std_deviations[t_o] = abs(best_guess - settings.ix[t_o, mod_type])[0][0]*2
+        settings.ix[t_o, mod_type] = best_guess[0][0]
     
     dump_f = os.path.join(res_loc, save_f)
     dump_c = (std_deviations, settings, this_score, winner, conv_)
@@ -353,7 +354,7 @@ def turn_mat_into_single_df(mat):
     return full_df
     
 def standard_scale_df(df):
-    sklearn_ss = StandardScaler()    
+    sklearn_ss = MinMaxScaler()
     
     if type(df) == type(pd.DataFrame()):
         std_data = sklearn_ss.fit_transform(df.values)
@@ -416,12 +417,10 @@ def score_results(obs_df_, data_df_, score_type):
         
         obs_vec_std = standard_scale_df(obs_vec_nn)
         data_vec_std = standard_scale_df(mod_vec_nn)
-        
-        # change this so it returns rss instead
-        # 
+
         obs_vals = obs_vec_std.values        
         model_vals = data_vec_std.values
-        r2_array[idx] = abs(model_vals - obs_vals).sum()*-1
+        r2_array[idx] = abs(model_vals - obs_vals).mean()*-1
         #r2_array[idx] = r2_score(model_vals, obs_vals)
         #print "{}: {}".format(col_, r2_array[idx])
         
@@ -431,7 +430,8 @@ def score_results(obs_df_, data_df_, score_type):
         print r2_array.sum()
         return None
     else:
-        return r2_array.mean()
+        print r2_array.sum()
+        return r2_array.sum()
 
 def run_model(arg_tuple):
     subdf, out_f, obs_data, score_type = arg_tuple
@@ -462,10 +462,16 @@ def run_model(arg_tuple):
     
     # run the model 
     p = sp.Popen(run_cmd, cwd=model_loc, shell=True, stderr=sp.PIPE, stdout=sp.PIPE)
-    stdout, stderr = p.communicate(timeout=int(60.*5))
+    try:
+        stdout, stderr = p.communicate(timeout=int(60.*5))
+        results_df = importratesandconcs_mod(out_f, 'full df')
+    except TimeoutExpired:
+        p.kill()
+        outs, errs = p.communicate()
+        results_df = obs_df*0.0
+        print "Timeout Exception Triggered, Process Killed"
 
     # pull results & return them to memory
-    results_df = importratesandconcs_mod(out_f, 'full df')
     
     r2 = score_results(obs_data, results_df, score_type)
     shutil.rmtree(model_loc)
