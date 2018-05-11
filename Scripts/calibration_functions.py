@@ -24,15 +24,14 @@ from multiprocessing import cpu_count
 
 def cal_iteration(idx, res_loc, save_f, settings, bool_key, obs_data, n_trials, mod_type, stds, last_score, conv_, param_trace):
     # Calculate the number of threads possible
-    thread_est = cpu_count() - 1
-    
+    thread_est = cpu_count()
     # Determine if it is initial run or a restart
     if idx == 1:
-        print "Starting new optimization with settings for {}".format(mod_type)
+        print "Starting new opt with settings for {} using {} cores".format(mod_type, thread_est)
         init_bool = True
     else:
         init_bool = False
-    
+
     # determine which variables are left to optimize
     not_optimized = settings[settings.ix[:, bool_key]].index.tolist()
     # create a directory for each model run output
@@ -460,19 +459,19 @@ def run_model(arg_tuple):
     with open(output_loc, 'w') as out_h:
         out_h.write(os.path.abspath(out_f))
     
-    # run the model 
+    # run the model
     p = sp.Popen(run_cmd, cwd=model_loc, shell=True, stderr=sp.PIPE, stdout=sp.PIPE)
     try:
         stdout, stderr = p.communicate(timeout=int(60.*5))
         results_df = importratesandconcs_mod(out_f, 'full df')
-    except TimeoutExpired:
+    except sp.TimeoutExpired:
         p.kill()
         outs, errs = p.communicate()
         results_df = obs_df*0.0
         print "Timeout Exception Triggered, Process Killed"
 
     # pull results & return them to memory
-    
+
     r2 = score_results(obs_data, results_df, score_type)
     shutil.rmtree(model_loc)
     return r2
@@ -484,12 +483,12 @@ def sample_params(settings, init_bool, n_trials, to_optimize, mod_type, stds):
     parameter_df = pd.DataFrame(index=np.arange(1,n_trials+1), columns=settings.index, data=parameter_mat)
     for key in settings.index:
         # start at the defaults
-        this_mean = settings.ix[key, mod_type]        
+        this_mean = settings.ix[key, mod_type]
         # only randomize for paramters that need optimization
         if key in to_optimize:
             if init_bool:
                 low_, high_ = settings.ix[key, ['lower_limit', 'upper_limit']].values
-                this_sample = abs(np.random.uniform(low_, high_, (n_trials,1)))
+                this_sample = abs(np.linspace(low_, high_, n_trials))
             else:
                 this_std = stds[key]
                 this_sample = abs(np.random.normal(this_mean, abs(this_std)+np.finfo(float).eps, 
