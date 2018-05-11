@@ -31,7 +31,7 @@ gene_df = pd.read_csv(in_data_loc+"/gene_data.tsv", sep="\t", index_col=[0,1], p
 obs_data = chem_df.join(gene_df)
 
 # these are the number of trials in each run
-n_samplings = [1000, 2000,  1000,  500,  500,  500,  200,  200,  100,  100,  50,  50,  10,  10,  10,  10, 10]
+n_samplings = [1000, 2000,  1000,  500,  500,  500,  200,  200,  100,  100,  50,  50,  10,  10,  10,  10, 10][:8]
 
 # make the output if necessary
 if not os.path.exists(results_loc):
@@ -41,7 +41,7 @@ if not os.path.exists(results_loc):
 # & the actual settings/scores change for each model
 dev_trace, param_trace = {}, {}
 
-for model_run_col in [0, 2]:
+for model_run_col in [2]:
     # pickup model type from column name
     mod_type = settings.columns[model_run_col]
     # create a new location for this data
@@ -57,7 +57,6 @@ for model_run_col in [0, 2]:
 
     # the algorithm will run an iteration for each parameter
     iterations = settings[bool_key].sum() + 1
-    assert iterations <= len(n_samplings)
 
     # these are the data saved between runs (in case of crash)
     save_files = ['save'+"{:02}.p".format(i) for i in range(1,iterations+1)]
@@ -96,8 +95,8 @@ for model_run_col in [0, 2]:
 
     print "Completed calibration of {}".format(mod_type)
 
-    dump_f = os.path.join(results_loc, 'final_result'+str(model_run_col)+'.p')
-    dump_c = (param_trace, dev_trace)
-    with open(dump_f, "wb") as dump_h:
-        pickle.dump( dump_c, dump_h )
+    #dump_f = os.path.join(results_loc, 'final_result'+str(model_run_col)+'.p')
+    #dump_c = (param_trace, dev_trace)
+    #with open(dump_f, "wb") as dump_h:
+    #    pickle.dump( dump_c, dump_h )
 
