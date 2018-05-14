@@ -1,12 +1,12 @@
 import pandas as pd
 import cPickle as pickle
 
-f_res_loc = "../Data/calibration_results/final_result.p"
+f_res_loc = "../Data/calibration_results2/final_result.p"
 with open(f_res_loc, "rb") as p_fh:
    dump_d = pickle.load(p_fh)
 
 param_trace, dev_trace = dump_d
-writer = pd.ExcelWriter('../Data/calibration_results/model_comparison.xlsx', engine='xlsxwriter')
+writer = pd.ExcelWriter('../Data/calibration_results2/model_comparison.xlsx', engine='xlsxwriter')
 
 sheet1 = (param_trace['old_model'].ix[:, 14] - param_trace['new_model'].ix[:, 17]).to_frame(name="Param_Val_Diff")
 sheet1["old_model_start"] = param_trace['old_model'].ix[:, 0]

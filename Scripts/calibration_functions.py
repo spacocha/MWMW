@@ -421,7 +421,7 @@ def score_results(obs_df_, data_df_, score_type):
         model_vals = data_vec_std.values
         r2_array[idx] = abs(model_vals - obs_vals).mean()*-1
         #r2_array[idx] = r2_score(model_vals, obs_vals)
-        print "{}: {}".format(col_, r2_score(model_vals, obs_vals))
+        #print "{}: {}".format(col_, r2_score(model_vals, obs_vals))
         
     #r2_array[r2_array < -1.] = -1.
 
@@ -429,7 +429,6 @@ def score_results(obs_df_, data_df_, score_type):
         print r2_array.sum()
         return None
     else:
-        print r2_array.sum()
         return r2_array.sum()
 
 def run_model(arg_tuple):
