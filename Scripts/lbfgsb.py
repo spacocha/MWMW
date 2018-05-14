@@ -26,17 +26,19 @@ def random_function(x):
                             'gene_objective'))
     return last_score*-1
 
-z = minimize(random_function, 
-             x0_, 
-             method='L-BFGS-B', 
-             jac="2-point",
-             bounds=bounds_, 
-             options={'disp': True, 
-                      'maxls': 20, 
-                      'iprint': 101, 
-                      'gtol': 1e-05, 
-                      'eps': 1e-08, 
-                      'maxiter': 10, 
-                      'ftol': 2.220446049250313e-09, 
-                      'maxcor': 10, 
-                      'maxfun': 10})
+z = minimize(random_function,
+             x0_,
+             method='L-BFGS-B',
+             jac=False,
+             bounds=bounds_,
+             options={'disp': True,
+                      'maxls': 20,
+                      'iprint': 101,
+                      'gtol': 1e-05,
+                      'eps': 1e-05,
+                      'maxiter': 100,
+                      'ftol': 2.220446049250313e-09,
+                      'maxcor': 10,
+                      'maxfun': 100})
+
+print z

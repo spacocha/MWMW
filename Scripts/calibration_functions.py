@@ -466,7 +466,7 @@ def run_model(arg_tuple):
     except sp.TimeoutExpired:
         p.kill()
         outs, errs = p.communicate()
-        results_df = obs_df*0.0
+        results_df = obs_data*0.0
         print "Timeout Exception Triggered, Process Killed"
 
     # pull results & return them to memory
