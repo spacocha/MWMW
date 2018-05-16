@@ -419,16 +419,16 @@ def score_results(obs_df_, data_df_, score_type):
 
         obs_vals = obs_vec_std.values        
         model_vals = data_vec_std.values
-        r2_array[idx] = abs(model_vals - obs_vals).mean()*-1
+        r2_array[idx] = abs(model_vals - obs_vals).sum()*-1
         #r2_array[idx] = r2_score(model_vals, obs_vals)
         #print "{}: {}".format(col_, r2_score(model_vals, obs_vals))
         
     #r2_array[r2_array < -1.] = -1.
 
     if score_type == 'print_objective':
-        print r2_array.sum()
         return None
     else:
+        print r2_array.sum()
         return r2_array.sum()
 
 def run_model(arg_tuple):
@@ -461,7 +461,7 @@ def run_model(arg_tuple):
     # run the model
     p = sp.Popen(run_cmd, cwd=model_loc, shell=True, stderr=sp.PIPE, stdout=sp.PIPE)
     try:
-        stdout, stderr = p.communicate(timeout=int(60.*5))
+        stdout, stderr = p.communicate(timeout=int(600.*5))
         results_df = importratesandconcs_mod(out_f, 'full df')
     except sp.TimeoutExpired:
         p.kill()
