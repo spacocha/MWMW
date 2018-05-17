@@ -1,0 +1,42 @@
+,"new_model","old_model"
+"oxygen_bubble_rate",0,0
+"nitrogen_source",170.396396,167.691692
+"nitrogen_ratio",0.1,0.0463463504
+"carbon_source_from_5e4",52432.4324,99009.009
+"oxygen_source",16553.5135,15507.027
+"methane_source",2830,2830
+"t_max",0.4,0.4
+"sminus_precipitation",0.131594823,0
+"fe_precipitation",0.120969339,0.0676676625
+"carbon_precip",0,0.146146135
+"diffusion_constant",130.891892,77.747747
+"ma_op_o_fe_rate_const",10,10
+"ma_op_o_n_rate_const",5,5
+"ma_op_o_s_rate_const",0.16,0.16
+"ma_op_fe_n_rate_const",0.877371116,2.74774758
+"ma_op_s_n_rate_const",0.159224783,0
+"ma_op_ch4_o_rate_const",10000,10000
+"ma_op_ch4_n_rate_const",34.1341341,0
+"ma_op_ch4_s_rate_const",0.01,0.01
+"primary_ox_rate_const",2.12939671,2.21622388
+"c_lim_o",20,20
+"c_lim_n",5,5
+"c_lim_fe",0.1,0.1
+"c_lim_s",30,30
+"C",1.31173794,0.512912874
+"N-",4.18799759,5.98822777
+"S-",0.284775087,0.279079058
+"CH4",3.2569882,8.02802797
+"Fe-",0.4347821387,0.4937736
+"N+",0.7982782696,0.7910878373
+"O",0.2772643292,0.0602167311
+"S+",0.7472532289,0.8473851723
+"Ammonia Oxidation (oxygen)",0.5870606735,0.47269343
+"C1 Oxidation (Sum)",-0.7304314442,-1.0518884144
+"Denitrification (Sum)",-1.2492263305,-1.013512973
+"Iron Reduction",-0.2259300987,-0.6972259127
+"Methanogenesis",1,1
+"Sulfate Reduction + Sulfur Oxidation (Sum)",0.5967679425,-0.4987232813
+"chem average",0.5643944916,0.5481158352
+"rate average",-0.0036265429,-0.2981095252
+"model average",0.2235818709,0.0403806189

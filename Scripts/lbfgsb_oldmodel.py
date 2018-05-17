@@ -10,7 +10,7 @@ d2 = "../Data/calibration_results3/new_model"
 f1s = os.listdir(d1)
 p1s = [os.path.join(d1, i) for i in f1s if i.endswith(".csv")]
 csv1s = pd.concat([pd.read_csv(i, index_col=0) for i in p1s], ignore_index=1)
-old_row = csv1s.ix[csv1s.score.argmax(), :]
+old_row = csv1s.ix[csv1s.score.argmax(), :].drop("score")
 old_row.name = "old_model"
 
 f2s = os.listdir(d2)
@@ -26,20 +26,20 @@ obs_data = chem_df.join(gene_df)
 
 settings = pd.read_csv(in_data_loc+"/calibration_run_settings.tsv", index_col=0, sep="\t")
 #x0_ = settings.ix[settings.new_model_bool, "new_model"].tolist()
-x0_ = new_row[settings.new_model_bool]
-bounds_ = settings.ix[settings.new_model_bool, ["lower_limit", "upper_limit"]].apply(tuple, axis=1).tolist()
-to_optimize = list(settings.ix[settings.new_model_bool, "new_model"].index)
+x0_ = old_row[settings.old_model_bool]
+bounds_ = settings.ix[settings.old_model_bool, ["lower_limit", "upper_limit"]].apply(tuple, axis=1).tolist()
+to_optimize = list(settings.ix[settings.old_model_bool, "old_model"].index)
 
 def random_function(x):
     new_vals = pd.Series({i:j for i, j in zip(to_optimize, x)})
     these_settings = settings.copy()
-    these_settings.loc[new_vals.index, 'new_model'] = new_vals
-    newvs = these_settings.ix[new_vals.index, 'new_model'].values
-    oldvs = new_row[new_vals.index].values
+    these_settings.loc[new_vals.index, 'old_model'] = new_vals
+    newvs = these_settings.ix[new_vals.index, 'old_model'].values
+    oldvs = old_row[new_vals.index].values
     print "{:2%}".format(np.divide(abs(newvs - oldvs), oldvs).sum())
-    last_score = run_model((these_settings.ix[:, 'new_model'], 
-                            "../Data/final_calibration/old_final/old_run.mat", 
-                            obs_data.copy(), 
+    last_score = run_model((these_settings.ix[:, 'old_model'],
+                            "../Data/final_calibration/older_final/older_run.mat",
+                            obs_data.copy(),
                             'gene_objective'))
     return last_score*-1
 

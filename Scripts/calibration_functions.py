@@ -377,8 +377,8 @@ def min_max_scale_df(df):
         return pd.Series(data=std_data.flatten(), index=df.index)
     else:
         sys.exit("Unrecognized data type for scaling")
-        
-        
+
+
 def score_results(obs_df_, data_df_, score_type):
     # temporal subsetting
     obs_df, data_df = obs_df_.copy(), data_df_.copy()
