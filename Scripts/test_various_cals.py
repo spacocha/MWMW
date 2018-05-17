@@ -4,6 +4,8 @@ import pandas as pd
 
 d1 = "../Data/calibration_results3/old_model"
 d2 = "../Data/calibration_results3/new_model"
+d2 = "../Data/calibration_results/new_model/"
+d1 = "../Data/calibration_results/old_model/"
 
 f1s = os.listdir(d1)
 p1s = [os.path.join(d1, i) for i in f1s if i.endswith(".csv")]
@@ -26,15 +28,15 @@ chem_df = pd.read_csv(in_data_loc+"/chem_data.tsv", sep="\t", index_col=[0,1], p
 gene_df = pd.read_csv(in_data_loc+"/gene_data.tsv", sep="\t", index_col=[0,1], parse_dates=True)
 obs_data = chem_df.join(gene_df)
 
-old_settings = pd.read_csv(in_data_loc+"/old_params.csv", index_col=0)
-all_settings = pd.concat((new_settings, old_settings), 1)
-all_settings.to_csv("../Data/final_calibration/final_params.csv")
+#old_settings = pd.read_csv(in_data_loc+"/old_params.csv", index_col=0)
+#all_settings = pd.concat((new_settings, old_settings), 1)
+new_settings.to_csv("../Data/calibration_results/final_params.csv")
 
 mod_type = 'old_model'
-last_score = run_model((new_settings.ix[:, mod_type], "../Data/final_calibration/old_final/old_run.mat", obs_data.copy(), 'gene_objective'))
+last_score = run_model((new_settings.ix[:, mod_type], "../Data/final_calibration/cal1_old/cal1o_run.mat", obs_data.copy(), 'gene_objective'))
 
 mod_type = 'new_model'
-last_score = run_model((new_settings.ix[:, mod_type], "../Data/final_calibration/new_final/new_run.mat", obs_data.copy(), 'gene_objective'))
+last_score = run_model((new_settings.ix[:, mod_type], "../Data/final_calibration/cal1_new/cal1n_run.mat", obs_data.copy(), 'gene_objective'))
 
 mod_type = 'new_model'
 oldest_baseline = old_settings.ix[settings.index, 'Previous model parameters']
