@@ -58,13 +58,19 @@ old_res_scores = [("Fe-", 0.493773599971),
                   ("Sulfate Reduction + Sulfur Oxidation (Sum)", -0.498723281337)]
 
 ts2 = these_settings.drop(["new_model_bool", "old_model_bool"], 1)
-score_df = pd.DataFrame(index=zip(*new_res_scores)[0], columns=ts2.columns)
+avgs = ['chem average', "rate average", "model average"]
+score_df = pd.DataFrame(index=list(zip(*new_res_scores)[0])+avgs, columns=ts2.columns)
 
+for idx in range(len(old_res_scores)):
+    idx_str = old_res_scores[idx][0]
+    score_df.ix[idx_str, 'old_model'] = old_res_scores[idx][1]
+    score_df.ix[idx_str, 'new_model'] = new_res_scores[idx][1]
 
-writer = pd.ExcelWriter('../Data/final_calibration/scores_settings.xlsx', engine='xlsxwriter')
-sheet1 = (param_trace['old_model'].ix[:, 14] - param_trace['new_model'].ix[:, 17]).to_frame(name="Param_Val_Diff")
-sheet1["old_model_start"] = param_trace['old_model'].ix[:, 0]
-sheet1["old_model_end"] = param_trace['old_model'].ix[:, 14]
-sheet1["new_model_start"] = param_trace['new_model'].ix[:, 0]
-sheet1["new_model_end"] = param_trace['new_model'].ix[:, 17]
-sheet1.to_excel(writer, sheet_name='Param Value Results')
+all_cols = list(zip(*new_res_scores)[0])
+chem_cols, proc_cols = all_cols[:4], all_cols[4:]
+mod_cols = ["new_model", "old_model"]
+score_df.loc["chem average", mod_cols] = score_df.ix[chem_cols, mod_cols].mean()
+score_df.loc["rate average", mod_cols] = score_df.ix[proc_cols, mod_cols].mean()
+score_df.loc["model average", mod_cols] = score_df.ix[all_cols, mod_cols].mean()
+ts3 = ts2.append(score_df)
+ts3.to_csv('../Data/final_calibration/scores_settings.csv')

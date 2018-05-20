@@ -2,7 +2,10 @@ import numpy as np
 import pandas as pd
 from scipy.optimize import minimize
 from calibration_functions import run_model
-import os
+import os, sys
+
+eps_ = float(sys.argv[-1])
+fname = sys.argv[-2]
 
 d1 = "../Data/calibration_results3/old_model"
 d2 = "../Data/calibration_results3/new_model"
@@ -30,6 +33,8 @@ x0_ = new_row[settings.new_model_bool]
 bounds_ = settings.ix[settings.new_model_bool, ["lower_limit", "upper_limit"]].apply(tuple, axis=1).tolist()
 to_optimize = list(settings.ix[settings.new_model_bool, "new_model"].index)
 
+mod_loc = "../Data/final_calibration/"+fname+"/"+fname+".mat"
+
 def random_function(x):
     new_vals = pd.Series({i:j for i, j in zip(to_optimize, x)})
     these_settings = settings.copy()
@@ -38,9 +43,7 @@ def random_function(x):
     oldvs = new_row[new_vals.index].values
     print "{:2%}".format(np.divide(abs(newvs - oldvs), oldvs).sum())
     last_score = run_model((these_settings.ix[:, 'new_model'], 
-                            "../Data/final_calibration/old_final/old_run.mat", 
-                            obs_data.copy(), 
-                            'gene_objective'))
+                            mod_loc, obs_data.copy(), 'gene_objective'))
     return last_score*-1
 
 z = minimize(random_function,
@@ -52,7 +55,7 @@ z = minimize(random_function,
                       'maxls': 20,
                       'iprint': 101,
                       'gtol': 1e-05,
-                      'eps': 1e-05,
+                      'eps': eps_,
                       'maxiter': 200,
                       'ftol': 1e-05,
                       'maxcor': 10,
