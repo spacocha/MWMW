@@ -86,6 +86,20 @@ for idx, col_ in enumerate(sub_obs_df.columns):
     plt.savefig(plotdir+"/"+col_+".png", dpi=300)
 
 
-#ts2 = these_settings.drop(["new_model_bool", "old_model_bool"], 1)
-#score_df = pd.DataFrame(index=zip(*new_res_scores)[0], columns=ts2.columns)
+ts2 = these_settings.drop(["new_model_bool", "old_model_bool"], 1)
+avgs = ['chem average', "rate average", "model average"]
+score_df = pd.DataFrame(index=list(zip(*new_res_scores)[0])+avgs, columns=ts2.columns)
 
+for idx in range(len(old_res_scores)):
+    idx_str = old_res_scores[idx][0]
+    score_df.ix[idx_str, 'old_model'] = old_res_scores[idx][1]
+    score_df.ix[idx_str, 'new_model'] = new_res_scores[idx][1]
+
+all_cols = list(zip(*new_res_scores)[0])
+chem_cols, proc_cols = all_cols[:4], all_cols[4:]
+mod_cols = ["new_model", "old_model"]
+score_df.loc["chem average", mod_cols] = score_df.ix[chem_cols, mod_cols].mean()
+score_df.loc["rate average", mod_cols] = score_df.ix[proc_cols, mod_cols].mean()
+score_df.loc["model average", mod_cols] = score_df.ix[all_cols, mod_cols].mean()
+ts3 = ts2.append(score_df)
+ts3.to_csv('../Data/final_calibration/scores_settings.csv')
