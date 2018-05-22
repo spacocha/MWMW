@@ -393,7 +393,7 @@ def score_results(obs_df_, data_df_, score_type):
     # drop all columns that aren't related to the specific objective
     if score_type == 'gene_objective':
         pass
-    elif score_type == 'print_objective':
+    elif score_type == 'return_scores':
         pass
     elif score_type == 'conc_objective':
         to_keep = set(['Fe-', 'N+', 'S+', 'O'])
@@ -403,7 +403,10 @@ def score_results(obs_df_, data_df_, score_type):
         sub_obs_df.drop(to_drop, axis=1, inplace=True)
         
     r2_array = np.zeros((len(sub_obs_df.columns),))
-    
+    if score_type == 'return_scores':
+        score_array = pd.Series(index=sub_obs_df.columns, 
+                                data=np.zeros((len(sub_obs_df.columns),) ) )
+
     for idx, col_ in enumerate(sub_obs_df.columns):
         obs_vec = sub_obs_df.ix[:, col_].dropna()
         mod_vec = sub_data_df.ix[:, col_].dropna()
@@ -421,12 +424,13 @@ def score_results(obs_df_, data_df_, score_type):
         model_vals = data_vec_std.values
         r2_array[idx] = abs(model_vals - obs_vals).mean()*-1
         #r2_array[idx] = r2_score(model_vals, obs_vals)
-        print "{}: {}".format(col_, r2_score(model_vals, obs_vals))
-        
+        if score_type == 'return_scores':
+            print "{}: {}".format(col_, r2_score(model_vals, obs_vals))
+            score_array[col_] = r2_score(model_vals, obs_vals)
     #r2_array[r2_array < -1.] = -1.
 
-    if score_type == 'print_objective':
-        return None
+    if score_type == 'return_scores':
+        return score_array
     else:
         print r2_array.sum()
         return r2_array.sum()
@@ -515,3 +519,46 @@ def apply_conc_multiplier(param_subdf, f_name):
     conc0.to_csv(f_name, float_format="%g", header=False, index=False)
     return None
 
+
+
+def plot_model(arg_tuple):
+    subdf, out_f, obs_data, score_type = arg_tuple
+    if platform.system() == 'Linux':
+        run_cmd = ""
+    else:
+        run_cmd = "/Applications/MATLAB_R2016b.app/bin/"
+        
+    # tell subprocess where and what to execute
+    model_loc = os.path.dirname(out_f)
+    source_dir = os.path.join(os.getcwd(), 'lake_model')
+    copyDirectory(source_dir, model_loc)
+    input_args_loc = os.path.join(model_loc, 'baseline.txt')
+    # write out the parameter set into the right location
+    subdf.T.to_csv(input_args_loc, header=False, index=False, float_format='%g')
+    init_val_f = os.path.join(model_loc, "concs0.txt")
+    apply_conc_multiplier(subdf, init_val_f)
+    #matlab -nodisplay -nojvm -nosplash -nodesktop -r 'calibration_kaw; exit'
+    run_cmd = run_cmd +"matlab -nodisplay -nojvm -nosplash -nodesktop " 
+    run_cmd = run_cmd +"-r 'calibration_kaw; exit'"
+
+    # what is the output file name ? 
+    output_loc = os.path.join(model_loc, 'outFile.txt')
+    
+    with open(output_loc, 'w') as out_h:
+        out_h.write(os.path.abspath(out_f))
+    
+    # run the model
+    p = sp.Popen(run_cmd, cwd=model_loc, shell=True, stderr=sp.PIPE, stdout=sp.PIPE)
+    try:
+        stdout, stderr = p.communicate(timeout=int(600.*5))
+        results_df = importratesandconcs_mod(out_f, 'full df')
+    except sp.TimeoutExpired:
+        p.kill()
+        outs, errs = p.communicate()
+        results_df = obs_data*0.0
+        print "Timeout Exception Triggered, Process Killed"
+
+    # pull results & return them to memory
+    r2 = score_results(obs_data, results_df, score_type)
+    shutil.rmtree(model_loc)
+    return r2
