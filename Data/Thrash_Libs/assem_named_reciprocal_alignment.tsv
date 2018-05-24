@@ -1,4 +1,4 @@
-our bin	their bin	their bin length	aligned length	our bin length	fraction of their bin aligned	fraction of our bin aligned	specificity of their bin across all of ours	specificity of our bin across all of theirs
+our bin	their IMG genome ID	their bin length	aligned length	our bin length	fraction of their bin aligned	fraction of our bin aligned	specificity of their bin across all of ours	specificity of our bin across all of theirs
 bin.100	94256	1086283	941746	1390879	0.866876311	0.677086936	0.628571429	0.996495327
 bin.117	79699	1972793	2019909	2304471	1.023827639	0.876517431	0.977678571	0.982071713
 bin.161	79700	2402386	2288694	2712238	0.952669138	0.843839663	0.944954128	0.993644068

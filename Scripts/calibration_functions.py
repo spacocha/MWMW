@@ -425,8 +425,8 @@ def score_results(obs_df_, data_df_, score_type):
         r2_array[idx] = abs(model_vals - obs_vals).mean()*-1
         #r2_array[idx] = r2_score(model_vals, obs_vals)
         if score_type == 'return_scores':
-            print "{}: {}".format(col_, r2_score(model_vals, obs_vals))
-            score_array[col_] = r2_score(model_vals, obs_vals)
+            print "{}: {}".format(col_, abs(model_vals - obs_vals).mean())
+            score_array[col_] = abs(model_vals - obs_vals).mean()
     #r2_array[r2_array < -1.] = -1.
 
     if score_type == 'return_scores':

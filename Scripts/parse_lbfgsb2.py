@@ -29,15 +29,29 @@ mod_res = [new_copied_res, old_copied_res]
 these_settings = settings.copy()
 score_list = []
 
-for x, mi in zip(mod_res, mod_types):
-    mt = settings.columns[mi]
-    mb = settings.columns[mi+1]
-    to_optimize = list(settings.ix[settings.ix[:, mb], mt].index)
-    assert len(to_optimize) == len(mod_res)
-    new_vals = pd.Series({i:j for i, j in zip(to_optimize, x)})
-    these_settings.loc[new_vals.index, mt] = new_vals
-    these_settings = these_settings.ix[settings.index, settings.columns]
-    score_list.append(run_model((these_settings.ix[:, mt], "../Data/final_calibration/finala/finala_run.mat", obs_data.copy(), 'return_scores')))
+#for x, mi in zip(mod_res, mod_types):
+x = mod_res[0]
+mi = mod_types[0]
+mt = settings.columns[mi]
+mb = settings.columns[mi+1]
+to_optimize = list(settings.ix[settings.ix[:, mb], mt].index)
+assert len(to_optimize) == len(x)
+new_vals = pd.Series({i:j for i, j in zip(to_optimize, x)})
+these_settings.loc[new_vals.index, mt] = new_vals
+these_settings = these_settings.ix[settings.index, settings.columns]
+
+old_settings = pd.read_csv(in_data_loc+"/old_params.csv", index_col=0)
+score_list.append(run_model((old_settings.ix[:, "Previous model parameters"],
+                             "../Data/final_calibration/finalb/finalb_run.mat", 
+                             obs_data.copy(), 
+                             'return_scores')))
+
+score_list.append(run_model((these_settings.ix[:, mt], "../Data/final_calibration/finala/finala_run.mat", obs_data.copy(), 'return_scores')))
 
 
 
+all_scores = pd.concat(score_list, 1)
+all_scores.columns = ['pub vals', 'opt vals']
+all_scores.to_csv("../Data/final_calibration/final_scores_REAL.tsv", sep="\t", index_label="Process")
+params_used = pd.concat((old_settings.ix[:, "Previous model parameters"], these_settings.ix[:, mt]), 1)
+params_used.to_csv("../Data/final_calibration/final_param_values_REAL.tsv", sep="\t", index_label="Params")
