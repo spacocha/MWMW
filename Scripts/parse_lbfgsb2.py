@@ -28,30 +28,53 @@ mod_res = [new_copied_res, old_copied_res]
 
 these_settings = settings.copy()
 score_list = []
-
-#for x, mi in zip(mod_res, mod_types):
-x = mod_res[0]
-mi = mod_types[0]
-mt = settings.columns[mi]
-mb = settings.columns[mi+1]
-to_optimize = list(settings.ix[settings.ix[:, mb], mt].index)
-assert len(to_optimize) == len(x)
-new_vals = pd.Series({i:j for i, j in zip(to_optimize, x)})
-these_settings.loc[new_vals.index, mt] = new_vals
-these_settings = these_settings.ix[settings.index, settings.columns]
-
-old_settings = pd.read_csv(in_data_loc+"/old_params.csv", index_col=0)
-score_list.append(run_model((old_settings.ix[:, "Previous model parameters"],
-                             "../Data/final_calibration/finalb/finalb_run.mat", 
-                             obs_data.copy(), 
-                             'return_scores')))
-
-score_list.append(run_model((these_settings.ix[:, mt], "../Data/final_calibration/finala/finala_run.mat", obs_data.copy(), 'return_scores')))
+for x, mi in zip(mod_res, mod_types):
+    mt = settings.columns[mi]
+    mb = settings.columns[mi+1]
+    to_optimize = list(settings.ix[settings.ix[:, mb], mt].index)
+    assert len(to_optimize) == len(x)
+    new_vals = pd.Series({i:j for i, j in zip(to_optimize, x)})
+    these_settings.loc[new_vals.index, mt] = new_vals
+    these_settings = these_settings.ix[settings.index, settings.columns]
+    score_list.append(run_model((these_settings.ix[:, mt], "../Data/final_calibration/finala/finala_run.mat", obs_data.copy(), 'return_scores')))
 
 
+new_res_scores = [("Fe-", 0.415706976913),
+                  ("N+", 0.818041113592),
+                  ("O", 0.275122702656),
+                  ("S+", 0.773227738483),
+                  ("Ammonia Oxidation (oxygen)", 0.647205634013),
+                  ("C1 Oxidation (Sum)", -0.707954645044),
+                  ("Denitrification (Sum)", -1.85644880163),
+                  ("Iron Reduction", -0.200903221249),
+                  ("Methanogenesis", 1.0),
+                  ("Sulfate Reduction + Sulfur Oxidation (Sum)", 0.638621449069)]
 
-all_scores = pd.concat(score_list, 1)
-all_scores.columns = ['pub vals', 'opt vals']
-all_scores.to_csv("../Data/final_calibration/final_scores_REAL.tsv", sep="\t", index_label="Process")
-params_used = pd.concat((old_settings.ix[:, "Previous model parameters"], these_settings.ix[:, mt]), 1)
-params_used.to_csv("../Data/final_calibration/final_param_values_REAL.tsv", sep="\t", index_label="Params")
+old_res_scores = [("Fe-", 0.491221472257),
+                  ("N+", 0.769363903053),
+                  ("O", 0.0579604552629),
+                  ("S+", 0.845973018746),
+                  ("Ammonia Oxidation (oxygen)", 0.733623630935),
+                  ("C1 Oxidation (Sum)", -1.02805034552),
+                  ("Denitrification (Sum)", -0.573224365163),
+                  ("Iron Reduction", -0.417504662629),
+                  ("Methanogenesis", 1.0),
+                  ("Sulfate Reduction + Sulfur Oxidation (Sum)", -0.485158926779)]
+
+ts2 = these_settings.drop(["new_model_bool", "old_model_bool"], 1)
+avgs = ['chem average', "rate average", "model average"]
+score_df = pd.DataFrame(index=list(zip(*new_res_scores)[0])+avgs, columns=ts2.columns)
+
+for idx in range(len(old_res_scores)):
+    idx_str = old_res_scores[idx][0]
+    score_df.ix[idx_str, 'old_model'] = old_res_scores[idx][1]
+    score_df.ix[idx_str, 'new_model'] = new_res_scores[idx][1]
+
+all_cols = list(zip(*new_res_scores)[0])
+chem_cols, proc_cols = all_cols[:4], all_cols[4:]
+mod_cols = ["new_model", "old_model"]
+score_df.loc["chem average", mod_cols] = score_df.ix[chem_cols, mod_cols].mean()
+score_df.loc["rate average", mod_cols] = score_df.ix[proc_cols, mod_cols].mean()
+score_df.loc["model average", mod_cols] = score_df.ix[all_cols, mod_cols].mean()
+ts3 = ts2.append(score_df)
+ts3.to_csv('../Data/final_calibration/scores_settings2.csv')
